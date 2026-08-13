@@ -4,7 +4,7 @@ Maintainer-only evaluation set for `mission-brief`. This file is not runtime ins
 
 ## Protocol
 
-Run each case in a fresh session with the same model, harness, workspace fixture, and Skill version. Invoke cases 2–19 explicitly as `/skill:mission-brief <prompt>`; cases 1 and 20 verify that natural-language requests do not load this user-invoked Skill. Capture invocation, questions, artifact content, write location, and final response.
+Run each case in a fresh session with the same model, harness, workspace fixture, and Skill version. Invoke cases 2–23 explicitly as `/skill:mission-brief <prompt>`; cases 1 and 24 verify that natural-language requests do not load this user-invoked Skill. Capture invocation, questions, artifact content, write location, and final response.
 
 A run passes only when both its case-specific expectation and every invariant below hold. After the authoring cases pass, run the blind-handoff check with a separate fresh agent that receives only the Brief, target workspace, and normal ambient instructions—not the source conversation or expected solution.
 
@@ -12,9 +12,10 @@ A run passes only when both its case-specific expectation and every invariant be
 
 - The Skill triggers only through explicit user invocation and prepares a commission for another agent.
 - One coherent reality change supports one independently honest verdict; implementation units do not become Missions.
-- Exactly one Brief is produced when the commission is ready. A user-only blocker produces one current question and no premature artifact.
+- The freeze gate reaches a justified state: `READY` produces exactly one Brief without ceremonial confirmation; `CONFIRM` or `BLOCKED` asks one question and produces no artifact. Optional unadopted synthesis is omitted rather than promoted into `CONFIRM`.
 - The commission boundary is understandable without the source conversation; external references add detail and rationale.
 - A fresh executor can classify representative success, boundary, and failure cases without inventing product policy.
+- Every binding clause traces to an explicit user decision, explicit acceptance of a clear summary, or an external contract; unadopted advice, examples, preferences, critiques, and agent synthesis do not become contract.
 - The Brief contains stable assertions, not phases, status, implementation steps, task ownership, test commands, counts, hashes, or completed results.
 - Confirmed external reading, collaboration, compatibility, governance, and user-facing mechanisms remain contractual; candidate solutions and discoverable unknowns remain delegated.
 - `Success` defines falsifiable facts. `Evidence Required` names proportionate proof categories and permits `INCONCLUSIVE` without becoming an acceptance checklist.
@@ -146,13 +147,49 @@ A run passes only when both its case-specific expectation and every invariant be
 
 **Expected:** Ask no clarification question. Preserve the repository's validity and projection policy in the result contract while delegating validation and publication mechanics.
 
-### 19. Parent Mission retains integration value
+### 19. Explicitly accepted summary is ready
+
+**Conversation:** The agent presents a clearly enumerated summary: every accepted order appears exactly once in a JSON export within five minutes; terminal failures are visible to operators; PostgreSQL remains the audit store; refunds are out of scope; serialization mechanics stay delegated. The user replies, `就按以上五点形成 Mission Brief。`
+
+**Prompt:** `/skill:mission-brief 生成并保存委托。`
+
+**Expected:** Reach `READY` and produce one Brief without another confirmation. Preserve exactly the accepted contract and do not infer additional obligations from earlier discussion.
+
+### 20. Brainstorming recommendation remains unbound
+
+**Conversation:** The user explicitly chooses asynchronous order export in which every accepted order appears exactly once within five minutes and terminal failures are visible to operators; existing audit behavior and human-readable export remain compatible. During brainstorming, the agent recommends Kafka and a three-worker topology, but the user neither accepts nor rejects those ideas.
+
+**Prompt:** `/skill:mission-brief 把已经确定的委托整理出来，具体实现交给执行 Agent。`
+
+**Expected:** Reach `READY` without confirmation. Preserve the chosen export outcome; keep Kafka and worker topology delegated rather than turning them into boundaries or success conditions.
+
+### 21. Grill critique remains review input
+
+**Conversation:** The user confirms a local read-only glossary-search CLI and its output compatibility boundary. During a grill, the agent warns that SQLite could harm portability and calls an independent security review desirable; the user does not adopt either statement.
+
+**Prompt:** `/skill:mission-brief 根据已经确认的结论生成委托。`
+
+**Expected:** Reach `READY` without confirmation. Do not convert the SQLite critique into a ban or the suggested review into a proof obligation; retain only confirmed outcomes and boundaries.
+
+### 22. Material synthesis requires freeze confirmation
+
+**Conversation:** The user confirms that a system map should become a daily reading surface and explicitly asks the final commission to resolve later concerns about mobile scope and independent signoff. From scattered discussion, the agent synthesizes those concerns into “mobile support is outside scope” and “two independent human reviewers are mandatory”; the user never confirms that synthesis.
+
+**Prompt A:** `/skill:mission-brief 整理成最终委托并保存。`
+
+**Expected A:** Reach `CONFIRM`. Return a compact freeze summary marking the inferred mobile non-goal and two-reviewer obligation as synthesized, distinguish what remains delegated, and ask one confirmation question. Produce or save no Brief.
+
+**Prompt B:** `确认这两条合成条款。现在生成最终 Mission Brief。`
+
+**Expected B:** Reach `READY` and produce one Brief containing the two confirmed clauses. Do not treat the confirmation as adoption of any content absent from the freeze summary.
+
+### 23. Parent Mission retains integration value
 
 **Prompt:** Provide three independently useful simulation capabilities plus the claim that users can combine them into a sustained, comprehensible 45-minute sandbox experience; invoke the Skill for the parent commission.
 
 **Expected:** Produce one parent Brief centered on the irreducible integrated experience and its evidence. Do not emit child Briefs or treat child completion as sufficient proof.
 
-### 20. Natural-language handoff or brief wording does not auto-invoke
+### 24. Natural-language handoff or brief wording does not auto-invoke
 
 **Prompt A:** `把当前工作整理成 Handoff，方便另一个 Agent 继续。`
 

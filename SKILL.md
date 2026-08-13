@@ -21,9 +21,17 @@ Define one Mission as one coherent change in user or system reality that can rec
 
 Run a **semantic closure test** before drafting: for each term that classifies admissible inputs, supported states, compatibility, identity, safety, failure, or success, verify that user decisions or authoritative repository material can classify plausible boundary cases. If two reasonable readings would change observable output, writes, rejection behavior, scope, or verdict, the term is an unresolved product contract—not delegation.
 
-Produce one Brief at the selected level, never a generated Mission tree. If the semantic closure test exposes an unresolved product contract, or other unresolved user judgment would materially change the destination or make success conditions incompatible, ask one current blocking question per round. Begin drafting only when no user-only decision blocks a coherent verdict; resolve repository-discoverable questions yourself.
+Run a **freeze gate** over every clause that would bind the destination, success meaning, proof obligations, boundaries, non-goals, or execution authority. Trace each clause to an explicit user decision, the user's explicit acceptance of a clearly enumerated summary, or an external contract. Let a faithful paraphrase inherit that provenance only if it neither adds, selects, nor strengthens meaning. Let proportionate, task-normal evidence that directly challenges a confirmed success claim inherit that claim's provenance; treat a new costly, subjective, or external proof obligation as synthesis. Treat recommendations, examples, preferences, critiques, risk hypotheses, proposed solutions, and agent-written summaries as discussion input until the user adopts them. Treat Skill invocation as a request to package confirmed decisions, not as adoption of earlier discussion.
 
-Completion criterion: the commission has one success center, an independently supportable verdict, and a stable boundary within which the executing agent may change route; a fresh executor can classify representative success, boundary, and failure cases without inventing product policy.
+Choose one gate state:
+
+- **READY:** the commission is semantically closed and every binding clause has confirmed provenance. Draft and save without ceremonial reconfirmation.
+- **CONFIRM:** the discussion supports one coherent commission, but faithfully stating it requires a binding clause derived through material agent synthesis—for example, an inferred non-goal, authority boundary, or high-cost evidence obligation. Use this state only when omitting the clause would materially misstate or under-specify the apparent commission; otherwise omit the unadopted material and choose `READY`. Return only a compact freeze summary of what will bind, what remains delegated, and which clauses are synthesized; ask one confirmation question. Produce no Brief yet.
+- **BLOCKED:** multiple materially different commissions remain valid, a required semantic classification is missing, or confirmed requirements conflict. Ask one current blocking decision question. Produce no Brief yet.
+
+Produce one Brief at the selected level, never a generated Mission tree, and resolve repository-discoverable questions yourself. A user confirmation of the freeze summary moves `CONFIRM` to `READY`; it does not confirm anything absent from that summary.
+
+Completion criterion: the gate has one justified state. In `READY`, the commission has one success center, an independently supportable verdict, a stable route-free boundary, and traceable provenance for every binding clause; a fresh executor can classify representative success, boundary, and failure cases without inventing product policy. In `CONFIRM` or `BLOCKED`, this invocation ends after one question and no artifact.
 
 ## 2. Establish the contract
 
@@ -99,7 +107,7 @@ Run two final tests on every clause:
 
 Collapse operational inventories into the principle they serve. Rewrite interface and implementation prescriptions as observable results unless they pass the contract test. Remove repeated intent across `Success`, `Evidence Required`, and `Boundaries`. Treat roughly one page as a pruning signal, not a hard limit.
 
-Save exactly one Mission Brief artifact for this Skill invocation:
+Save exactly one Mission Brief artifact only after the freeze gate reaches `READY`:
 
 - Return it inline when the user requests inline output or file writes are unavailable.
 - Otherwise honor a requested path, then an established repository convention, then default to `docs/mission-briefs/<outcome-slug>.md` at the relevant repository or package documentation boundary.
