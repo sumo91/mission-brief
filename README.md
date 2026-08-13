@@ -130,6 +130,6 @@ Skill 不追求让每份 Brief 第一次生成就完美。更重要的是让重�
 git log --oneline
 ```
 
-初始默认 Skill 已归档在提交 `b6ec2fc`。需要回退时，从目标提交恢复 `SKILL.md` 与 `EVALS.md`，再按上文只同步 `SKILL.md` 到安装目录。
+初始默认 Skill 已归档在提交 `82d40de`。需要回退时，从目标提交恢复 `SKILL.md` 与 `EVALS.md`，再按上文只同步 `SKILL.md` 到安装目录。
 
 评估产物和临时 fixture 放在工作区外的临时目录，不提交到本仓库。
