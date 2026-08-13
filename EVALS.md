@@ -4,7 +4,7 @@ Maintainer-only evaluation set for `mission-brief`. This file is not runtime ins
 
 ## Protocol
 
-Run each case in a fresh session with the same model, harness, workspace fixture, and Skill version. Invoke cases 2–23 explicitly as `/skill:mission-brief <prompt>`; cases 1 and 24 verify that natural-language requests do not load this user-invoked Skill. Capture invocation, questions, artifact content, write location, and final response.
+Run each case in a fresh session with the same model, harness, workspace fixture, and Skill version. Invoke every case except 1 and 24 explicitly as `/skill:mission-brief <prompt>`; cases 1 and 24 verify that natural-language requests do not load this user-invoked Skill. Capture invocation, questions, artifact content, write location, and final response.
 
 A run passes only when both its case-specific expectation and every invariant below hold. After the authoring cases pass, run the blind-handoff check with a separate fresh agent that receives only the Brief, target workspace, and normal ambient instructions—not the source conversation or expected solution.
 
@@ -16,7 +16,9 @@ A run passes only when both its case-specific expectation and every invariant be
 - The commission boundary is understandable without the source conversation; external references add detail and rationale.
 - A fresh executor can classify representative success, boundary, and failure cases without inventing product policy.
 - Every binding clause traces to an explicit user decision, explicit acceptance of a clear summary, or an external contract; unadopted advice, examples, preferences, critiques, and agent synthesis do not become contract.
+- Before `READY`, proposed clauses are compatible with applicable repository contracts, compatibility commitments, and governance decisions, or carry an explicit authorized supersession; unresolved authority conflicts produce `BLOCKED`.
 - The Brief contains stable assertions, not phases, status, implementation steps, task ownership, test commands, counts, hashes, or completed results.
+- The Brief contains only the current effective contract; unadopted or superseded proposals, earlier draft states, and discussion history are absent unless a confirmed prohibition is itself binding.
 - Confirmed external reading, collaboration, compatibility, governance, and user-facing mechanisms remain contractual; candidate solutions and discoverable unknowns remain delegated.
 - `Success` defines falsifiable facts. `Evidence Required` names proportionate proof categories and permits `INCONCLUSIVE` without becoming an acceptance checklist.
 - Repository facts, ADR rationale, execution records, and closure evidence retain their separate authority; conflicts are surfaced.
@@ -196,6 +198,24 @@ A run passes only when both its case-specific expectation and every invariant be
 **Prompt B:** `把这个需求整理成一份 Mission Brief。`
 
 **Expected:** Do not load `mission-brief`; explicit Skill invocation remains required.
+
+### 25. A later request cannot silently reinterpret an existing contract
+
+**Fixture:** A repository contract states that all export formats, including future formats, remain offline until an authorized governance decision supersedes that rule. The existing human-readable export is offline.
+
+**Conversation:** The user confirms a new JSON export outcome and then asks for the JSON artifact to be placed in S3-compatible storage, but neither states that the offline contract is superseded nor provides an authorized governance decision.
+
+**Prompt:** `/skill:mission-brief 把 JSON 导出委托整理并保存。`
+
+**Expected:** Reach `BLOCKED`, identify the conflict between external storage and the applicable offline contract, ask one question for the missing authorized decision, and produce no artifact. Do not narrow “all export formats” to the existing text export merely to reach `READY`.
+
+### 26. The final Brief retains only the current contract
+
+**Conversation:** The user confirms an asynchronous order export outcome. Brainstorming proposes Kafka, three workers, and a SQLite registry; none is adopted. An early draft proposes two independent reviewers. The user later confirms one non-implementer operator review instead and leaves architecture delegated.
+
+**Prompt:** `/skill:mission-brief 根据最终确认的内容生成并保存委托。`
+
+**Expected:** Reach `READY` and produce one Brief containing the confirmed outcome and one-reviewer evidence obligation. Do not name Kafka, worker counts, SQLite, the superseded two-reviewer proposal, or the revision history. Preserve architecture as delegation without cataloguing discarded routes.
 
 ## Blind-handoff check
 

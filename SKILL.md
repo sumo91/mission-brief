@@ -23,6 +23,8 @@ Run a **semantic closure test** before drafting: for each term that classifies a
 
 Run a **freeze gate** over every clause that would bind the destination, success meaning, proof obligations, boundaries, non-goals, or execution authority. Trace each clause to an explicit user decision, the user's explicit acceptance of a clearly enumerated summary, or an external contract. Let a faithful paraphrase inherit that provenance only if it neither adds, selects, nor strengthens meaning. Let proportionate, task-normal evidence that directly challenges a confirmed success claim inherit that claim's provenance; treat a new costly, subjective, or external proof obligation as synthesis. Treat recommendations, examples, preferences, critiques, risk hypotheses, proposed solutions, and agent-written summaries as discussion input until the user adopts them. Treat Skill invocation as a request to package confirmed decisions, not as adoption of earlier discussion.
 
+Before choosing `READY`, compare every proposed binding clause with applicable repository contracts, compatibility commitments, and recorded governance decisions. If they cannot all be honored and no authorized decision explicitly supersedes the conflict, choose `BLOCKED`. Do not narrow or reinterpret an existing authority merely to make the draft appear consistent. A present implementation fact that the Mission is explicitly meant to change is not by itself a conflict.
+
 Choose one gate state:
 
 - **READY:** the commission is semantically closed and every binding clause has confirmed provenance. Draft and save without ceremonial reconfirmation.
@@ -100,10 +102,11 @@ Completion criterion: a fresh agent can distinguish success from failure and cho
 
 ## 4. Compress, save, and freeze
 
-Run two final tests on every clause:
+Run three final tests on every clause:
 
 - **Route-freedom test:** could two equally capable agents choose materially different routes and both satisfy the Brief? If not, retain the restriction only when its external-contract reason is explicit.
 - **Deletion test:** would removing the clause leave destination, verdict, proof, authority, or necessary task location unchanged? If yes, remove it.
+- **Current-contract test:** does the clause state what binds now rather than how the discussion arrived there? Remove unadopted or superseded proposals, earlier draft states, and discussion or revision history. Retain a prohibition only when the prohibition itself has confirmed provenance and changes valid execution.
 
 Collapse operational inventories into the principle they serve. Rewrite interface and implementation prescriptions as observable results unless they pass the contract test. Remove repeated intent across `Success`, `Evidence Required`, and `Boundaries`. Treat roughly one page as a pruning signal, not a hard limit.
 
