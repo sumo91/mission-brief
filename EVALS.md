@@ -4,7 +4,7 @@ Maintainer-only evaluation set for `mission-brief`. This file is not runtime ins
 
 ## Protocol
 
-Run each case in a fresh session with the same model, harness, workspace fixture, and Skill version. Invoke cases 2–17 explicitly as `/skill:mission-brief <prompt>`; cases 1 and 18 verify that natural-language requests do not load this user-invoked Skill. Capture invocation, questions, artifact content, write location, and final response.
+Run each case in a fresh session with the same model, harness, workspace fixture, and Skill version. Invoke cases 2–19 explicitly as `/skill:mission-brief <prompt>`; cases 1 and 20 verify that natural-language requests do not load this user-invoked Skill. Capture invocation, questions, artifact content, write location, and final response.
 
 A run passes only when both its case-specific expectation and every invariant below hold. After the authoring cases pass, run the blind-handoff check with a separate fresh agent that receives only the Brief, target workspace, and normal ambient instructions—not the source conversation or expected solution.
 
@@ -14,6 +14,7 @@ A run passes only when both its case-specific expectation and every invariant be
 - One coherent reality change supports one independently honest verdict; implementation units do not become Missions.
 - Exactly one Brief is produced when the commission is ready. A user-only blocker produces one current question and no premature artifact.
 - The commission boundary is understandable without the source conversation; external references add detail and rationale.
+- A fresh executor can classify representative success, boundary, and failure cases without inventing product policy.
 - The Brief contains stable assertions, not phases, status, implementation steps, task ownership, test commands, counts, hashes, or completed results.
 - Confirmed external reading, collaboration, compatibility, governance, and user-facing mechanisms remain contractual; candidate solutions and discoverable unknowns remain delegated.
 - `Success` defines falsifiable facts. `Evidence Required` names proportionate proof categories and permits `INCONCLUSIVE` without becoming an acceptance checklist.
@@ -129,13 +130,29 @@ A run passes only when both its case-specific expectation and every invariant be
 
 **Expected:** Ask no clarification question. Leave location, framework, and internal design delegated.
 
-### 17. Parent Mission retains integration value
+### 17. Undefined validity blocks drafting
+
+**Fixture:** A repository contains sample schema-v1 session records and a migration contract that names the source version and target transform but does not define valid source field types, extra-field policy, or identifier uniqueness.
+
+**Prompt:** `/skill:mission-brief 将所有合法 schema-v1 session 迁移成 schema-v2；非法记录必须整体拒绝，不能产生部分目标。`
+
+**Expected:** Ask one current blocking question about the authoritative validity contract and produce no Brief. Do not let the executing agent invent which records are legal.
+
+### 18. Defined validity does not trigger clarification
+
+**Fixture:** A repository contract defines every required schema-v1 field and type, identifier uniqueness, and that unknown fields are valid but omitted from the schema-v2 projection.
+
+**Prompt:** `/skill:mission-brief 将所有合法 schema-v1 session 迁移成 schema-v2；非法记录必须整体拒绝，不能产生部分目标。`
+
+**Expected:** Ask no clarification question. Preserve the repository's validity and projection policy in the result contract while delegating validation and publication mechanics.
+
+### 19. Parent Mission retains integration value
 
 **Prompt:** Provide three independently useful simulation capabilities plus the claim that users can combine them into a sustained, comprehensible 45-minute sandbox experience; invoke the Skill for the parent commission.
 
 **Expected:** Produce one parent Brief centered on the irreducible integrated experience and its evidence. Do not emit child Briefs or treat child completion as sufficient proof.
 
-### 18. Natural-language handoff or brief wording does not auto-invoke
+### 20. Natural-language handoff or brief wording does not auto-invoke
 
 **Prompt A:** `把当前工作整理成 Handoff，方便另一个 Agent 继续。`
 

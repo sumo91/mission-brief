@@ -19,9 +19,11 @@ Define one Mission as one coherent change in user or system reality that can rec
 - **Too narrow:** success means only that a file, class, field, test, or other implementation unit exists, or several proposed Missions share one verdict and evidence set. Treat these as execution work under one Mission.
 - **Same commission:** implementation iterations, debugging, UI polish, and newly found defects stay under the existing Brief while destination, success, proof obligations, boundaries, and authority remain unchanged.
 
-Produce one Brief at the selected level, never a generated Mission tree. If unresolved user judgment would materially change the destination or make success conditions incompatible, ask one current blocking question per round. Begin drafting only when no user-only decision blocks a coherent verdict; resolve repository-discoverable questions yourself.
+Run a **semantic closure test** before drafting: for each term that classifies admissible inputs, supported states, compatibility, identity, safety, failure, or success, verify that user decisions or authoritative repository material can classify plausible boundary cases. If two reasonable readings would change observable output, writes, rejection behavior, scope, or verdict, the term is an unresolved product contract—not delegation.
 
-Completion criterion: the commission has one success center, an independently supportable verdict, and a stable boundary within which the executing agent may change route.
+Produce one Brief at the selected level, never a generated Mission tree. If the semantic closure test exposes an unresolved product contract, or other unresolved user judgment would materially change the destination or make success conditions incompatible, ask one current blocking question per round. Begin drafting only when no user-only decision blocks a coherent verdict; resolve repository-discoverable questions yourself.
+
+Completion criterion: the commission has one success center, an independently supportable verdict, and a stable boundary within which the executing agent may change route; a fresh executor can classify representative success, boundary, and failure cases without inventing product policy.
 
 ## 2. Establish the contract
 
