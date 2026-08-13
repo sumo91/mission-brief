@@ -106,7 +106,7 @@ Run three final tests on every clause:
 
 - **Route-freedom test:** could two equally capable agents choose materially different routes and both satisfy the Brief? If not, retain the restriction only when its external-contract reason is explicit.
 - **Deletion test:** would removing the clause leave destination, verdict, proof, authority, or necessary task location unchanged? If yes, remove it.
-- **Current-contract test:** does the clause state what binds now rather than how the discussion arrived there? Remove unadopted or superseded proposals, earlier draft states, and discussion or revision history. Retain a prohibition only when the prohibition itself has confirmed provenance and changes valid execution.
+- **Current-contract test:** does the clause state only what binds now? Express delegated choices as open decision domains—for example, `Storage and indexing remain delegated.` Name a specific exclusion only when that exclusion itself has confirmed provenance and changes valid execution. Omit candidate, rejected, or superseded routes, earlier draft states, and discussion or revision history.
 
 Collapse operational inventories into the principle they serve. Rewrite interface and implementation prescriptions as observable results unless they pass the contract test. Remove repeated intent across `Success`, `Evidence Required`, and `Boundaries`. Treat roughly one page as a pruning signal, not a hard limit.
 
