@@ -23,38 +23,34 @@
 
 ## 安装
 
-运行时**只安装 `SKILL.md`**。不要把 `README.md`、`EVALS.md` 或 `examples/` 拷进 Skill 目录，以免评估用例被当成运行时指令。
+面向 Codex、Claude Code 等兼容 Agent Skills 的环境。运行时**只安装 `SKILL.md`**。不要把 `README.md`、`EVALS.md` 或 `examples/` 拷进 Skill 目录，以免评估用例被当成运行时指令。
 
 安装目录名必须是 `mission-brief`，与 Skill 的 `name` 一致。
-
-### Cursor / Agent Skills（推荐）
 
 **当前项目可用：**
 
 ```sh
-mkdir -p .cursor/skills/mission-brief
-cp SKILL.md .cursor/skills/mission-brief/SKILL.md
+mkdir -p .agents/skills/mission-brief
+cp SKILL.md .agents/skills/mission-brief/SKILL.md
 ```
 
 **本机所有项目可用：**
 
 ```sh
-mkdir -p ~/.cursor/skills/mission-brief
-cp SKILL.md ~/.cursor/skills/mission-brief/SKILL.md
+mkdir -p ~/.agents/skills/mission-brief
+cp SKILL.md ~/.agents/skills/mission-brief/SKILL.md
 ```
 
 Windows PowerShell：
 
 ```powershell
-New-Item -ItemType Directory -Force "$HOME\.cursor\skills\mission-brief" | Out-Null
-Copy-Item SKILL.md "$HOME\.cursor\skills\mission-brief\SKILL.md"
+New-Item -ItemType Directory -Force "$HOME\.agents\skills\mission-brief" | Out-Null
+Copy-Item SKILL.md "$HOME\.agents\skills\mission-brief\SKILL.md"
 ```
-
-Cursor 也会从 `.agents/skills/`、`~/.agents/skills/`，以及 Claude / Codex 的 skills 目录发现 Skill。把上面的 `.cursor/skills` 换成对应路径即可。
 
 ### 验证
 
-安装后，Skill 目录里应当只有 `SKILL.md`。在 Cursor 中打开 **Customize → Skills**，应能看到 `mission-brief`。
+安装后，Skill 目录里应当只有 `SKILL.md`。新开对话后应能通过 `/mission-brief` 显式调用。
 
 ## 调用
 
