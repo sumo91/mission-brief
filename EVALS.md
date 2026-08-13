@@ -1,116 +1,156 @@
 # Mission Brief regression evals
 
-Maintainer-only evaluation set for `mission-brief`. This file is not runtime instruction and should not be loaded while producing a brief.
+Maintainer-only evaluation set for `mission-brief`. This file is not runtime instruction and must not be loaded while producing a brief.
 
 ## Protocol
 
-Run each case in a fresh session with the same model, harness, workspace fixture, and Skill version. Invoke cases 2–12 explicitly as `/skill:mission-brief <prompt>`; cases 1 and 13 verify that natural-language requests do not load this user-invoked Skill. Capture invocation, artifact content, write location, and final response. When tuning the Skill, change one instruction group at a time and rerun all cases.
+Run each case in a fresh session with the same model, harness, workspace fixture, and Skill version. Invoke cases 2–17 explicitly as `/skill:mission-brief <prompt>`; cases 1 and 18 verify that natural-language requests do not load this user-invoked Skill. Capture invocation, questions, artifact content, write location, and final response.
 
-A run passes only when both its case-specific expectation and every invariant below hold.
+A run passes only when both its case-specific expectation and every invariant below hold. After the authoring cases pass, run the blind-handoff check with a separate fresh agent that receives only the Brief, target workspace, and normal ambient instructions—not the source conversation or expected solution.
 
 ## Global invariants
 
-- The Skill triggers only for preparing a commission for another agent.
-- Exactly one brief is produced, inline or at the expected path.
-- A fresh agent can identify the target, outcome, boundaries, authority, and credible completion evidence.
-- The brief contains assertions rather than phases, implementation steps, tasks, or checkboxes.
-- Proposed solutions and discoverable unknowns remain delegated unless the user or an external contract makes them binding.
-- Evidence challenges the delivered outcome through task-appropriate signals; visible tests are not treated as the complete definition of success.
-- Authoritative repository material is referenced with only its delivery consequence summarized.
-- The artifact is materially shorter and clearer than its source discussion without losing confirmed intent.
+- The Skill triggers only through explicit user invocation and prepares a commission for another agent.
+- One coherent reality change supports one independently honest verdict; implementation units do not become Missions.
+- Exactly one Brief is produced when the commission is ready. A user-only blocker produces one current question and no premature artifact.
+- The commission boundary is understandable without the source conversation; external references add detail and rationale.
+- The Brief contains stable assertions, not phases, status, implementation steps, task ownership, test commands, counts, hashes, or completed results.
+- Confirmed external reading, collaboration, compatibility, governance, and user-facing mechanisms remain contractual; candidate solutions and discoverable unknowns remain delegated.
+- `Success` defines falsifiable facts. `Evidence Required` names proportionate proof categories and permits `INCONCLUSIVE` without becoming an acceptance checklist.
+- Repository facts, ADR rationale, execution records, and closure evidence retain their separate authority; conflicts are surfaced.
+- A working plan, implementation ledger, QA artifact, or Closure Report may coexist with the Brief but cannot redefine it.
+- The artifact is materially shorter and clearer than its source discussion, and two capable agents retain room to choose different valid routes.
 
 ## Cases
 
-### 1. Ordinary implementation request does not trigger
+### 1. Ordinary implementation does not trigger
 
 **Prompt:** `修复登录页在 Safari 下无法提交的问题，并运行相关测试。`
 
-**Expected:** The agent performs the requested work normally. It does not create a Mission Brief.
+**Expected:** Perform the work normally. Do not load the Skill or create a Brief.
 
-### 2. Small bug commission stays small
+### 2. Small observable commission stays small
 
-**Prompt:** `不要现在修。整理成一份可以直接交给另一个 Agent 的委托：Safari 下登录表单按回车没有提交，Chrome 正常；不能改变鼠标点击提交的行为。`
+**Prompt:** `不要现在修。/skill:mission-brief Safari 下登录表单按回车没有提交，Chrome 正常；鼠标点击提交行为必须保持不变。`
 
-**Expected:** A compact brief describes the observable regression, compatibility boundary, and representative verification. It does not invent architecture or expand into a general form rewrite.
+**Expected:** Produce a compact result contract for the observable regression and compatibility boundary. Do not expand it into a form architecture or general rewrite.
 
-### 3. Complex capability does not become an implicit task list
+### 3. Internal work item is not promoted into a Mission
 
-**Prompt:** Provide a long discussion of a competitor-research capability containing user outcomes, examples of research topics, suggested worker lanes, possible registry fields, existing workflow boundaries, and several candidate architectures; ask for an agent-ready Mission Brief.
+**Prompt:** `/skill:mission-brief 新增一个 LoginSubmissionCoordinator 类，并给它加三个测试。`
 
-**Expected:** Durable research behavior, evidence provenance, workflow boundaries, and explicitly confirmed mechanisms remain. Lane taxonomies, registry field inventories, orchestration topology, and candidate architecture are compressed into principles or delegated decisions unless explicitly fixed.
+**Expected:** Ask one question about the user/system outcome or explain that the input is execution work under an existing Mission. Do not manufacture a result contract around file and test existence.
 
-### 4. Explicit architecture decision remains binding
+### 4. Complex capability remains route-free
 
-**Prompt:** `生成 Mission Brief。由于现有审计合同明确要求所有付款事件写入 PostgreSQL，必须继续使用 PostgreSQL；缓存可以考虑 Redis，但我没有决定。`
+**Prompt:** Provide a long discussion of a competitor-research capability containing confirmed user outcomes, provenance requirements, suggested worker lanes, possible registry fields, existing workflow boundaries, and several candidate architectures; invoke the Skill.
 
-**Expected:** PostgreSQL appears as a constraint with its rationale. Redis appears only as a preference or delegated option.
+**Expected:** Preserve the observable research result, evidence integrity, and workflow boundaries. Compress lanes, registries, orchestration, and candidate architecture into decision principles or delegation.
 
-### 5. Examples do not become an exhaustive taxonomy
+### 5. Explicit architecture contract remains binding
 
-**Prompt:** `准备一份 Agent 委托。导出能力需要支持订单，未来可能还有退款、发票、订阅等对象；这次确认只交付订单导出。`
+**Prompt:** `/skill:mission-brief 现有审计合同要求所有付款事件写入 PostgreSQL，必须继续使用；缓存可以考虑 Redis，但尚未决定。`
 
-**Expected:** Order export is the outcome. Other objects define scope context or non-goals, not required behaviors to implement.
+**Expected:** Keep PostgreSQL as a boundary with its external-contract reason. Leave Redis delegated.
 
-### 6. Tests remain evidence
+### 6. Confirmed collaboration mechanism is not misclassified
 
-**Prompt:** `整理成 Mission Brief：修复金额舍入错误。仓库里现有测试只覆盖 1.005 和 2.675，但正确行为必须适用于所有合法两位小数金额。`
+**Prompt:** `/skill:mission-brief 新策划案必须以设计地图作为第一阅读入口；规则锚点必须稳定、可见、可复制；具体 Markdown 结构和锚点语法由执行者决定。`
 
-**Expected:** Evidence includes representative and boundary coverage without defining the implementation around the two visible cases.
+**Expected:** Preserve the reading entry and anchor properties as success or boundary contracts. Delegate document topology and syntax.
 
-### 7. Authoritative artifacts are referenced
+### 7. Examples do not become a taxonomy
 
-**Fixture:** A repository contains `AGENTS.md` and `docs/contracts/payments.md` with detailed established rules.
+**Prompt:** `/skill:mission-brief 导出能力本次只交付订单；退款、发票、订阅只是未来可能支持的例子。`
 
-**Prompt:** `根据我们刚才的支付重试讨论生成 Mission Brief，已有仓库合同继续有效。`
+**Expected:** Make order export the outcome. Treat other objects as context or non-goals, not required behaviors.
 
-**Expected:** The brief points to both authoritative artifacts and summarizes only consequences relevant to the commission. It does not reproduce either document.
+### 8. Evidence covers the claim, not visible tests
 
-### 8. Inline output writes no file
+**Prompt:** `/skill:mission-brief 修复金额舍入错误。现有测试只覆盖 1.005 和 2.675，但正确行为适用于全部合法两位小数金额。`
 
-**Prompt:** `在回复里直接给我 Mission Brief，不要创建文件：为后台列表增加空状态。`
+**Expected:** Require representative and boundary evidence without defining the solution around the two visible cases or naming a test file.
 
-**Expected:** One complete inline brief and no workspace write.
+### 9. Evidence cost is calibrated
 
-### 9. Default path respects repository scope
+**Prompt:** `/skill:mission-brief 给本地 CLI 增加确定性的 --version 输出；失败只影响开发者读取版本号。`
 
-**Fixture:** A monorepo with `packages/billing/docs/`; the commission affects only billing and no existing brief convention is present.
+**Expected:** Require cheap deterministic verification and relevant compatibility evidence. Do not demand independent reviewers, broad human testing, or unrelated end-to-end journeys.
 
-**Prompt:** `为这个 billing 改动准备一份可直接执行的 Mission Brief。`
+### 10. Subjective success receives independent evidence
 
-**Expected:** The artifact is saved under `packages/billing/docs/mission-briefs/<specific-slug>.md`.
+**Prompt:** `/skill:mission-brief 让系统关系图在桌面和手机上成为无需开发者解释即可使用的日常阅读入口。`
 
-### 10. Same commission updates; different commission distinguishes
+**Expected:** Require real viewport and human-readable evidence proportionate to the subjective and cross-device claim while leaving layout and controls delegated.
 
-**Fixture:** `docs/mission-briefs/password-reset-rate-limit.md` already exists.
+### 11. Authority references preserve a self-contained boundary
 
-**Prompt A:** `根据刚确认的限流阈值修订现有密码重置委托。`
+**Fixture:** A repository contains `AGENTS.md`, `docs/contracts/payments.md`, ADRs, and an implementation ledger.
 
-**Expected A:** The existing commission is updated.
+**Prompt:** `/skill:mission-brief 根据刚确认的支付重试讨论准备委托；已有仓库合同继续有效。`
 
-**Prompt B:** `为登录失败限流生成一份 Mission Brief。`
+**Expected:** State the commission boundary without requiring the original discussion, point to authoritative sources for detail, and keep the ledger as progress evidence rather than product authority.
 
-**Expected B:** A separately named brief is created; the password-reset brief is preserved.
+### 12. Inline output writes no file
 
-### 11. Partial intent may trigger one blocker question
+**Prompt:** `/skill:mission-brief 在回复里直接给我，不要创建文件：为后台列表增加明确的空状态。`
 
-**Prompt:** `整理成给 Agent 的委托：我们要更换账户删除行为，但还没决定是立即硬删除还是提供 30 天恢复期。`
+**Expected:** Return one complete inline Brief and make no workspace write.
 
-**Expected:** The Skill triggers despite unsettled intent and asks one focused product question because the alternatives produce materially different outcomes. It does not draft competing implementations.
+### 13. Default path respects repository scope
 
-### 12. Discoverable unknown does not block
+**Fixture:** A monorepo with `packages/billing/docs/`; no existing Brief convention.
 
-**Prompt:** `生成 Mission Brief：让现有 CLI 支持 JSON 输出。具体命令入口和测试框架你让执行 Agent 自己从仓库调查。`
+**Prompt:** `/skill:mission-brief 为 billing 的可观察结果准备委托。`
 
-**Expected:** No clarification question. Command location, internal design, and test framework remain delegated.
+**Expected:** Save under `packages/billing/docs/mission-briefs/<specific-slug>.md`.
 
-### 13. Natural-language handoff or brief requests do not auto-invoke
+### 14. Same commission revises; new outcome distinguishes
+
+**Fixture:** `docs/mission-briefs/password-reset-rate-limit.md` exists.
+
+**Prompt A:** `/skill:mission-brief 根据刚确认的限流阈值修订现有密码重置委托。`
+
+**Expected A:** Update the existing commission and identify the contract change.
+
+**Prompt B:** `/skill:mission-brief 为登录失败限流生成委托。`
+
+**Expected B:** Create a distinct Brief and preserve the password-reset commission.
+
+### 15. Product ambiguity asks one question per round
+
+**Prompt:** `/skill:mission-brief 更换账户删除行为，但尚未决定立即硬删除还是提供 30 天恢复期。`
+
+**Expected:** Ask only the current blocking product question and produce no competing or premature Brief. A later round may ask another blocker if one remains.
+
+### 16. Discoverable unknown does not block
+
+**Prompt:** `/skill:mission-brief 让现有 CLI 支持 JSON 输出。命令入口和测试框架由执行者从仓库调查。`
+
+**Expected:** Ask no clarification question. Leave location, framework, and internal design delegated.
+
+### 17. Parent Mission retains integration value
+
+**Prompt:** Provide three independently useful simulation capabilities plus the claim that users can combine them into a sustained, comprehensible 45-minute sandbox experience; invoke the Skill for the parent commission.
+
+**Expected:** Produce one parent Brief centered on the irreducible integrated experience and its evidence. Do not emit child Briefs or treat child completion as sufficient proof.
+
+### 18. Natural-language handoff or brief wording does not auto-invoke
 
 **Prompt A:** `把当前工作整理成 Handoff，方便另一个 Agent 继续。`
 
 **Prompt B:** `把这个需求整理成一份 Mission Brief。`
 
-**Expected:** `mission-brief` is not loaded for either prompt. The user must invoke `/skill:handoff` or `/skill:mission-brief` explicitly; no model-invoked Skill substitution occurs.
+**Expected:** Do not load `mission-brief`; explicit Skill invocation remains required.
 
-## Review record
+## Blind-handoff check
 
-For each Skill revision, record model and harness versions, cases passed, observed regressions, and the single instruction group changed. Promote a new instruction into `SKILL.md` only after a representative failure demonstrates that the existing Skill does not already produce the desired behavior.
+Give a generated Brief and its target repository to a capable fresh agent. Ask it to restate the commission, identify authority conflicts, propose its own route, and name the evidence needed before a success verdict. The check passes only when it:
+
+- recovers the destination, success meaning, proof obligations, and boundaries without source-chat access;
+- distinguishes repository facts and ADR rationale from the commission and execution record;
+- proposes a viable route not copied from hidden authoring context;
+- identifies when the result would be `INCONCLUSIVE`;
+- requests user input only for genuine contract or approval conflicts.
+
+Record model and harness versions, cases passed, blind-handoff observations, and any regression. Promote a new runtime instruction only when a representative failure shows that the existing Skill does not already produce the intended behavior.
