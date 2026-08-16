@@ -46,6 +46,6 @@
 ## Context
 
 - 仓库：本仓库
-- 配对 Skill：`SKILL.md`、`agents/openai.yaml`、`references/mission-zero.md`
+- 配对 Skill：`mission-brief/`、`mission-review/`
 - 当前维护者行为合同：`EVALS.md`
 - 首个真实审查材料：维护者私有，不随本仓库发布

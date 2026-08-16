@@ -17,7 +17,12 @@
 
 你跟 Agent 讨论完一件事，准备让它动手时，真正需要交接的往往只有这四样。要去哪里，怎样算做成，用什么证明，哪些线不能碰。怎么走，留给现场那个 Agent。
 
-Mission Brief 就是干这个的。它把已经谈定的目标收成一份稳定的任务简报。旁边还有配套的 Mission Review，任务做完后可以另开一次，让独立 Agent 对照简报检查结果有没有兑现。两个都要你手动调用，提一句“Mission Brief”不会自动跑起来。
+这个仓库装的是一对配套 Skill。
+
+- [`mission-brief`](./mission-brief/) 在动手前，把已经谈定的目标收成一份稳定的任务简报
+- [`mission-review`](./mission-review/) 在做完后，让独立 Agent 对照简报检查结果有没有兑现
+
+两个都要手动调用。提一句“Mission Brief”或“帮我 review 一下”不会自动跑起来。
 
 > Specify the destination, proof, and hard boundaries - not the route.
 
@@ -33,15 +38,23 @@ Mission Brief 就是干这个的。它把已经谈定的目标收成一份稳定
 - 涉及兼容、安全、数据写入、外部系统，边界必须写死
 - 你希望做完以后能独立验收，而不是听实现者自报完成
 
-小修小补、当场排错、纯 UI 微调，往往用不着。它也不替你脑暴。需求还没谈清楚时，先用你平时的讨论 Skill；谈定了再来写简报。
+小修小补、当场排错、纯 UI 微调，往往用不着。`mission-brief` 也不替你脑暴。需求还没谈清楚时，先用你平时的讨论 Skill；谈定了再来写简报。
 
 ### 怎么用
 
-下面两种情形最常见。
+常见流程很短。先写简报，再实施，需要时再审查。
+
+```text
+$mission-brief   →  生成 / 修订任务简报
+实施 Agent       →  按简报做事（不必再加载这个 Skill）
+$mission-review  →  独立检查结果是否兑现
+```
+
+下面两种情形最常用来启动 Brief。
 
 #### 1. 你已经知道要做什么
 
-直接跟 Agent 说清楚目标，再调用 Skill，让它写成任务简报。简报满意以后，就可以让它开始实施。
+直接跟 Agent 说清楚目标，再调用 `$mission-brief`，让它写成任务简报。简报满意以后，就可以让它开始实施。
 
 ```text
 你：Safari 里登录表单按回车没反应，Chrome 正常。鼠标点提交必须继续可用，别改成别的交互。
@@ -57,7 +70,7 @@ Mission Brief 就是干这个的。它把已经谈定的目标收成一份稳定
 
 #### 2. 你刚跟别的 Skill 讨论完
 
-很多时候你会先用 grill-me、brainstorming 一类 Skill 把需求谈开。谈完以后，不要把整段脑暴原样丢给执行 Agent。调用 Mission Brief，让它只保留你已经采纳的决定。
+很多时候你会先用 grill-me、brainstorming 一类 Skill 把需求谈开。谈完以后，不要把整段脑暴原样丢给执行 Agent。调用 `$mission-brief`，让它只保留你已经采纳的决定。
 
 ```text
 你：（和 brainstorming / grill-me 讨论完导出能力、审计约束、范围）
@@ -71,21 +84,21 @@ Mission Brief 就是干这个的。它把已经谈定的目标收成一份稳定
 
 ### 目标太多时怎么拆
 
-如果你一次塞进很多彼此独立的结果，Agent 会先帮你看清楚。这是一个整体结果，还是几个可以分别验收的结果。
+如果你一次塞进很多彼此独立的结果，`$mission-brief` 会先帮你看清楚。这是一个整体结果，还是几个可以分别验收的结果。
 
 它可能提议拆成一份大纲型 Mission，管整体接缝和不变量；再拆成若干份逐步推进的 Mission，各自有独立成败。
 
 你也可以主动说“拆开做”。先定拓扑，再分别写 Brief，比硬塞进一份长委托更稳。
 
-### 做完以后
+### 做完以后怎么审查
 
-实施结束后，如果需要独立验收，可以另开对话这样调用。
+实施结束后，另开对话调用 `$mission-review`。最好把采用的 Brief、最终产物和现场证据一起给它。
 
 ```text
-$mission-review 独立审查这个已完成任务是否兑现 Mission。
+你：$mission-review 独立审查这个已完成任务是否兑现 Mission。Brief 在 docs/mission-briefs/...，产物在仓库里。
 ```
 
-Review 只审查和裁决，不会在同一次调用里偷偷把产物修完再改判通过。
+Review 只审查和裁决，不会在同一次调用里偷偷把产物修完再改判通过。结构检查、测试通过、实现者自述，只证明它们实际检查到的内容。
 
 ### 简报里通常有什么
 
@@ -97,66 +110,76 @@ Review 只审查和裁决，不会在同一次调用里偷偷把产物修完再�
 
 ## 给 Agent 读
 
-### 安装
+### 仓库里有什么
 
-面向 Codex、Claude Code 等兼容 Agent Skills 的环境。
+根目录是仓库说明与维护材料。两个运行时 Skill 各自成包，互相对称。
 
-运行时只安装两个最小包。不要把 `README.md`、`docs/`、`EVALS.md`、`evals/` 拷进 Skill 目录。
-
-目录名必须分别是 `mission-brief` 和 `mission-review`。
-
-### 当前项目
-
-```sh
-mkdir -p .agents/skills/mission-brief/agents \
-         .agents/skills/mission-brief/references \
-         .agents/skills/mission-review/agents
-cp SKILL.md .agents/skills/mission-brief/SKILL.md
-cp agents/openai.yaml .agents/skills/mission-brief/agents/openai.yaml
-cp references/mission-zero.md .agents/skills/mission-brief/references/mission-zero.md
-cp mission-review/SKILL.md .agents/skills/mission-review/SKILL.md
-cp mission-review/agents/openai.yaml .agents/skills/mission-review/agents/openai.yaml
+```text
+mission-brief/
+  SKILL.md
+  agents/openai.yaml
+  references/mission-zero.md
+mission-review/
+  SKILL.md
+  agents/openai.yaml
+README.md
+assets/
+docs/                  # 维护材料，不安装
+evals/                 # 维护材料，不安装
+EVALS.md
+LICENSE
 ```
 
-### 本机所有项目
+只把 `mission-brief/` 和 `mission-review/` 拷进 Skills 目录。不要安装 `README.md`、`docs/`、`EVALS.md`、`evals/`、`assets/`。
 
-```sh
-mkdir -p ~/.agents/skills/mission-brief/agents \
-         ~/.agents/skills/mission-brief/references \
-         ~/.agents/skills/mission-review/agents
-cp SKILL.md ~/.agents/skills/mission-brief/SKILL.md
-cp agents/openai.yaml ~/.agents/skills/mission-brief/agents/openai.yaml
-cp references/mission-zero.md ~/.agents/skills/mission-brief/references/mission-zero.md
-cp mission-review/SKILL.md ~/.agents/skills/mission-review/SKILL.md
-cp mission-review/agents/openai.yaml ~/.agents/skills/mission-review/agents/openai.yaml
+### 让 Agent 安装
+
+把下面这句话发给你的 Agent。
+
+```text
+帮我安装这个仓库里的两个 Skill。
+https://github.com/sumo91/mission-brief
+只安装 mission-brief/ 和 mission-review/ 这两个运行时目录。
 ```
 
-### Windows PowerShell
+### 手动安装
+
+**当前项目**
+
+```sh
+mkdir -p .agents/skills
+cp -R mission-brief mission-review .agents/skills/
+```
+
+**本机所有项目**
+
+```sh
+mkdir -p ~/.agents/skills
+cp -R mission-brief mission-review ~/.agents/skills/
+```
+
+**Windows PowerShell**
 
 ```powershell
-$brief = "$HOME\.agents\skills\mission-brief"
-$review = "$HOME\.agents\skills\mission-review"
-New-Item -ItemType Directory -Force "$brief\agents", "$brief\references", "$review\agents" | Out-Null
-Copy-Item SKILL.md "$brief\SKILL.md"
-Copy-Item agents\openai.yaml "$brief\agents\openai.yaml"
-Copy-Item references\mission-zero.md "$brief\references\mission-zero.md"
-Copy-Item mission-review\SKILL.md "$review\SKILL.md"
-Copy-Item mission-review\agents\openai.yaml "$review\agents\openai.yaml"
+$dest = "$HOME\.agents\skills"
+New-Item -ItemType Directory -Force $dest | Out-Null
+Copy-Item -Recurse -Force mission-brief, mission-review $dest
 ```
 
-### 安装后应有的文件
+装好后目录长这样。
 
-`mission-brief` 目录里放这三份。
+```text
+~/.agents/skills/mission-brief/
+  SKILL.md
+  agents/openai.yaml
+  references/mission-zero.md
+~/.agents/skills/mission-review/
+  SKILL.md
+  agents/openai.yaml
+```
 
-- `SKILL.md`
-- `agents/openai.yaml`
-- `references/mission-zero.md`
+目录名必须与各 Skill 的 `name` 一致。新开对话后显式调用 `$mission-brief` 或 `$mission-review`。
 
-`mission-review` 目录里放这两份。
+维护者评估另设 `MISSION_REVIEW_HARNESS_SRC`。评估材料不进入运行时目录。
 
-- `SKILL.md`
-- `agents/openai.yaml`
-
-新开对话后显式调用 `$mission-brief` 或 `$mission-review`。维护者评估另设 `MISSION_REVIEW_HARNESS_SRC`，评估材料不进入运行时目录。
-
-运行时行为以 [`SKILL.md`](./SKILL.md) 与 [`mission-review/SKILL.md`](./mission-review/SKILL.md) 为准。维护者评估见 [`EVALS.md`](./EVALS.md) 与 [`evals/`](./evals/)。
+运行时行为以 [`mission-brief/SKILL.md`](./mission-brief/SKILL.md) 与 [`mission-review/SKILL.md`](./mission-review/SKILL.md) 为准。维护者评估见 [`EVALS.md`](./EVALS.md) 与 [`evals/`](./evals/)。
