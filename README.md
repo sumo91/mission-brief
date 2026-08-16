@@ -1,4 +1,19 @@
-# Mission Brief
+<p align="center">
+  <img src="./assets/readme-cover.svg" alt="Mission Brief" width="100%">
+</p>
+
+<p align="center">
+  <a href="./LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-313131?style=flat-square"></a>
+  <a href="#给人类读"><img alt="Human guide" src="https://img.shields.io/badge/guide-for_humans-2F5D50?style=flat-square"></a>
+  <a href="#给-agent-读"><img alt="Agent install" src="https://img.shields.io/badge/install-for_agents-6B6258?style=flat-square"></a>
+</p>
+
+<p align="center">
+  <a href="#给人类读">给人类读</a> ·
+  <a href="#怎么用">怎么用</a> ·
+  <a href="#给-agent-读">给 Agent 读</a> ·
+  <a href="https://github.com/sumo91/mission-brief/issues">提交问题</a>
+</p>
 
 你跟 Agent 讨论完一件事，准备让它动手时，真正需要交接的往往只有这四样。要去哪里，怎样算做成，用什么证明，哪些线不能碰。怎么走，留给现场那个 Agent。
 

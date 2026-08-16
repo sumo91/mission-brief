@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-labelledby="title desc">
+  <title id="title">Mission Brief</title>
+  <desc id="desc">Stable result contracts for capable agents</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F4F1EA"/>
+      <stop offset="100%" stop-color="#EBE6DC"/>
+    </linearGradient>
+    <pattern id="grain" width="120" height="120" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="18" r="1" fill="#1C1914" opacity="0.035"/>
+      <circle cx="48" cy="62" r="1" fill="#1C1914" opacity="0.03"/>
+      <circle cx="86" cy="28" r="1" fill="#1C1914" opacity="0.04"/>
+      <circle cx="104" cy="90" r="1" fill="#1C1914" opacity="0.03"/>
+      <circle cx="30" cy="100" r="1" fill="#1C1914" opacity="0.025"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="420" rx="28" fill="url(#paper)"/>
+  <rect width="1280" height="420" rx="28" fill="url(#grain)"/>
+  <rect x="1.5" y="1.5" width="1277" height="417" rx="26.5" fill="none" stroke="#D6CFC2" stroke-width="3"/>
+  <text x="72" y="78" fill="#2F5D50" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="2.4">MISSION BRIEF · SKILL PAIR</text>
+  <rect x="72" y="92" width="268" height="3" rx="1.5" fill="#2F5D50"/>
+  <text x="72" y="188" fill="#1C1914" font-family="Segoe UI, PingFang SC, Microsoft YaHei, sans-serif" font-size="72" font-weight="800">任务简报</text>
+  <text x="72" y="248" fill="#2A2620" font-family="Segoe UI, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="500">指定目的地、证明与硬边界，不写路线</text>
+  <g font-family="Segoe UI, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#4A453C">
+    <rect x="72" y="292" width="118" height="42" rx="21" fill="#E3DDD1"/>
+    <text x="131" y="319" text-anchor="middle">结果契约</text>
+    <rect x="204" y="292" width="118" height="42" rx="21" fill="#E3DDD1"/>
+    <text x="263" y="319" text-anchor="middle">手动调用</text>
+    <rect x="336" y="292" width="148" height="42" rx="21" fill="#E3DDD1"/>
+    <text x="410" y="319" text-anchor="middle">Mission Review</text>
+  </g>
+  <rect x="980" y="110" width="200" height="200" rx="28" fill="#F7F4ED" stroke="#2F5D50" stroke-width="4"/>
+  <text x="1080" y="248" text-anchor="middle" fill="#2F5D50" font-family="Segoe UI, PingFang SC, Microsoft YaHei, sans-serif" font-size="120" font-weight="800">简</text>
+  <text x="980" y="352" fill="#7A7367" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="1.8">A RESULT CONTRACT FOR AGENTS</text>
+</svg>
