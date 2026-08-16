@@ -15,9 +15,20 @@
   <a href="https://github.com/sumo91/mission-brief/issues">提交问题</a>
 </p>
 
-你跟 Agent 讨论完一件事，准备让它动手时，真正需要交接的往往只有这四样。要去哪里，怎样算做成，用什么证明，哪些线不能碰。怎么走，留给现场那个 Agent。
+大模型本身越来越强。以前那类强约束、强门禁、把步骤写死的计划 Skill，反而容易把它绑住。OpenAI 在新版模型引导里建议把提示词写瘦，先说清结果和硬限制；Anthropic 也公开说过，他们为更强模型砍掉了八成以上的系统提示词，评估没有明显掉。
 
-这个仓库装的是一对配套 Skill。
+这个仓库就是顺着这个方向做的：给新一代强模型用的任务委托 Skill。它不写具体执行步骤，只把真正该钉住的事说清楚。通常是这六样。
+
+1. 要做成什么
+2. 怎样算做成
+3. 用什么证明
+4. 哪些线不能碰
+5. 这次明确不承诺什么
+6. 什么可以自己做，什么要先问你
+
+怎么走，留给现场那个 Agent。
+
+仓库里是一对配套 Skill。
 
 - [`mission-brief`](./mission-brief/) 在动手前，把已经谈定的目标收成一份稳定的任务简报
 - [`mission-review`](./mission-review/) 在做完后，让独立 Agent 对照简报检查结果有没有兑现
@@ -102,9 +113,9 @@ Review 只审查和裁决，不会在同一次调用里偷偷把产物修完再�
 
 ### 简报里通常有什么
 
-一份 Brief 尽量短。常见字段是 Outcome（最后变成可能或真实的事情）、Success（怎样区分做成了和看起来像做成了）、Evidence Required（用什么证据挑战这个结果）、Boundaries（哪些硬边界会改变合法执行）。
+和上面那六样对应。核心一般是 Outcome、Success、Evidence Required、Boundaries；需要时再写 Non-goals 和 Execution Authority。Intent、Context 只在确有信息时补上。
 
-需要时再加 Intent、Non-goals、Context、Execution Authority。路线、阶段、测试命令、提交号不属于 Brief。
+路线、阶段、测试命令、提交号不属于 Brief。
 
 ---
 
