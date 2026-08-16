@@ -1,0 +1,30 @@
+{
+  "case_id": "mr-004-faithful-delivery",
+  "captured_at": "2026-08-16",
+  "files": [
+    {
+      "path": "mission.md",
+      "sha256": "986029ee0722896b0a8cc2ab0fb760cf26631f0b921f72d764e944905858d5ad"
+    },
+    {
+      "path": "review-request.md",
+      "sha256": "c1bf24a2a3bbb9ef4869af21da6cd1664db8040399bd6b6a306084955658d949"
+    },
+    {
+      "path": "implementer-note.md",
+      "sha256": "e04c39ea513a2643481feff15c4ea156f2c8a63121cfd2a8d27199eb9e0782db"
+    },
+    {
+      "path": "bin/export-cli",
+      "sha256": "0259c8bbbfe6b4808f2136ce3316bc16c7c5b068bf368b184f206ae495b8280a"
+    },
+    {
+      "path": "evidence/postgres-audit.sql",
+      "sha256": "9a37d38b66b1a56b438ae30ccd29e826c0a87173bab81c0b7f759ceeda9a8cc4"
+    },
+    {
+      "path": "evidence/postgres-query.txt",
+      "sha256": "766bb1f61b7a84f1e0b344eb5d4acd483376fed7772abb039c846e14e81cd6b0"
+    }
+  ]
+}

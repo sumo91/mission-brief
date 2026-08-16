@@ -1,0 +1,7 @@
+{
+  "name": "mission-review-guide-fixture",
+  "private": true,
+  "scripts": {
+    "preview": "node scripts/preview.mjs"
+  }
+}

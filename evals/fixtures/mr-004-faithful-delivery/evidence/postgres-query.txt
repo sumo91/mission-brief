@@ -1,0 +1,5 @@
+$ psql --no-psqlrc --dbname=mission_ops --command="SELECT export_id, state, reason FROM export_audit WHERE export_id = 'exp-42';"
+ export_id |  state  |      reason
+-----------+---------+-------------------
+ exp-42    | stopped | permission denied
+(1 row)

@@ -1,0 +1,35 @@
+{
+  "case_id": "mr-005-guide-journey",
+  "captured_at": "2026-08-16",
+  "source_revision": "bcdd50903b0120d2aea5e06157925a39bdc29df4",
+  "files": [
+    {
+      "path": "mission.md",
+      "sha256": "beb2e8c01705700e94d348e028e220b970398ffbdd9dd08e7823fbdeb2d0cf60"
+    },
+    {
+      "path": "guide.md",
+      "sha256": "6790910cf26fac6e943e32d1570129add02f87103b9dd5cdd846dd0dfd36baf8"
+    },
+    {
+      "path": "acceptance-original.md",
+      "sha256": "32ddee345950c94c1fa43fd0bc99edb2b289aad7c28f1699971e62036c33a8c9"
+    },
+    {
+      "path": "review-request.md",
+      "sha256": "ddbfebdef8487333571244e2ab4cadac76577d23e5532c641d0d1609b6d0a02e"
+    },
+    {
+      "path": "sample-site/package.json",
+      "sha256": "ab0834703bc5e808c58930bb732af76911ba876b1515ee32d304bc6ea1903e9c"
+    },
+    {
+      "path": "sample-site/scripts/preview.mjs",
+      "sha256": "2ac486fbe458e8def3ee87bf6c26355c9e1f254a8ae2cb9a9da89282ae574787"
+    },
+    {
+      "path": "sample-site/dist/index.html",
+      "sha256": "2c111a833c2abcadfaf75edc5376d32b0f47ccfbd3cc1347dbaef346a28b585c"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Mission Brief"
+  short_description: "Freeze one stable result contract for a fresh agent"
+  default_prompt: "Use $mission-brief to freeze this request into one stable result contract."
+policy:
+  allow_implicit_invocation: false

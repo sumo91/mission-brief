@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ "$#" -ne 1 ]; then
+  printf 'usage: export-cli EXPORT_ID\n' >&2
+  exit 64
+fi
+
+if [ "$1" = "exp-42" ]; then
+  printf 'export exp-42 stopped: permission denied\n' >&2
+  exit 17
+fi
+
+printf 'export %s completed\n' "$1"

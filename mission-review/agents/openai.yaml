@@ -1,0 +1,6 @@
+interface:
+  display_name: "Mission Review"
+  short_description: "Verify delivered outcomes against a Mission"
+  default_prompt: "Use $mission-review to independently verify whether this completed Mission delivered its promised result."
+policy:
+  allow_implicit_invocation: false

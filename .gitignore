@@ -1,3 +1,6 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Local evaluation evidence archives are reproducible but intentionally not cloned.
+evals/runs/

@@ -1,131 +1,159 @@
-# Mission Brief
+# Mission Brief + Mission Review
 
-面向高能力执行 Agent 的稳定结果契约：定义目的地、成功含义、证明要求与硬边界，把实现路线留给拥有最新现场上下文的 Agent。
+这是一对配套、手动调用的 Agent Skills：
+
+- `mission-brief` 把已经采用的委托压缩成稳定的结果契约，交给拥有最新现场上下文的执行 Agent；
+- `mission-review` 在任务完成后，由独立 Agent 亲自检查最终产物和实质证据，判断结果合同是否兑现。
+
+两者共享同一个中心思想：
 
 > Specify the destination, proof, and hard boundaries—not the route.
 
-本仓库是 `mission-brief` Skill。运行时行为以 [`SKILL.md`](./SKILL.md) 为唯一真源。
+本仓库同时保存两项运行时 Skill、Mission 0 引用、维护者评估和真实回归材料。维护者文件不进入运行时安装目录。
 
-## 它做什么
+## 核心行为
 
-在讨论和关键产品决策基本结束后，把已经确认的委托压缩成一份 Brief。新 Agent 不读原始对话，也能判断成败、证明义务和硬边界。
+`mission-brief` 先选择一个能够独立判断成败的用户或系统结果，再判断合同是否已经充分明确：
 
-它**只生成或修订一份 Mission Brief，不实施委托内容**。
+- 没有可观察结果时，先定位真正应发生的变化。
+- 一个结果无论多复杂，都可以直接形成一个 Brief。
+- 多个独立结果默认分别立项。
+- 用户已经提出、正在考虑或已经采用一个“局部都通过后仍可能失败”的整体结果时，进入 Mission 0 先把候选拓扑讲清楚；只有采用后才写父级 Brief。
+- 会改变结果、证据、边界或授权的决定尚未作出时，先展示需要决定的内容，不写 Brief。
 
-适合：
+一份 Brief 只保留：
 
-- 长期、复杂或跨上下文的任务
-- 容易发生目标、范围或权威漂移的任务
-- 涉及兼容性、安全、治理、数据或外部写入的任务
-- 需要独立证据和可审查最终结论的任务
+- `Outcome`：最终成为可能或真实的事情；
+- `Success`：区分成功和相似失败的事实；
+- `Evidence Required`：能够挑战真实结果的证据；
+- `Boundaries`：会改变合法执行的硬边界；
+- 确有信息时才增加 `Intent`、`Non-goals`、`Context` 或 `Execution Authority`。
 
-普通小修复、排错、实现迭代和 UI 微调，如果没有改变可观察结果、成功语义、证明义务、边界或授权，不需要新建 Mission Brief。它也不替代 brainstorming、grilling、需求讨论或产品决策。
+绑定内容必须忠实于用户采用的决定和适用权威。讨论、例子、批评、风险猜测和候选方案不会自动进入合同。产品中立的架构、工具和实现路线留给执行 Agent。
 
-## 安装
+## Evidence
 
-面向 Codex、Claude Code 等兼容 Agent Skills 的环境。运行时**只安装 `SKILL.md`**。不要把 `README.md`、`EVALS.md` 或 `examples/` 拷进 Skill 目录，以免评估用例被当成运行时指令。
+证据应直接挑战 Mission 承诺的结果，不能用方便的代理指标替代。例如页面可加载、字段存在和自动化通过，只能证明它们实际检查的行为；如果结果是“读者能快速理解并追溯证据”，执行 Agent 还需要实际完成代表性的阅读与追证任务。
 
-安装目录名必须是 `mission-brief`，与 Skill 的 `name` 一致。
+验证默认由 Agent 完成。只有 Agent 无法真实提供的人类决定或体验，才保留给人类。最终证据应允许诚实得出 `PASSED`、`FAILED` 或 `INCONCLUSIVE`。
+
+## Mission Review
+
+`mission-review` 从已采用的 Mission Brief 或等效权威合同恢复结果、证明义务、硬边界和授权条件，然后检查实际交付物：
+
+- 亲自执行当前环境中可做的合理验证，不把常规审查转交给用户；
+- 只按检查真实覆盖的行为采信自动化、截图、结构检查和实现者报告；
+- 接受自然措辞、必要语义和合同留给执行阶段的路线自由；
+- 只有实质结果、证据、边界或权威条件未满足时才判 `FAILED`；
+- 决定性事实在可行检查后仍不可取得时判 `INCONCLUSIVE`；
+- 先给审查结论，不在审查过程中静默修复产物或重写 Mission。
+
+当独立 child Agent 能减少实现上下文偏差或真正模拟读者任务时，可以使用；它提供待核对的观察，不替代主审查者判断，也不能冒充合同指定的人类授权。
+
+## Mission 0
+
+[`references/mission-zero.md`](./references/mission-zero.md) 只在存在已采用或待确认的整体集成结果，或后来为该 Mission 0 创建 child Mission 时读取。
+
+Mission 0 拥有：
+
+- 不可约的整体结果；
+- 跨结果不变量；
+- 能挑战接缝的证据；
+- 项目级边界；
+- 简洁的结果边界。
+
+它不复制 child 的局部成功条件、测试清单、实施顺序或详细合同。省略的已确认 child 合同需要由持久权威来源保存，否则留到对应 child 立项时重新确认。
+
+## 文档职责
+
+| 载体 | 职责 |
+|---|---|
+| Mission Brief | 结果、成功语义、证明义务、硬边界与授权变化 |
+| Working Plan / Implementation Ledger | 路线、进度、发现和中间证据 |
+| Closure Review | 实际证据、反证、裁决和不确定性 |
+
+后两者可以演进，但不能静默改写 Mission Brief。
+
+## 调用
+
+两项 Skill 都是手动调用型，不因普通请求或自然语言提及自动触发：
+
+```text
+$mission-brief 根据刚才采用的决定生成最终委托。
+$mission-review 独立审查这个已完成任务是否兑现 Mission。
+```
+
+`mission-brief` 只形成委托，不实施委托内容；`mission-review` 只审查和裁决，不在同一委托中修复结果。
+
+## 仓库结构
+
+- [`SKILL.md`](./SKILL.md)：普通运行路径。
+- [`agents/openai.yaml`](./agents/openai.yaml)：界面元数据与手动调用策略。
+- [`references/mission-zero.md`](./references/mission-zero.md)：按需加载的父级与 child 连续性规则。
+- [`mission-review/SKILL.md`](./mission-review/SKILL.md)：独立结果审查流程。
+- [`mission-review/agents/openai.yaml`](./mission-review/agents/openai.yaml)：Mission Review 界面元数据与手动调用策略。
+- [`EVALS.md`](./EVALS.md)：维护者行为评估，不属于运行时内容。
+- [`evals/mission-review.md`](./evals/mission-review.md)：Mission Review 外部行为评估合同。
+- [`evals/fixtures`](./evals/fixtures)：公开回归材料。真实业务报告等私有夹具不进入本仓库。
+- [`evals/scripts`](./evals/scripts)：可审计的维护者评估 runner；本地 `evals/runs/` 证据档案不进入版本仓库。
+
+## 安装与同步
+
+面向 Codex、Claude Code 等兼容 Agent Skills 的环境。运行时只同步两个最小包，不要把 README、docs、evals、cases、fixtures 或 runner 拷进 Skill 目录。
+
+安装目录名必须分别是 `mission-brief` 和 `mission-review`。
 
 **当前项目可用：**
 
 ```sh
-mkdir -p .agents/skills/mission-brief
+mkdir -p .agents/skills/mission-brief/agents \
+         .agents/skills/mission-brief/references \
+         .agents/skills/mission-review/agents
 cp SKILL.md .agents/skills/mission-brief/SKILL.md
+cp agents/openai.yaml .agents/skills/mission-brief/agents/openai.yaml
+cp references/mission-zero.md .agents/skills/mission-brief/references/mission-zero.md
+cp mission-review/SKILL.md .agents/skills/mission-review/SKILL.md
+cp mission-review/agents/openai.yaml .agents/skills/mission-review/agents/openai.yaml
 ```
 
 **本机所有项目可用：**
 
 ```sh
-mkdir -p ~/.agents/skills/mission-brief
+mkdir -p ~/.agents/skills/mission-brief/agents \
+         ~/.agents/skills/mission-brief/references \
+         ~/.agents/skills/mission-review/agents
 cp SKILL.md ~/.agents/skills/mission-brief/SKILL.md
+cp agents/openai.yaml ~/.agents/skills/mission-brief/agents/openai.yaml
+cp references/mission-zero.md ~/.agents/skills/mission-brief/references/mission-zero.md
+cp mission-review/SKILL.md ~/.agents/skills/mission-review/SKILL.md
+cp mission-review/agents/openai.yaml ~/.agents/skills/mission-review/agents/openai.yaml
 ```
 
 Windows PowerShell：
 
 ```powershell
-New-Item -ItemType Directory -Force "$HOME\.agents\skills\mission-brief" | Out-Null
-Copy-Item SKILL.md "$HOME\.agents\skills\mission-brief\SKILL.md"
+$brief = "$HOME\.agents\skills\mission-brief"
+$review = "$HOME\.agents\skills\mission-review"
+New-Item -ItemType Directory -Force "$brief\agents", "$brief\references", "$review\agents" | Out-Null
+Copy-Item SKILL.md "$brief\SKILL.md"
+Copy-Item agents\openai.yaml "$brief\agents\openai.yaml"
+Copy-Item references\mission-zero.md "$brief\references\mission-zero.md"
+Copy-Item mission-review\SKILL.md "$review\SKILL.md"
+Copy-Item mission-review\agents\openai.yaml "$review\agents\openai.yaml"
 ```
 
-### 验证
+安装后每个 Skill 目录里只应有上述运行时文件。新开对话后通过 `$mission-brief` / `$mission-review` 显式调用。维护者评估 runner 需要另外设置 `MISSION_REVIEW_HARNESS_SRC`，不要把评估夹具装进 Skill 目录。
 
-安装后，Skill 目录里应当只有 `SKILL.md`。新开对话后应能通过 `/mission-brief` 显式调用。
+README、docs、evals、cases、fixtures、runner 和本地 run 档案都不是运行时文件。候选通过评估和独立 Closure 前，不同步到运行设备。
 
-## 调用
+## 评估原则
 
-该 Skill 设置了 `disable-model-invocation: true`，**不会**因为对话里出现 “Mission Brief” 或 “handoff” 而自动触发。必须显式调用：
+[`EVALS.md`](./EVALS.md) 验证外部行为，不要求固定状态名、表单、措辞或对话轮数：
 
-```text
-/mission-brief 根据刚才确认的决定生成最终委托。
-```
+1. 新鲜上下文只接收原始任务和权威材料，不接收预期答案或缺陷诊断。
+2. 检查是否虚构合同、隐藏权威冲突、写死路线、过度阻塞或用代理指标替代真实结果。
+3. 对合理的不同结果分解保持开放，只要求用户在意的结果和接缝不丢失。
+4. 使用独立盲交接检查 Brief 是否自包含且保有路线自由。
+5. 保留每次失败和候选身份；只为重复或高后果的行为缺陷修改运行时规则。
 
-其他兼容 Agent Skills 的工具，用该工具的显式调用方式指向 `mission-brief` 即可。
-
-## 会得到什么
-
-Skill 在落盘前选择一种状态：
-
-| 状态 | 行为 |
-|---|---|
-| `READY` | 任务语义闭合，所有绑定条款都有确认来源；生成一份 Brief |
-| `CONFIRM` | 忠实陈述委托需要加入 Agent 合成的实质性条款；先确认，不写文件 |
-| `BLOCKED` | 产品语义缺失、多个有效委托、权威冲突或不兼容要求；只问当前最阻塞的一个问题，不写文件 |
-
-默认保存到 `docs/mission-briefs/<outcome-slug>.md`。也可以要求内联输出、指定路径，或遵循仓库已有约定。完整示例见 [`examples/async-order-export.md`](./examples/async-order-export.md)。
-
-一份有效 Brief 应当：
-
-- 围绕一个能够独立判断成败的现实变化
-- 让新 Agent 不读取原始对话也能理解任务边界
-- 区分 `Success` 与 `Evidence Required`
-- 保留正式产品、兼容、安全与治理约束
-- 不包含实施计划、阶段、状态、测试结果、提交号或修复流水账
-- 不通过列举候选或被拒路线来表达“仍可自由决定”
-- 允许最终结论为 `PASSED`、`FAILED` 或 `INCONCLUSIVE`
-
-完整规则见 [`SKILL.md`](./SKILL.md)。
-
-## 和执行记录的关系
-
-Mission Brief 不是大型任务的唯一持久化载体：
-
-| 载体 | 职责 |
-|---|---|
-| Mission Brief | 目标、成功语义、证明义务、硬边界与执行授权 |
-| Working Plan / Implementation Ledger | 临时路线、进度、发现、下一安全切片与中间证据 |
-| Closure Report | 实际证据、反证、最终裁决、残留风险与不确定性 |
-
-执行记录可以变化，但不能重新定义 Mission Brief。Brief 只在任务契约本身改变时修订。
-
-## 仓库文件
-
-| 文件 | 给谁用 | 是否安装到 Skill 目录 |
-|---|---|---|
-| [`SKILL.md`](./SKILL.md) | 运行时 Agent | 是，唯一需要拷贝的文件 |
-| [`examples/async-order-export.md`](./examples/async-order-export.md) | 阅读者 | 否 |
-| [`EVALS.md`](./EVALS.md) | 维护者回归 | 否 |
-| `README.md` | 人类说明 | 否 |
-
-## 维护者
-
-回归要求见 [`EVALS.md`](./EVALS.md)。维护时遵循：
-
-1. 在新鲜上下文中调用候选 Skill，不向 Agent 泄露预期答案或待验证缺陷。
-2. 提供原始讨论、仓库合同和任务材料，而不是维护者结论。
-3. 记录 Gate 状态、询问内容、文件副作用和最终 Brief。
-4. 对生成产物进行盲交接：新 Agent 只读取 Brief、目标仓库与正常环境说明。
-5. 分别观察危险的 `false READY` 与造成摩擦的 `false BLOCKED`。
-6. 优先根据重复、代表性的失败做小幅修改；避免为了单次波动增加通用检查表。
-
-Skill 不追求让每份 Brief 第一次生成就完美。更重要的是让重大错误可见、可审查、可证伪，并在实施前以较低成本被发现。
-
-所有行为修改应独立提交，并在提交前完成相应回归：
-
-```sh
-git log --oneline
-```
-
-初始默认 Skill 已归档在提交 `82d40de`。需要回退时，从目标提交恢复 `SKILL.md` 与 `EVALS.md`，再按上文只同步 `SKILL.md` 到安装目录。
-
-评估产物和临时 fixture 放在工作区外的临时目录，不提交到本仓库。
+初始 Mission Brief 默认版本位于提交 `82d40de`。当前稳定版本、后续简化候选和配套 Mission Review 均可通过 Git 历史独立恢复与比较。

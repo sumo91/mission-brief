@@ -6,118 +6,96 @@ disable-model-invocation: true
 
 # Mission Brief
 
-Use **mission command**: specify the destination, proof, and hard boundaries—not the route. Treat the brief as a commission compressed after the material product decisions are settled, not as the sole memory for execution.
+Use **mission command**: specify the destination, proof, and hard boundaries—not the route. Compress an adopted commission into one stable Brief for a fresh capable agent.
 
-## 1. Qualify the mission
+Write one Brief only when the commission is settled. When a consequential user choice or authority conflict would change the contract, write nothing; show what remains undecided and request the smallest decision that can settle it.
 
-Ground the commission in the conversation, named artifacts, and only enough workspace inspection to locate the target, established contracts, and current reality.
+## 1. Choose the result
 
-Define one Mission as one coherent change in user or system reality that can receive an independent, honest verdict from a bounded body of complementary evidence. Diagnose its scale before drafting:
+Ground the commission in the conversation and named artifacts. Inspect the workspace only until the target and enough applicable authority are located to judge the contract boundary.
 
-- **Mission:** the result has independent value, can independently fail, and changes observable capability, experience, risk, or trust—not merely the existence of an internal artifact.
-- **Too broad:** the request contains several success centers that need materially different evidence or make failure attribution ambiguous. Select one coherent level. Create a parent Mission only when integration has a success claim that cannot be inferred by adding up child results.
-- **Too narrow:** success means only that a file, class, field, test, or other implementation unit exists, or several proposed Missions share one verdict and evidence set. Treat these as execution work under one Mission.
-- **Same commission:** implementation iterations, debugging, UI polish, and newly found defects stay under the existing Brief while destination, success, proof obligations, boundaries, and authority remain unchanged.
+Leave implementation location, root cause, internal structure, and other discoverable facts to the executing Agent.
 
-Run a **semantic closure test** before drafting: for each term that classifies admissible inputs, supported states, compatibility, identity, safety, failure, or success, verify that user decisions or authoritative repository material can classify plausible boundary cases. If two reasonable readings would change observable output, writes, rejection behavior, scope, or verdict, the term is an unresolved product contract—not delegation.
+Choose one **result**: a coherent change in user or system reality that has independent value and can receive an honest verdict. Files, components, activities, phases, and test counts are execution work unless they define that observable change.
 
-Run a **freeze gate** over every clause that would bind the destination, success meaning, proof obligations, boundaries, non-goals, or execution authority. Trace each clause to an explicit user decision, the user's explicit acceptance of a clearly enumerated summary, or an external contract. Let a faithful paraphrase inherit that provenance only if it neither adds, selects, nor strengthens meaning. Let proportionate, task-normal evidence that directly challenges a confirmed success claim inherit that claim's provenance; treat a new costly, subjective, or external proof obligation as synthesis. Treat recommendations, examples, preferences, critiques, risk hypotheses, proposed solutions, and agent-written summaries as discussion input until the user adopts them. Treat Skill invocation as a request to package confirmed decisions, not as adoption of earlier discussion.
+- If no observable result is stated, ask what should become true for the user or system, or place the request under an existing Mission.
+- If one result owns the destination and verdict, continue with it regardless of size or complexity.
+- If several results can be accepted independently, ask which one to commission unless the user has stated or is considering an overall result that could still fail after every local result passes.
+  In that case, read [`references/mission-zero.md`](references/mission-zero.md) before responding and make the candidate integration topology explicit. Do not write the parent Brief until the user adopts it.
 
-Before choosing `READY`, compare every proposed binding clause with applicable repository contracts, compatibility commitments, and recorded governance decisions. If they cannot all be honored and no authorized decision explicitly supersedes the conflict, choose `BLOCKED`. Do not narrow or reinterpret an existing authority merely to make the draft appear consistent. A present implementation fact that the Mission is explicitly meant to change is not by itself a conflict.
+A parent label or a large scope does not establish an integrated result. Read the Mission 0 reference for a later child explicitly tied to an approved parent as well.
 
-Choose one gate state:
+This step is complete when one commission boundary is selected or the user can see the smallest topology decision still needed.
 
-- **READY:** the commission is semantically closed and every binding clause has confirmed provenance. Draft and save without ceremonial reconfirmation.
-- **CONFIRM:** the discussion supports one coherent commission, but faithfully stating it requires a binding clause derived through material agent synthesis—for example, an inferred non-goal, authority boundary, or high-cost evidence obligation. Use this state only when omitting the clause would materially misstate or under-specify the apparent commission; otherwise omit the unadopted material and choose `READY`. Return only a compact freeze summary of what will bind, what remains delegated, and which clauses are synthesized; ask one confirmation question. Produce no Brief yet.
-- **BLOCKED:** multiple materially different commissions remain valid, a required semantic classification is missing, or confirmed requirements conflict. Ask one current blocking decision question. Produce no Brief yet.
+## 2. Settle the contract
 
-Produce one Brief at the selected level, never a generated Mission tree, and resolve repository-discoverable questions yourself. A user confirmation of the freeze summary moves `CONFIRM` to `READY`; it does not confirm anything absent from that summary.
+Collect the adopted user decisions and applicable external authority that determine the result. Include binding content only when it follows from them, preserves their minimum necessary meaning, defines task-appropriate proof, or points to a necessary located source.
 
-Completion criterion: the gate has one justified state. In `READY`, the commission has one success center, an independently supportable verdict, a stable route-free boundary, and traceable provenance for every binding clause; a fresh executor can classify representative success, boundary, and failure cases without inventing product policy. In `CONFIRM` or `BLOCKED`, this invocation ends after one question and no artifact.
+Paraphrase faithfully. Preserve who or what acts on what, the direction of important relationships, confirmed scope and granularity, and the original proof burden.
 
-## 2. Establish the contract
+Discussion, examples, critiques, risk hypotheses, and proposed solutions remain non-binding until adopted.
 
-Make the **commission boundary** self-contained: without the original conversation or linked rationale, a fresh capable agent can identify the target, intent, desired outcome, success meaning, proof obligations, and hard boundaries. Point to repository sources for detailed facts and reasoning instead of copying them.
+Keep repository contracts, compatibility commitments, and governance decisions in force. When they conflict with the requested commission and no authorized supersession exists, expose the conflict before writing.
 
-Assign authority by subject, not by a single priority ladder:
+Treat current implementation as a fact to change when the Mission requires it, not as authority over the Mission.
 
-- The Mission Brief owns this commission's intent, destination, success meaning, proof obligations, scope, and granted authority.
-- Repository contracts and current implementation own present system facts and compatibility reality.
-- ADRs own recorded decisions and their rationale.
-- Working plans, implementation ledgers, commits, and QA records own route, progress, discoveries, and interim evidence; they cannot redefine the commission or product facts.
-- A Closure Report owns the final verdict, actual evidence, counterevidence, and remaining uncertainty.
+Ask for a user decision only when different answers would materially change the outcome, success meaning, proof, boundary, topology, or authority. Display any proposed synthesis that needs adoption in concrete language.
 
-Surface conflicts between authorities; never silently choose the convenient source. Preserve current facts and the commission separately, then seek user judgment only when both cannot be honored.
+Delegate product-neutral architecture, tools, implementation choices, and facts the executing Agent can discover safely.
 
-Apply the **contract test** to every material statement:
+The contract is settled when a fresh Agent can identify the result, meaningful failure, proof obligations, hard boundaries, target, and granted authority without inventing product policy.
 
-- **Destination:** changing it changes why the work matters, what becomes observable, or what an honest verdict means.
-- **Proof:** it names evidence needed to support or falsify the destination.
-- **Boundary:** the user or an external contract fixes a product, safety, permission, data, compatibility, governance, resource, or scope limit.
-- **Delegation:** it is a preference, example, candidate solution, discoverable unknown, or implementation choice.
+## 3. Write and compress the Brief
 
-A mechanism belongs in the contract when the user or an external contract fixes it and substitution would change external reading, collaboration, compatibility, governance, or user-facing behavior. Preserve softer preferences only as decision principles. Express boundaries as risks and commitments to preserve rather than preselected call sequences.
-
-Completion criterion: every material statement has one authoritative home, linked material adds depth rather than filling a missing commission boundary, and solution shape remains delegated unless externally binding.
-
-## 3. Write the brief
-
-Use the minimal structure below. Omit optional sections that carry no contract information. Use bullets as assertions, not as an execution sequence.
+Use this core structure:
 
 ```markdown
-# Mission Brief: <observable outcome>
+# Mission Brief: <observable result>
 
-## Intent
-<Why this reality change is worth delivering.>
-
-## Desired Outcome
+## Outcome
 <What becomes possible or true at the user or system boundary.>
 
 ## Success
-<The minimum falsifiable facts and durable invariants that distinguish success from a plausible but wrong result.>
+<The minimum falsifiable facts that distinguish success from a plausible but wrong result.>
 
 ## Evidence Required
-<The prospective, task-appropriate evidence categories needed for an honest verdict.>
+<The task-appropriate evidence needed for an honest verdict.>
 
 ## Boundaries
-<Binding product, fact-authority, compatibility, safety, permission, data, governance, resource, and scope limits.>
-
-## Non-goals
-<Adjacent results this commission does not promise. Omit when obvious.>
-
-## Context
-<Only necessary target facts and pointers to authoritative material. Omit when the commission is already locatable.>
-
-## Execution Authority
-<Authorized reversible local action and the external, destructive, costly, irreversible, or scope-expanding actions that require confirmation. Omit when ambient authority is sufficient.>
+<The hard limits that change valid execution.>
 ```
 
-When `Execution Authority` carries information, grant ownership of investigation, planning, implementation, correction, and validation within the authorized scope. Treat internal phases as execution choices, not approval points.
+Add a section only when it carries binding information:
 
-Keep `Success` about facts that must hold and `Evidence Required` about how the final claim will be challenged. Specify evidence categories rather than test modules, commands, counts, hashes, or completed results. Calibrate evidence strength to failure impact, irreversibility, cross-system reach, and the share of subjective judgment. Require real supported environments, human judgment, independent review, negative paths, or compatibility checks only where cheaper deterministic evidence cannot support the claim.
+- `Intent`: an adopted purpose that adds meaning beyond `Outcome`.
+- `Non-goals`: confirmed adjacent exclusions that change valid execution.
+- `Context`: necessary target facts and pointers to authoritative material.
+- `Execution Authority`: a commission-specific grant or restriction that changes ambient authority.
 
-Evidence must permit `PASSED`, `FAILED`, or `INCONCLUSIVE`. Missing required evidence, a violated boundary, an unmet success condition, or unexplained counterevidence blocks a successful verdict. Improvements that do not affect the contract may remain as reported limitations; completion does not require exhausting every possible refinement.
+Keep `Success` about facts that must hold and `Evidence Required` about how to challenge them. Evidence must address the promised result rather than substitute convenient proxy checks.
 
-Completion criterion: a fresh agent can distinguish success from failure and choose credible proof without inheriting an acceptance checklist or prescribed implementation route.
+For claims about reading, judgment, or use, have the executing Agent exercise the finished result under realistic conditions and record concrete success, failure, and uncertainty. Structural and automated checks support the behaviors they actually exercise.
 
-## 4. Compress, save, and freeze
+Use the least costly evidence capable of falsifying each claim, increasing strength with consequence, irreversibility, cross-system reach, or genuinely subjective judgment. The eventual evidence must support an honest `PASSED`, `FAILED`, or `INCONCLUSIVE`.
 
-Run three final tests on every clause:
+Human participation is reserved for decisions or experiences an Agent cannot genuinely supply, not routine validation.
 
-- **Route-freedom test:** could two equally capable agents choose materially different routes and both satisfy the Brief? If not, retain the restriction only when its external-contract reason is explicit.
-- **Deletion test:** would removing the clause leave destination, verdict, proof, authority, or necessary task location unchanged? If yes, remove it.
-- **Current-contract test:** does the clause state only what binds now? Express delegated choices as open decision domains—for example, `Storage and indexing remain delegated.` Name a specific exclusion only when that exclusion itself has confirmed provenance and changes valid execution. Omit candidate, rejected, or superseded routes, earlier draft states, and discussion or revision history.
+Preserve an externally fixed mechanism when changing it would alter user-facing behavior, compatibility, collaboration, or governance. Otherwise describe the observable result and leave the route open.
 
-Collapse operational inventories into the principle they serve. Rewrite interface and implementation prescriptions as observable results unless they pass the contract test. Remove repeated intent across `Success`, `Evidence Required`, and `Boundaries`. Treat roughly one page as a pruning signal, not a hard limit.
+State the current contract, not implementation phases, ownership plans, commands, counts, hashes, completed checks, rejected alternatives, or generic safety prose.
 
-Save exactly one Mission Brief artifact only after the freeze gate reaches `READY`:
+Mission Brief owns the commission. Repository sources own present facts and recorded decisions; working plans own route and progress; Closure Reports own actual evidence, counterevidence, verdict, and uncertainty.
 
-- Return it inline when the user requests inline output or file writes are unavailable.
-- Otherwise honor a requested path, then an established repository convention, then default to `docs/mission-briefs/<outcome-slug>.md` at the relevant repository or package documentation boundary.
-- Form the slug from concise, stable domain terms. Update an existing file only for the same commission; create a distinct file for a new independently signable outcome.
+Those records may evolve without silently redefining the Brief.
 
-Keep the Brief stable during execution. Revise it only when intent, destination, success meaning, proof obligations, boundaries, or authority change, and identify that revision as a contract change. Working plans, implementation ledgers, QA artifacts, and Closure Reports may be created later; the one-artifact rule limits this Skill's commission output, not the execution record.
+Delete any clause whose removal would not change the result, verdict, proof, hard boundaries, authority, approved topology, or necessary target location.
 
-For a saved artifact, report its path plus any blocker or consequential assumption. For inline output, return the complete artifact plus those notices. This Skill ends after producing the commission; it does not implement the work or record progress.
+## 4. Save and hand off
 
-Final completion criterion: exactly one minimal, self-contained, contradiction-free result contract can be handed unchanged to a capable fresh agent, while execution and closure records remain free to evolve beneath it.
+Return the Brief inline when requested or when writes are unavailable. Otherwise honor a requested path, then an established repository convention, then use `docs/mission-briefs/<outcome-slug>.md` at the relevant repository or package documentation boundary.
+
+Update an existing file only for the same commission; give a distinct result a distinct path.
+
+Produce the commission, not its implementation or progress record. Revise the Brief later only when the contract itself changes.
+
+Finish with a **blind handoff** check: a capable fresh Agent can recover the outcome, failure conditions, proof obligations, boundaries, target, and authority without the source conversation, while retaining freedom to choose a viable route.
