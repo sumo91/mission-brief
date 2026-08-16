@@ -1,8 +1,19 @@
+<p align="center">
+  <img src="./assets/readme-cover.svg" alt="Mission Brief" width="100%">
+</p>
 
+<p align="center">
+  <a href="./LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-313131?style=flat-square"></a>
+  <a href="#给人类读"><img alt="Human guide" src="https://img.shields.io/badge/guide-for_humans-2F5D50?style=flat-square"></a>
+  <a href="#给-agent-读"><img alt="Agent install" src="https://img.shields.io/badge/install-for_agents-6B6258?style=flat-square"></a>
+</p>
 
-
-
-[给人类读](#给人类读) · [怎么用](#怎么用) · [给 Agent 读](#给-agent-读) · [提交问题](https://github.com/sumo91/mission-brief/issues)
+<p align="center">
+  <a href="#给人类读">给人类读</a> ·
+  <a href="#怎么用">怎么用</a> ·
+  <a href="#给-agent-读">给 Agent 读</a> ·
+  <a href="https://github.com/sumo91/mission-brief/issues">提交问题</a>
+</p>
 
 大模型越来越强。以前那类强约束、强门禁、把步骤写得很具体的计划类 Skill，反而容易把它绑住。OpenAI 在新版模型引导里建议用户把提示词写瘦，重点说清结果和硬限制；Anthropic 也公开说过，他们为更强模型砍掉了80%以上的系统提示词，评估没有明显掉。
 
@@ -15,12 +26,12 @@
 5. 这次明确不承诺什么
 6. 什么可以自己做，什么要先问你
 
-剩下的全部交给Agent和大模型本身。
+剩下的全部交给 Agent 和大模型本身。
 
 仓库里是一对配套 Skill。
 
-- `[mission-brief](./mission-brief/)` 在动手前，把已经谈定的目标收成一份稳定的任务简报
-- `[mission-review](./mission-review/)` 在做完后，让独立 Agent 对照简报检查结果有没有兑现
+- [`mission-brief`](./mission-brief/) 在动手前，把已经谈定的目标收成一份稳定的任务简报
+- [`mission-review`](./mission-review/) 在做完后，让独立 Agent 对照简报检查结果有没有兑现
 
 两个都要手动调用。提一句“Mission Brief”或“帮我 review 一下”不会自动跑起来。
 
@@ -28,11 +39,7 @@
 
 ---
 
-
-
 ## 给人类读
-
-
 
 ### 它适合什么时候用
 
@@ -112,11 +119,7 @@ Review 只审查和裁决，不会在同一次调用里偷偷把产物修完再�
 
 ---
 
-
-
 ## 给 Agent 读
-
-
 
 ### 仓库里有什么
 
@@ -149,8 +152,6 @@ LICENSE
 https://github.com/sumo91/mission-brief
 只安装 mission-brief/ 和 mission-review/ 这两个运行时目录。
 ```
-
-
 
 ### 手动安装
 
@@ -192,4 +193,4 @@ Copy-Item -Recurse -Force mission-brief, mission-review $dest
 
 维护者评估另设 `MISSION_REVIEW_HARNESS_SRC`。评估材料不进入运行时目录。
 
-运行时行为以 `[mission-brief/SKILL.md](./mission-brief/SKILL.md)` 与 `[mission-review/SKILL.md](./mission-review/SKILL.md)` 为准。维护者评估见 `[EVALS.md](./EVALS.md)` 与 `[evals/](./evals/)`。
+运行时行为以 [`mission-brief/SKILL.md`](./mission-brief/SKILL.md) 与 [`mission-review/SKILL.md`](./mission-review/SKILL.md) 为准。维护者评估见 [`EVALS.md`](./EVALS.md) 与 [`evals/`](./evals/)。
