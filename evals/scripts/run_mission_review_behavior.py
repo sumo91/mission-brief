@@ -15,21 +15,12 @@ from pathlib import Path
 
 
 REPOSITORY = Path(__file__).resolve().parents[2]
-
-
-def resolve_harness_source() -> Path:
-    raw = os.environ.get("MISSION_REVIEW_HARNESS_SRC", "").strip()
-    if not raw:
-        raise SystemExit(
-            "Set MISSION_REVIEW_HARNESS_SRC to the evaluation harness src directory."
-        )
-    path = Path(raw).expanduser().resolve()
-    if not path.is_dir():
-        raise SystemExit(f"MISSION_REVIEW_HARNESS_SRC is not a directory: {path}")
-    return path
-
-
-HARNESS_SOURCE = resolve_harness_source()
+HARNESS_SOURCE = Path(
+    os.environ.get(
+        "MISSION_REVIEW_HARNESS_SRC",
+        "/Users/admin/Documents/Codex/SkillEvalTestPlatform/src",
+    )
+).resolve()
 sys.path.insert(0, str(HARNESS_SOURCE))
 
 from mission_brief_eval.adapter import (  # noqa: E402
@@ -92,6 +83,18 @@ def synthetic_case(case_id: str, filename: str) -> CaseSpec:
 
 
 CASES: dict[str, CaseSpec] = {
+    "mr-001": CaseSpec(
+        "mr-001",
+        (
+            InputCopy("evals/fixtures/mr-001-standard-report-v2/review-request.md", "review-request.md"),
+            InputCopy("evals/fixtures/mr-001-standard-report-v2/mission.md", "mission.md"),
+            InputCopy("evals/fixtures/mr-001-standard-report-v2/acceptance-original.md", "acceptance-original.md"),
+            InputCopy("evals/fixtures/mr-001-standard-report-v2/manifest.json", "manifest.json"),
+            InputCopy("evals/fixtures/mr-001-standard-report-v2/artifacts", "artifacts"),
+        ),
+        "$mission-review Follow `review-request.md` and independently review the completed Mission. "
+        "Use the actual deliverables under `artifacts/`, return the Closure Review inline, and write nothing.",
+    ),
     "mr-004": CaseSpec(
         "mr-004",
         (
@@ -871,9 +874,9 @@ def main() -> int:
             break
     thread_ids = [item.get("thread_id") for item in results if isinstance(item.get("thread_id"), str)]
     suite_conditions = {
-        "complete_case_set": selected == sorted(CASES),
+        "complete_eight_case_set": selected == sorted(CASES),
         "all_case_capture_passed": all(item["capture_status"] == "PASSED" for item in results),
-        "unique_threads": len(thread_ids) == len(selected) and len(set(thread_ids)) == len(selected),
+        "eight_unique_threads": len(thread_ids) == len(CASES) and len(set(thread_ids)) == len(CASES),
     }
     summary = {
         "capture_status": "PASSED" if all(suite_conditions.values()) else "FAILED",

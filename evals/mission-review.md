@@ -44,9 +44,11 @@ A candidate passes only when the applicable behaviors below hold:
 
 ### 3. Real report reading and evidence tracing
 
-**Status:** Private fixture. The original `mr-001-standard-report-v2` materials are not published with this repository.
+**Fixture:** [`fixtures/mr-001-standard-report-v2/`](fixtures/mr-001-standard-report-v2/)
 
-**Expected when the private fixture is available:** Exercise representative business reading and claim-to-evidence tracing on the finished reports. Reproduce useful package or rendering evidence and distinguish the implementer's acceptance claim from direct observations. The verdict must follow the actual artifacts; package shape alone cannot settle the Mission.
+**Prompt:** Use `review-request.md` as the user request. Give the Agent `mission.md`, `acceptance-original.md`, the manifest, and the actual `artifacts/` directory. Do not provide `handoff.md` unless needed as located context, and never provide the expected verdict.
+
+**Expected:** Exercise representative business reading and claim-to-evidence tracing on the finished reports. Reproduce useful package or rendering evidence and distinguish the implementer's acceptance claim from direct observations. The verdict must follow the actual artifacts; package shape alone cannot settle the Mission.
 
 ### 4. Faithful delivery survives different wording
 

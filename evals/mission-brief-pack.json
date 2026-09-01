@@ -1,0 +1,785 @@
+{
+  "schema_version": "1.0",
+  "pack_id": "mission-brief-traceability",
+  "pack_version": "1.3.5",
+  "display_name": "Mission Brief Traceability Eval Pack",
+  "platform_contract": "skill-eval-pack-v1",
+  "capability_requirements": [
+    "local-files",
+    "local-process"
+  ],
+  "skill_contract": {
+    "skill_name": "mission-brief",
+    "display_name": "Mission Brief",
+    "explicit_invocation": "$mission-brief",
+    "conditional_runtime_reference": "references/mission-zero.md",
+    "runtime_reference_finding_name": "mission-zero-reference",
+    "runtime_reference_roots": [
+      "references"
+    ],
+    "runtime_reference_suffixes": [
+      ".md"
+    ],
+    "runtime_metadata_files": [
+      "agents/openai.yaml"
+    ],
+    "artifact_path_prefixes": [
+      "docs/missions",
+      "docs/mission-briefs",
+      "package/docs/missions",
+      "packages/billing/docs/missions",
+      "packages/preview/docs/missions",
+      "packages/approval/docs/missions",
+      "packages/publication/docs/missions"
+    ],
+    "artifact_path_suffixes": [
+      ".md"
+    ],
+    "protected_project_files": [],
+    "protected_candidate_files": [
+      "CONTEXT.md",
+      "EVALS.md",
+      "README.md",
+      "docs/adr/0001-separate-mission-contract-from-context.md",
+      "docs/missions/traceable-mission-handoffs/brief.md",
+      "docs/missions/traceable-mission-handoffs/context.md",
+      "docs/missions/traceable-mission-handoffs/working-plan.md",
+      "evals/mission-brief.md",
+      "evals/mission-brief-pack.json"
+    ],
+    "global_installation_roots": [
+      ".agents/skills",
+      ".codex/skills"
+    ],
+    "semantic_judge_policy": "Judge the observable Mission contract and handoff, not exact headings, wording, length, dialogue count, or a preferred implementation. In the retained packet, each user-visible answer is at turns[].executor_final.response; there is intentionally no top-level response field. workspace_directories is the complete final directory inventory and may be used to decide directory-side-effect criteria. Do not require a response to repeat names already explicit in the same-turn user prompt when it unambiguously refers to them and no durable artifact is being written. Do not require generic policy boilerplate when the observable contract already satisfies that policy. Do not fail because an optional supporting-check category is not named when the required result-level proof remains explicit and proxy proof is not made sufficient. Binding content must follow adopted decisions and applicable authority. Material known facts must remain durably recoverable with their actual authority status; candidate routes must remain optional. A result contract must not replace another requested product. Compactness is semantic: every retained clause should change the contract, proof, boundary, authority, or durable handoff. Fail invented authority, lost adopted meaning, transient-only material context, unnecessary ceremony, route overconstraint, invalid Mission topology, or a blind handoff that cannot recover the result. Return INCONCLUSIVE when decisive evidence is unavailable."
+  },
+  "cases": [
+    {
+      "id": "c-10000001",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-brief Safari 下登录表单按回车没有提交，Chrome 正常；鼠标点击提交行为必须保持不变。把已确认委托保存到仓库。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The artifact centers the Safari Enter-key regression and keeps Chrome and mouse-click behavior as compatibility boundaries.",
+        "It requires proportionate behavioral proof while leaving root cause and implementation location open.",
+        "It creates only one compact brief.md and no preservation or parent ceremony."
+      ]
+    },
+    {
+      "id": "c-10000002",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-brief 新增一个 LoginSubmissionCoordinator 类，并给它加三个测试。",
+          "assertions": {
+            "artifact_count": 0,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The response does not turn a class and test count into the Mission destination.",
+        "It asks for the observable user or system result or points the work beneath an existing Mission.",
+        "No Brief is written before the commission exists."
+      ]
+    },
+    {
+      "id": "c-10000003",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "已经确认：每个被接受订单五分钟内恰好一次出现在 JSON 导出中；终态失败可见；PostgreSQL 继续作为审计存储；退款不在范围；序列化实现交给执行 Agent。$mission-brief 按这些最终决定生成并保存。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The settled commission is written without redundant reconfirmation.",
+        "Every adopted result, failure condition, audit-store boundary, and non-goal remains recoverable.",
+        "Serialization remains delegated."
+      ]
+    },
+    {
+      "id": "c-10000004",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-brief 更换账户删除行为，但还没决定立即删除还是保留 30 天恢复期。现在就保存最终委托。",
+          "assertions": {
+            "artifact_count": 0,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The response exposes the immediate-versus-recoverable deletion decision as contract-shaping.",
+        "It asks only for the decision needed to settle the result.",
+        "No Brief is written while that decision remains unresolved."
+      ]
+    },
+    {
+      "id": "c-10000005",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "已经确认异步订单导出。讨论里有人建议 Kafka 和三个 worker，批评 SQLite，并建议独立安全评审；这些都没有被采用。$mission-brief 只把已经确定的委托整理并保存，具体实现交给执行 Agent。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The adopted asynchronous export result remains the contract.",
+        "Kafka, worker count, SQLite criticism, and a security-review obligation do not become binding.",
+        "The artifact does not catalog rejected routes merely to say they are delegated."
+      ]
+    },
+    {
+      "id": "c-10000006",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "仓库的 contracts/export-governance.md 对全部导出格式要求保持离线，除非有授权治理决定明确取代。用户确认了 JSON 导出，又要求放进 S3 兼容存储，但没有治理授权。$mission-brief 整理并保存 JSON 导出委托。",
+          "assertions": {
+            "artifact_count": 0,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "contracts/export-governance.md",
+          "content": "# Export governance\n\nStatus: authoritative.\n\nAll export formats, including future formats, must remain offline unless an authorized governance decision explicitly supersedes this rule.\n"
+        }
+      ],
+      "rubric": [
+        "The repository offline rule remains in force and the S3 conflict is explicit.",
+        "The response requests the scoped authority decision needed before external storage can bind.",
+        "No Brief silently narrows or supersedes the repository contract."
+      ]
+    },
+    {
+      "id": "c-10000007",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-brief 给本地 CLI 增加确定性的 --version 输出；失败只影响开发者读取版本号。保存委托。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The proof is cheap, deterministic, and directly checks the version output and compatibility surface.",
+        "The commission avoids broad journeys, independent reviewers, and unrelated ceremony.",
+        "Implementation remains delegated."
+      ]
+    },
+    {
+      "id": "c-10000008",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-brief 修复金额舍入错误。现有测试只覆盖 1.005 和 2.675，但正确行为适用于全部合法两位小数金额。保存最终委托。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Success remains the full legal two-decimal amount population, not the two examples.",
+        "Evidence includes representative and boundary challenges proportionate to that claim.",
+        "The Brief does not prescribe the rounding implementation."
+      ]
+    },
+    {
+      "id": "c-10000009",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-brief 让系统关系图在桌面和手机上成为无需开发者解释即可使用的日常阅读入口。直接生成并保存委托，验证工作也由执行 Agent 负责。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The executing Agent must exercise representative reading tasks in real desktop and mobile conditions.",
+        "Concrete success, failure, and uncertainty remain Agent-owned evidence.",
+        "Routine validation remains Agent-owned and is not delegated to a separate human reviewer. Do not require boilerplate defining when human review would be allowed when this commission contains no irreducibly human-only claim."
+      ]
+    },
+    {
+      "id": "c-1000000a",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-brief 我想继续把这里的标准报告做好，让业务同事真的能快速看懂，也能顺着每个判断找到证据。先读 handoff.md，再帮我把下一步立项并保存。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "handoff.md",
+          "source": "fixtures/mr-001-standard-report-v2/handoff.md"
+        }
+      ],
+      "rubric": [
+        "Business reading and claim-to-evidence tracing remain observable success conditions.",
+        "Structural, rendering, and automated checks, when used, remain supporting evidence, while representative business reading and claim-to-evidence tracing are still required for final proof. The Brief need not name every optional supporting-check category.",
+        "The commission preserves route freedom and does not import hidden later expectations."
+      ]
+    },
+    {
+      "id": "c-1000000b",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "已经确认三个互不依赖的结果：可审计的账单导出、跨设备深色模式、可配置日志保留。它们可独立发布和失败，没有共享端到端结果。$mission-brief 把这批需求整理成一个长期总 Mission。",
+          "assertions": {
+            "artifact_count": 0,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The response keeps the three independent results visible without manufacturing a parent. It may refer collectively to the three concrete results already explicit in the same-turn prompt and need not repeat their names when no artifact is written.",
+        "It asks which result to commission or whether a genuine overall result exists.",
+        "No artifact is written before one commission boundary is selected."
+      ]
+    },
+    {
+      "id": "c-1000000c",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "已经确认受理、对账、发布是独立有价值的结果；整体流程还要保持身份、授权和已确认状态，但还没决定是否把整体结果立项。$mission-brief 先整理并保存父 Mission。",
+          "assertions": {
+            "artifact_count": 0,
+            "runtime_reference": "required",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The candidate integration outcome, result boundaries, and cross-result invariants are made inspectable.",
+        "The user is asked whether to commission that packaging.",
+        "No parent or child Brief is written before adoption."
+      ]
+    },
+    {
+      "id": "c-1000000d",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "已经确认一个受监管迁移结果：把全部现有客户授权记录无中断迁移到新账本；每条合法记录保留同一主体、权限和审计链，非法记录进入可见失败队列，旧账本保持只读 30 天。分类、失败路径和证据类别很多，但没有任何子集可以独立产生价值。$mission-brief 生成并保存最终委托。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The commission remains one result despite its detail and difficulty.",
+        "The artifact preserves the result boundary without inventing a parent or phases.",
+        "Proof remains proportionate to the regulated claim; population-level reconciliation may be combined with representative and boundary behavioral challenges, because one-result topology does not itself require exhaustive execution of every behavior."
+      ]
+    },
+    {
+      "id": "c-1000000e",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "已经采用整体结果：同一个获授权的变更集必须从预览、审批、发布到审计保持身份和授权连续。三个结果边界也已采用：预览让操作者核对一个具名变更集但不发布；审批让授权审查者接受或拒绝同一个变更集；发布只让已批准的同一变更集生效并进入审计。$mission-brief 创建并保存这个 Mission 0，子结果以后分别立项。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "required",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The artifact uses a Mission 0 title, a uniform brief.md path, and concise Result Boundaries.",
+        "Success and evidence challenge identity and authorization across seams rather than union child tests.",
+        "No child, milestone, implementation order, or empty children directory is created."
+      ]
+    },
+    {
+      "id": "c-1000000f",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "已批准 docs/missions/authorized-change-set/brief.md 中的 Mission 0，requirements/approved-child-contracts.md 是已确认 child 合同的权威来源。$mission-brief 为其中的预览结果创建并保存一个 child Mission Brief。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "required",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "docs/missions/authorized-change-set/brief.md",
+          "content": "# Mission 0: Authorized change-set continuity\n\n## Outcome\nThe same authorized change set remains identifiable through preview, approval, publication, and audit.\n\n## Result Boundaries\n- Preview — [future child](./children/preview/brief.md)\n- Approval\n- Publication\n\n## Success\nIdentity and authority remain continuous across seams.\n\n## Evidence Required\nChallenge each transition and the integrated audit trail.\n\n## Boundaries\nChild-local contracts remain in requirements/approved-child-contracts.md.\n"
+        },
+        {
+          "path": "requirements/approved-child-contracts.md",
+          "content": "# Approved child contracts\n\nStatus: authoritative and approved.\n\n## Preview\nAuthorized operators can preview one identified change set without publishing it. Preview preserves identity for later approval and exposes invalid or unauthorized inputs.\n"
+        }
+      ],
+      "rubric": [
+        "One self-contained preview child Brief is created beneath the same-boundary parent.",
+        "The child has a Parent Mission link, preserves applicable identity and authority invariants, and points to the durable child contract when needed.",
+        "The parent remains unchanged."
+      ]
+    },
+    {
+      "id": "c-10000010",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "父级已批准：同一获授权变更集贯穿预览、审批和发布；三个边界分别是预览不发布、审批只接受或拒绝同一变更集、发布只应用已批准变更。已确认的 child 本地义务只存在于这段对话：预览必须显示非法输入，审批必须记录拒绝理由，发布失败必须可回滚。父级应保持简洁，仓库没有权威文件保存这些 child 义务；我还没有决定应把它们持久保存，还是留待 child 立项时重新确认。$mission-brief 先保存 Mission 0，child 以后再说。",
+          "assertions": {
+            "artifact_count": 0,
+            "runtime_reference": "required",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The response protects confirmed child-local contracts from silent loss without copying them into Mission 0.",
+        "It asks whether to preserve them in a durable Authority Source or leave them unsettled for later confirmation.",
+        "No parent is written while the preservation disposition remains unresolved."
+      ]
+    },
+    {
+      "id": "c-10000011",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "已经确认：每个已接受订单五分钟内恰好一次出现在本地 JSON 导出中，终态失败可见；现有 CSV consumer 必须继续工作；证据要覆盖成功导出、终态失败和 CSV 回归。仓库有多个可能修改位置，根因未知但执行 Agent 可以安全调查。$mission-brief 生成并保存委托，具体从哪里改、为什么坏了和用什么工具都交给执行 Agent。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The Brief is written without asking for implementation location, root cause, tool, or architecture.",
+        "The observable export result, compatibility boundary, and proof remain complete.",
+        "Safely discoverable unknowns remain execution-time discovery."
+      ]
+    },
+    {
+      "id": "c-10000012",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "最终决定：operators 获得离线导出，终态失败可见，并由一位非实现者 operator 完成结果评审；具体架构保持委托。早期方案曾提到 Kafka、SQLite、三个 worker 和两位评审，这些都已被替代。$mission-brief 根据最终决定生成并保存委托。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The current outcome and one non-implementer operator review remain binding.",
+        "Earlier architectures and superseded reviewer counts are absent from the contract.",
+        "The Brief carries no revision-history sediment."
+      ]
+    },
+    {
+      "id": "c-10000013",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-brief 返回完整 Brief，但禁止写入任何文件。已确认结果：本地 CLI 接受一个查询词，只读搜索仓库 glossary，确定性返回全部精确匹配及来源位置；无匹配时给出明确空结果；不得修改文件或访问网络。",
+          "assertions": {
+            "artifact_count": 0,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "One complete inline result contract is returned.",
+        "No file is written because the user explicitly forbade writes.",
+        "The contract remains outcome-centered and compact."
+      ]
+    },
+    {
+      "id": "c-10000014",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "这是 monorepo。packages/billing/docs 属于 billing 结果，尚无 Mission 约定。$mission-brief 为已确认的可审计账单导出创建并保存 Brief。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        },
+        {
+          "prompt": "这是同一委托的补充决定：现有 CSV 消费者必须继续工作。更新原 Mission Brief。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden"
+          }
+        },
+        {
+          "prompt": "现在另行确认一个新结果：退款异常日报每天列出终态失败或退款金额与订单金额不一致的退款，包含订单 ID、退款 ID 和异常原因，不包含仍在处理中的退款，也不修改退款状态。为它创建新的 Mission Brief。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "packages/billing/docs/README.md",
+          "content": "# Billing documentation\n\nThis directory owns billing result documentation.\n"
+        }
+      ],
+      "rubric": [
+        "The first turn creates packages/billing/docs/missions/auditable-billing-export/brief.md or an equivalently stable outcome slug.",
+        "The second turn updates that same commission rather than creating a versioned or duplicate Mission directory.",
+        "The third turn creates a distinct result directory for the refund exception report."
+      ]
+    },
+    {
+      "id": "c-10000015",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "方案中已采用 PostgreSQL 审计和终态失败可见；Kafka、三个 worker、S3 和独立安全评审只是候选。$mission-brief 阅读方案并给出最终可行实施计划，现在保存最终方案。",
+          "assertions": {
+            "artifact_count": 0,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The response does not relabel a Mission Brief as the requested final implementation plan.",
+        "It explains the product boundary and asks whether to freeze the adopted commission, produce a separate plan, or do both.",
+        "Only adopted PostgreSQL audit and visible-failure constraints are treated as binding."
+      ]
+    },
+    {
+      "id": "c-10000016",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "阅读 proposal.md 和 request.md，按 request.md 中的明确 $mission-brief 委托生成并保存结果。proposal.md 是持久来源，内部混合已采用决定、确认事实和候选路线。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "proposal.md",
+          "source": "fixtures/mb-001-detailed-plan-preservation/proposal.md"
+        },
+        {
+          "path": "request.md",
+          "source": "fixtures/mb-001-detailed-plan-preservation/request.md"
+        }
+      ],
+      "rubric": [
+        "The adopted retirement, compatibility, permission, and behavioral-proof contract is preserved.",
+        "Confirmed consumers, importer recreation, and distinct stale entry points remain durably recoverable with accurate source status. A durable Reference Source pointer that identifies the confirmed shared-consumer dependency category is sufficient; exact consumer names need not be duplicated in the Brief when the linked source retains them.",
+        "Candidate routes and investigation order remain optional, and the Brief does not copy them when a durable labeled pointer is sufficient."
+      ]
+    },
+    {
+      "id": "c-10000017",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "proposal.md 是持久方案：离线导出结果已采用，PostgreSQL 审计事实已确认，Kafka 是候选设计，SQLite 实验已拒绝，人工批准建议尚未决定。$mission-brief 提取已经确定的委托并保存。",
+          "assertions": {
+            "artifact_count": 0,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "proposal.md",
+          "content": "# Export proposal\n\nStatus: durable mixed source.\n\nAdopted decision: operators receive an offline export whose failures are visible.\n\nConfirmed fact: PostgreSQL is the audit store used by supported consumers.\n\nCandidate: publish export jobs through Kafka and three workers.\n\nRejected: the SQLite experiment cannot satisfy the audit contract.\n\nUnresolved recommendation: require a human approval before every export.\n"
+        }
+      ],
+      "rubric": [
+        "The adopted offline export and confirmed PostgreSQL fact retain their actual status.",
+        "Kafka remains optional and the rejected SQLite route does not enter the current contract.",
+        "The main response exposes the unresolved human-approval recommendation because it consequentially changes proof and authority: asking whether it becomes a binding requirement communicates the authority issue, and the response must explain that adoption changes the evidence or proof required for the export gate. Do not require exact labels when those meanings are explicit. The source link does not promote the whole proposal, and no Brief is written before the decision."
+      ]
+    },
+    {
+      "id": "c-10000018",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "transient/investigation.md 是临时附件，任务结束后会消失；它是已完成调查的唯一副本。委托已经确定。$mission-brief 把 settled Mission 保存到仓库，并确保交接不只留下临时链接。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "transient/investigation.md",
+          "content": "# Temporary investigation\n\nConfirmed dependency: supported consumers alpha and beta both invoke scripts/scan_dependencies.sh.\n\nConfirmed failure mechanism: importer registration recreates the legacy entry after deletion when the catalog still names it.\n\nCandidate route: replace the importer with a tombstone. This route is not adopted.\n"
+        }
+      ],
+      "rubric": [
+        "The completed handoff does not depend only on transient/investigation.md.",
+        "The shared consumers and importer recreation mechanism remain durable in concise Context or an authorized durable reference.",
+        "The tombstone remains optional and is not promoted into the contract."
+      ]
+    },
+    {
+      "id": "c-10000019",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "委托已确定：consumer-alpha 的依赖扫描在当前仓库约定下恢复正常。调查已经确认 consumer-alpha 依赖 scripts/scan_dependencies.sh；真实根因、最佳修改位置、工具和架构仍未知，但可由执行 Agent 安全发现。$mission-brief 保存委托。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The confirmed consumer dependency remains recoverable as completed investigation.",
+        "Unknown root cause, edit location, tools, and architecture remain delegated.",
+        "The Brief is not blocked by safely discoverable unknowns."
+      ]
+    },
+    {
+      "id": "c-1000001a",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "这个独立结果属于仓库根目录：让本地依赖扫描命令稳定输出机器可读 JSON，并保持现有文本模式。$mission-brief 创建并保存委托。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The artifact is stored at docs/missions/<stable-outcome-slug>/brief.md.",
+        "No empty children directory or mandatory context record is created.",
+        "The contract preserves JSON and text-mode compatibility without choosing an implementation."
+      ]
+    },
+    {
+      "id": "c-1000001b",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "package 是单一文档边界。已立项的父结果是同一获授权变更集从 Preview 到 Approval 保持身份和授权连续。Preview child 让操作者核对一个具名变更集但不应用它，并显示无效或未授权输入。Approval child 让授权审查者接受或拒绝同一个未被修改的变更集，并记录拒绝理由。$mission-brief 在 package 内保存 Mission 0 和两个 child Brief，父子都要可双向导航。",
+          "assertions": {
+            "artifact_count": 3,
+            "runtime_reference": "required",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "package/docs/README.md",
+          "content": "# Package documentation\n\nThis package owns the integrated result and both commissioned child results.\n"
+        }
+      ],
+      "rubric": [
+        "The parent is package/docs/missions/<integration-slug>/brief.md with a Mission 0 title and Result Boundaries.",
+        "Each commissioned child is physically nested under children/<child-slug>/brief.md and contains a Parent Mission link.",
+        "The parent's Result Boundaries link to both children, establishing bidirectional navigation without implementation phases."
+      ]
+    },
+    {
+      "id": "c-1000001c",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "这是跨 package 的已批准拓扑。仓库根拥有整体结果：同一获授权变更集贯穿预览、审批和发布。三个已立项 child 结果是：packages/preview 让操作者核对具名变更集但不发布；packages/approval 让授权审查者接受或拒绝同一变更集；packages/publication 只让已批准的同一变更集生效并进入审计。$mission-brief 保存父级和三个 child，使用双向链接，不强制物理嵌套。",
+          "assertions": {
+            "artifact_count": 4,
+            "runtime_reference": "required",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "docs/README.md",
+          "content": "# Repository documentation\n\nThe repository root owns cross-package integration outcomes.\n"
+        },
+        {
+          "path": "packages/preview/docs/README.md",
+          "content": "# Preview package documentation\n"
+        },
+        {
+          "path": "packages/approval/docs/README.md",
+          "content": "# Approval package documentation\n"
+        },
+        {
+          "path": "packages/publication/docs/README.md",
+          "content": "# Publication package documentation\n"
+        }
+      ],
+      "rubric": [
+        "The parent is stored at the lowest common root documentation boundary.",
+        "Each child remains under its owning package docs/missions boundary.",
+        "Parent Result Boundaries and child Parent Mission sections form valid bidirectional relative links without ownership fiction."
+      ]
+    },
+    {
+      "id": "c-1000001d",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-brief Safari 下登录表单按回车没有提交，Chrome 和鼠标点击行为必须保持不变。创建并保存最小充分委托。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The artifact stays compact and observable.",
+        "No context record, source inventory, ADR, reference appendix, Mission 0, or review ceremony is added.",
+        "The proof remains proportionate and compatibility remains explicit."
+      ]
+    },
+    {
+      "id": "c-1000001e",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "archive.md 是持久 Reference Source。已采用结果只有：本地导出成功后继续兼容 consumer-v2，失败可见。文档很长，但只有 consumer-v2 兼容事实会改变边界。$mission-brief 生成并保存精炼委托。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "archive.md",
+          "content": "# Durable project archive\n\nAuthority status: Reference Source except where the user separately adopts a statement.\n\nConfirmed compatibility fact: consumer-v2 reads the current local export and must continue to work.\n\nSuperseded naming debate: export-v1, export-next, export-final, and export-final-2 were discussed and abandoned.\n\nUnrelated roadmap: a dashboard, mobile client, weekly email, localization, public API, and partner portal may be considered next year.\n\nGeneric advice: use encryption, tests, monitoring, retries, queues, reviews, dashboards, alerts, backups, documentation, feature flags, canaries, and a service mesh. None is adopted for this commission.\n\nMeeting history: five teams discussed ownership over six meetings; all ownership proposals were superseded by the current repository boundary.\n\nCandidate routes: replace the exporter, wrap it, fork it, or migrate consumers first. None is adopted.\n\nAdditional unrelated history: earlier experiments covered PDF rendering, image compression, calendar feeds, browser automation, and spreadsheet cleanup.\n"
+        }
+      ],
+      "rubric": [
+        "The local export result, visible failure, and consumer-v2 compatibility remain complete.",
+        "Unrelated roadmap, generic advice, meeting sediment, and candidate routes do not inflate the Brief or become obligations.",
+        "The durable source may remain a labeled pointer, and compactness is judged without a fixed word count."
+      ]
+    },
+    {
+      "id": "l-20000001",
+      "suite": "loader",
+      "turns": [
+        {
+          "prompt": "$mission-brief 为只读词汇搜索 CLI 生成并保存一个简短委托。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": []
+    },
+    {
+      "id": "l-20000002",
+      "suite": "loader",
+      "turns": [
+        {
+          "prompt": "修复登录页在 Safari 下无法提交的问题，并运行相关测试。",
+          "assertions": {
+            "skill_invocation": "forbidden"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": []
+    },
+    {
+      "id": "l-20000003",
+      "suite": "loader",
+      "turns": [
+        {
+          "prompt": "把这个需求整理成一份 Mission Brief。",
+          "assertions": {
+            "skill_invocation": "forbidden"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": []
+    }
+  ]
+}

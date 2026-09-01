@@ -1,0 +1,29 @@
+{
+  "case_id": "mb-000-original-feedback-regression",
+  "captured_at": "2026-09-01",
+  "baseline_revision": "8adf782bf61e7051f9afe14d2e25166790e8bdc3",
+  "provenance_status": "incomplete-authentic-source-set",
+  "files": [
+    {
+      "role": "adopted_overall_plan_original",
+      "path": "adopted-plan-original.txt",
+      "sha256": "b904c19e5bd0f01af7f6084233861eb62cc4ac1804900b817ab26f481f5ba6e5"
+    },
+    {
+      "role": "source_feedback_screenshot",
+      "path": "source-feedback.png",
+      "sha256": "e7feea9a6dca13f53285b456369886db93cee0862f3b429ad15b05f0331ada7e"
+    },
+    {
+      "role": "source_availability_record",
+      "path": "source-status.md",
+      "sha256": "3da3a4e0f1db57fc2c291aa84ad3945a524f52383bb16f4117226605d5e464ed"
+    }
+  ],
+  "missing_authentic_inputs": [
+    "original_detailed_proposal",
+    "first_generated_brief",
+    "revised_generated_brief",
+    "exact_conversion_request"
+  ]
+}

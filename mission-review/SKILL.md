@@ -12,7 +12,7 @@ Review a completed Mission from its adopted contract, finished artifacts, and av
 
 ## 1. Recover the promise
 
-Locate the Mission Brief or the latest authorized contract that serves the same purpose. Read applicable repository authority and only enough implementation record to find the result and its evidence.
+Locate the Mission Brief or the latest authorized contract that serves the same purpose. Read applicable repository authority, labeled context sources, and only enough implementation record to find the result and its evidence.
 
 Recover:
 
@@ -21,7 +21,7 @@ Recover:
 - required proof and hard boundaries;
 - any commission-specific authority or explicit human decision.
 
-Treat plans, progress logs, implementation choices, acceptance claims, and earlier proposals according to their actual authority. They may point to evidence; they do not silently redefine the Mission.
+Treat Authority Sources, Reference Sources, plans, progress logs, implementation choices, acceptance claims, and earlier proposals according to their actual status. They may preserve context or point to evidence; retention, linkage, or package membership does not silently redefine the Mission.
 
 Preserve meaning rather than sentence form. A wording difference matters only when it changes the promised result, proof burden, boundary, scope, relationship, or authority.
 
@@ -73,6 +73,6 @@ Cite concrete artifact paths, commands, outputs, or interaction results closely 
 
 Choose headings that fit the repository rather than filling a fixed form. Do not manufacture recommendations after `PASSED` or design a repair unless the user separately commissions it.
 
-Return the review inline when requested or when writes are unavailable. Otherwise honor a requested path, then an established repository convention, then use `docs/closure-reviews/<mission-slug>.md` at the relevant documentation boundary.
+Return the review inline when requested or when writes are unavailable. Otherwise honor a requested path, then an established repository convention. When the Mission lives at `docs/missions/<mission-slug>/brief.md`, place the review under that Mission's `reviews/` directory with a concise distinct filename; otherwise use `docs/closure-reviews/<mission-slug>.md` at the relevant documentation boundary.
 
 Finish when a fresh owner can see what was promised, what was actually observed, why the verdict follows, and what—if anything—still prevents closure.

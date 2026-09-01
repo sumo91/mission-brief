@@ -1,0 +1,15 @@
+{
+  "case_id": "mb-001-detailed-plan-preservation",
+  "captured_at": "2026-09-01",
+  "baseline_revision": "8adf782bf61e7051f9afe14d2e25166790e8bdc3",
+  "inputs": {
+    "proposal": {
+      "path": "proposal.md",
+      "sha256": "08093d19e8a22e9a3e07630f42130e8237c2199c17d745c99d2b8cb2e80fd388"
+    },
+    "request": {
+      "path": "request.md",
+      "sha256": "4179b55531c8ed003000dfe01f94f494b9e61690db29e685b4a8f6860490f106"
+    }
+  }
+}

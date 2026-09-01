@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "pack_id": "mission-brief-traceability-baseline",
+  "pack_version": "1.0.0",
+  "display_name": "Mission Brief Historical Compression Baseline",
+  "platform_contract": "skill-eval-pack-v1",
+  "capability_requirements": [
+    "local-files",
+    "local-process"
+  ],
+  "skill_contract": {
+    "skill_name": "mission-brief",
+    "display_name": "Mission Brief",
+    "explicit_invocation": "$mission-brief",
+    "conditional_runtime_reference": "references/mission-zero.md",
+    "runtime_reference_finding_name": "mission-zero-reference",
+    "runtime_reference_roots": [
+      "references"
+    ],
+    "runtime_reference_suffixes": [
+      ".md"
+    ],
+    "runtime_metadata_files": [
+      "agents/openai.yaml"
+    ],
+    "artifact_path_prefixes": [
+      "docs/missions",
+      "docs/mission-briefs"
+    ],
+    "artifact_path_suffixes": [
+      ".md"
+    ],
+    "protected_project_files": [],
+    "protected_candidate_files": [],
+    "global_installation_roots": [
+      ".agents/skills",
+      ".codex/skills"
+    ],
+    "semantic_judge_policy": "Judge the observable handoff, not exact wording or length. Binding content must preserve adopted decisions and authority. Confirmed material dependencies and risk mechanisms must remain recoverable without promoting candidate routes into requirements. Return INCONCLUSIVE when missing authentic history prevents the claimed conclusion."
+  },
+  "cases": [
+    {
+      "id": "b-30000001",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "阅读 proposal.md 和 request.md，按 request.md 中的明确 $mission-brief 委托生成并保存结果。proposal.md 是持久来源，内部混合已采用决定、确认事实和候选路线。",
+          "assertions": {
+            "artifact_count": 1,
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "proposal.md",
+          "source": "fixtures/mb-001-detailed-plan-preservation/proposal.md"
+        },
+        {
+          "path": "request.md",
+          "source": "fixtures/mb-001-detailed-plan-preservation/request.md"
+        }
+      ],
+      "rubric": [
+        "The adopted retirement, compatibility, permission, and behavioral-proof contract is preserved.",
+        "Confirmed consumers, importer recreation, and distinct stale entry points remain durably recoverable with accurate source status.",
+        "Candidate routes and investigation order remain optional, and the Brief does not copy them when a durable labeled pointer is sufficient."
+      ]
+    }
+  ]
+}

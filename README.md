@@ -134,6 +134,7 @@ mission-review/
   SKILL.md
   agents/openai.yaml
 README.md
+CONTEXT.md             # 领域语言，不安装
 assets/
 docs/                  # 维护材料，不安装
 evals/                 # 维护材料，不安装
@@ -141,7 +142,7 @@ EVALS.md
 LICENSE
 ```
 
-只把 `mission-brief/` 和 `mission-review/` 拷进 Skills 目录。不要安装 `README.md`、`docs/`、`EVALS.md`、`evals/`、`assets/`。
+只把 `mission-brief/` 和 `mission-review/` 拷进 Skills 目录。不要安装 `README.md`、`CONTEXT.md`、`docs/`、`EVALS.md`、`evals/`、`assets/`。
 
 ### 让 Agent 安装
 
