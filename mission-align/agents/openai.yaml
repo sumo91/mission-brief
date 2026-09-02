@@ -1,0 +1,6 @@
+interface:
+  display_name: "Mission Align"
+  short_description: "Clarify and confirm a Mission before briefing"
+  default_prompt: "Use $mission-align to clarify this request and confirm its Mission boundary before briefing."
+policy:
+  allow_implicit_invocation: true

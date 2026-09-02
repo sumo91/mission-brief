@@ -1,7 +1,6 @@
 ---
 name: mission-review
 description: Review a completed Mission against its adopted result contract and produce an evidence-grounded closure verdict.
-disable-model-invocation: true
 ---
 
 # Mission Review

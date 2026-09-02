@@ -1,7 +1,6 @@
 ---
 name: mission-brief
 description: Create one stable, traceable result contract for a capable fresh agent.
-disable-model-invocation: true
 ---
 
 # Mission Brief
@@ -18,6 +17,8 @@ A Mission Brief is a result contract, not a proposal review, final design, imple
 - **Falsifying proof.** Evidence must be capable of exposing failure in the promised result. Tests, screenshots, schemas, and reports prove only the behavior they actually exercise.
 
 The four required sections—`Outcome`, `Success`, `Evidence Required`, and `Boundaries`—form the **Contract Core**. A complete handoff also identifies the target, authority, necessary durable context, source status, and any adopted parent topology. Protect **route freedom** so a fresh Agent can act without inheriting candidate approaches as commands.
+
+Keep one bounded missing decision in this Skill. When the desired result itself is unclear, several consequential decisions are coupled, plausible interpretations imply different contracts, or Mission suitability or result topology needs exploration, use `mission-align` when it is available. If it is unavailable, retain the same safe gate and request the smallest decision that can settle the commission. Treat an explicitly confirmed Mission Alignment as adopted handoff input, then still check it against applicable authority before writing the Brief.
 
 ## 1. Recover the commission
 

@@ -28,12 +28,13 @@
 
 剩下的全部交给 Agent 和大模型本身。
 
-仓库里是一对配套 Skill。
+仓库里是三件配套 Skill。
 
+- [`mission-align`](./mission-align/) 目标还不清楚、几个决定缠在一起、或还没定该不该立项时，先跟你对齐
 - [`mission-brief`](./mission-brief/) 在动手前，把已经谈定的目标收成一份稳定的任务简报
 - [`mission-review`](./mission-review/) 在做完后，让独立 Agent 对照简报检查结果有没有兑现
 
-两个都要手动调用。提一句“Mission Brief”或“帮我 review 一下”不会自动跑起来。
+`mission-align` 可以按对话自己上场。`$mission-brief` 和 `$mission-review` 仍要手动调用。
 
 > Specify the destination, proof, and hard boundaries - not the route.
 
@@ -49,13 +50,14 @@
 - 涉及兼容、安全、数据写入、外部系统，边界必须写死
 - 你希望做完以后能独立验收，而不是听实现者自报完成
 
-小修小补、当场排错、纯 UI 微调，往往用不着。`mission-brief` 也不替你脑暴。需求还没谈清楚时，先用你平时的讨论 Skill；谈定了再来写简报。
+目标还不清楚、几个结果缠在一起、或还没定该不该立项时，先用 `mission-align`。小修小补、当场排错、纯 UI 微调，往往用不着。`mission-brief` 也不替你脑暴。需求谈定了再写简报。
 
 ### 怎么用
 
-常见流程很短。先写简报，再实施，需要时再审查。
+常见流程很短。目标清楚就直接写简报；不清楚就先对齐。实施后需要时再审查。
 
 ```text
+$mission-align   →  目标不清时，对齐结果、边界和拓扑
 $mission-brief   →  生成 / 修订任务简报
 实施 Agent       →  按简报做事（不必再加载这个 Skill）
 $mission-review  →  独立检查结果是否兑现
@@ -65,7 +67,7 @@ $mission-review  →  独立检查结果是否兑现
 
 #### 1. 你已经知道要做什么
 
-直接跟 Agent 说清楚目标，再调用 `$mission-brief`，让它写成任务简报。简报满意以后，就可以让它开始实施。
+直接跟 Agent 说清楚目标，再调用 `$mission-brief`，让它写成任务简报。简报满意以后，就可以让它开始实施。目标本身还含糊时，先用 `$mission-align` 对齐，确认后再交给 `$mission-brief`。
 
 ```text
 你：Safari 里登录表单按回车没反应，Chrome 正常。鼠标点提交必须继续可用，别改成别的交互。
@@ -123,9 +125,12 @@ Review 只审查和裁决，不会在同一次调用里偷偷把产物修完再�
 
 ### 仓库里有什么
 
-根目录是仓库说明与维护材料。两个运行时 Skill 各自成包，互相对称。
+根目录是仓库说明与维护材料。三个运行时 Skill 各自成包。
 
 ```text
+mission-align/
+  SKILL.md
+  agents/openai.yaml
 mission-brief/
   SKILL.md
   agents/openai.yaml
@@ -143,16 +148,16 @@ EVALS.md
 LICENSE
 ```
 
-只把 `mission-brief/` 和 `mission-review/` 拷进 Skills 目录。不要安装 `README.md`、`CONTEXT.md`、`docs/`、`EVALS.md`、`evals/`、`assets/`。
+只把 `mission-align/`、`mission-brief/` 和 `mission-review/` 拷进 Skills 目录。不要安装 `README.md`、`CONTEXT.md`、`docs/`、`EVALS.md`、`evals/`、`assets/`。
 
 ### 让 Agent 安装
 
 把下面这句话发给你的 Agent。
 
 ```text
-帮我安装这个仓库里的两个 Skill。
+帮我安装这个仓库里的三个 Skill。
 https://github.com/sumo91/mission-brief
-只安装 mission-brief/ 和 mission-review/ 这两个运行时目录。
+只安装 mission-align/、mission-brief/ 和 mission-review/ 这三个运行时目录。
 ```
 
 ### 手动安装
@@ -161,14 +166,14 @@ https://github.com/sumo91/mission-brief
 
 ```sh
 mkdir -p .agents/skills
-cp -R mission-brief mission-review .agents/skills/
+cp -R mission-align mission-brief mission-review .agents/skills/
 ```
 
 **本机所有项目**
 
 ```sh
 mkdir -p ~/.agents/skills
-cp -R mission-brief mission-review ~/.agents/skills/
+cp -R mission-align mission-brief mission-review ~/.agents/skills/
 ```
 
 **Windows PowerShell**
@@ -176,12 +181,15 @@ cp -R mission-brief mission-review ~/.agents/skills/
 ```powershell
 $dest = "$HOME\.agents\skills"
 New-Item -ItemType Directory -Force $dest | Out-Null
-Copy-Item -Recurse -Force mission-brief, mission-review $dest
+Copy-Item -Recurse -Force mission-align, mission-brief, mission-review $dest
 ```
 
 装好后目录长这样。
 
 ```text
+~/.agents/skills/mission-align/
+  SKILL.md
+  agents/openai.yaml
 ~/.agents/skills/mission-brief/
   SKILL.md
   agents/openai.yaml
@@ -192,8 +200,8 @@ Copy-Item -Recurse -Force mission-brief, mission-review $dest
   agents/openai.yaml
 ```
 
-目录名必须与各 Skill 的 `name` 一致。新开对话后显式调用 `$mission-brief` 或 `$mission-review`。
+目录名必须与各 Skill 的 `name` 一致。`mission-align` 可以按描述自动上场；`$mission-brief` 与 `$mission-review` 仍需显式调用。
 
 维护者评估另设 `MISSION_REVIEW_HARNESS_SRC`。评估材料不进入运行时目录。
 
-运行时行为以 [`mission-brief/SKILL.md`](./mission-brief/SKILL.md) 与 [`mission-review/SKILL.md`](./mission-review/SKILL.md) 为准。维护者评估见 [`EVALS.md`](./EVALS.md) 与 [`evals/`](./evals/)。
+运行时行为以 [`mission-align/SKILL.md`](./mission-align/SKILL.md)、[`mission-brief/SKILL.md`](./mission-brief/SKILL.md) 与 [`mission-review/SKILL.md`](./mission-review/SKILL.md) 为准。维护者评估见 [`EVALS.md`](./EVALS.md) 与 [`evals/`](./evals/)。
