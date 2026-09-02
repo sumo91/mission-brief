@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "pack_id": "mission-brief-traceability-baseline",
-  "pack_version": "1.0.0",
-  "display_name": "Mission Brief Historical Compression Baseline",
+  "pack_id": "mission-brief-synthetic-preservation-baseline",
+  "pack_version": "2.0.0",
+  "display_name": "Mission Brief Synthetic Source-Preservation Baseline",
   "platform_contract": "skill-eval-pack-v1",
   "capability_requirements": [
     "local-files",
@@ -36,7 +36,7 @@
       ".agents/skills",
       ".codex/skills"
     ],
-    "semantic_judge_policy": "Judge the observable handoff, not exact wording or length. Binding content must preserve adopted decisions and authority. Confirmed material dependencies and risk mechanisms must remain recoverable without promoting candidate routes into requirements. Return INCONCLUSIVE when missing authentic history prevents the claimed conclusion."
+    "semantic_judge_policy": "Judge only the observable handoff for this synthetic proposal and request, not exact wording or length. Binding content must preserve adopted decisions and authority. Confirmed material dependencies and risk mechanisms must remain recoverable without promoting candidate routes into requirements. This case does not reproduce the unavailable historical conversation."
   },
   "cases": [
     {
@@ -44,7 +44,7 @@
       "suite": "behavior",
       "turns": [
         {
-          "prompt": "阅读 proposal.md 和 request.md，按 request.md 中的明确 $mission-brief 委托生成并保存结果。proposal.md 是持久来源，内部混合已采用决定、确认事实和候选路线。",
+        "prompt": "这是合成行为案例。阅读 proposal.md 和 request.md，按 request.md 中的明确 $mission-brief 委托生成并保存结果。proposal.md 是持久来源，内部混合已采用决定、确认事实和候选路线。",
           "assertions": {
             "artifact_count": 1,
             "runtime_reference": "forbidden",

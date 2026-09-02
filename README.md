@@ -130,6 +130,7 @@ mission-brief/
   SKILL.md
   agents/openai.yaml
   references/mission-zero.md
+  references/source-fidelity.md
 mission-review/
   SKILL.md
   agents/openai.yaml
@@ -185,6 +186,7 @@ Copy-Item -Recurse -Force mission-brief, mission-review $dest
   SKILL.md
   agents/openai.yaml
   references/mission-zero.md
+  references/source-fidelity.md
 ~/.agents/skills/mission-review/
   SKILL.md
   agents/openai.yaml

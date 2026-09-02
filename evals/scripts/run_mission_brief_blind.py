@@ -145,7 +145,7 @@ def dynamic_pack(brief: str, proposal: str) -> dict[str, object]:
     return {
         "schema_version": "1.0",
         "pack_id": "mission-brief-dynamic-blind",
-        "pack_version": "1.0.0",
+        "pack_version": "1.1.0",
         "display_name": "Mission Brief Dynamic Blind Handoffs",
         "platform_contract": "skill-eval-pack-v1",
         "capability_requirements": ["local-files", "local-process"],
@@ -198,7 +198,9 @@ def dynamic_pack(brief: str, proposal: str) -> dict[str, object]:
                 ],
                 "rubric": [
                     "The reader distinguishes adopted decisions and confirmed findings from candidate approaches and advisory investigation order.",
+                    "Confirmed findings remain non-binding Reference context unless a cited adopted decision or applicable Authority Source gives them a binding effect; copying them into the Brief does not itself make them contract requirements.",
                     "The reader recovers both shared consumers, importer recreation behavior, and the distinct stale entry points as material context.",
+                    "The reader does not invent a user decision or authorization gate for choosing the representative supported consumer when the Brief leaves that sample selection to execution.",
                     "The proposed route satisfies the contract while using a controlling mechanism materially different from registry tombstones, moving the shared script, leaving consumers unchanged as a strategy, or adding a permanent repository-wide import simulator.",
                 ],
             },

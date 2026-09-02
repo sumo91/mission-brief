@@ -12,8 +12,8 @@ _Avoid_: Task, project, work item
 The normative artifact that records a Mission's outcome, success meaning, proof obligations, hard boundaries, and commission-specific authority.
 _Avoid_: Final plan, implementation brief, requirements summary
 
-**Mission 0**:
-A Mission Brief in the parent role, owning an irreducible integration result, cross-result invariants, seam evidence, and concise result boundaries. The zero denotes topology, not sequence or priority.
+**Integration Mission (Mission 0)**:
+A Mission Brief in the parent role, owning an irreducible integration result, cross-result invariants, seam evidence, and concise result boundaries. `Mission 0` remains the compatible artifact title; the role expresses result topology.
 _Avoid_: Phase 0, master plan, program folder
 
 **Child Mission**:
@@ -28,9 +28,9 @@ _Avoid_: Background material, helpful reference
 A durable source of useful facts, dependencies, risks, rationale, examples, or candidate approaches that does not become binding merely because it is preserved or linked.
 _Avoid_: Requirement, approval, authorization
 
-**Information Disposition**:
-The explicit destination of material source information: the Mission Brief, a durable source, a consequential decision still to settle, or a justified omission as irrelevant, rejected, superseded, or safely discoverable.
-_Avoid_: Summarization, trimming
+**Information Home**:
+The single durable destination of material information: the Mission Brief, a labeled durable source, a consequential decision still to settle, or a justified omission.
+_Avoid_: Duplicate requirements, preservation without authority status
 
 **Mission Package**:
 The logical set of a Mission Brief and any linked context, working records, and Closure Reviews needed across commissioning, execution, and review. Its members retain their own authority rather than inheriting authority from the package.

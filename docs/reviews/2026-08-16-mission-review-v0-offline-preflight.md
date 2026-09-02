@@ -6,7 +6,7 @@ Result: `PASSED` offline; behavioral model-run gate remains `CLOSED` pending exp
 ## Frozen inputs
 
 - Repository baseline: `bcdd50903b0120d2aea5e06157925a39bdc29df4`
-- Mission contract: `docs/mission-briefs/mission-review-mvp.md`
+- Mission contract: `docs/missions/reliable-mission-review/brief.md`
 - Mission contract SHA-256: `e564f5677c4d3c800d2629d5ec10141ad3d4b1fd06f074c64ad68e16aa90d723`
 - Candidate runtime aggregate: `2bc5a2359c90071e8cfedc647ac993479e0346148c801c08beadd7e61f9f5acc`
 - Maintainer eval contract SHA-256: `fcab38b66457f16da89897105ccf329679ac3bd56440899ab4cd63c8bf618b40`

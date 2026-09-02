@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "pack_id": "mission-brief-traceability",
-  "pack_version": "1.3.5",
+  "pack_version": "1.7.0",
   "display_name": "Mission Brief Traceability Eval Pack",
   "platform_contract": "skill-eval-pack-v1",
   "capability_requirements": [
@@ -204,7 +204,7 @@
       "suite": "behavior",
       "turns": [
         {
-          "prompt": "$mission-brief 修复金额舍入错误。现有测试只覆盖 1.005 和 2.675，但正确行为适用于全部合法两位小数金额。保存最终委托。",
+        "prompt": "$mission-brief 修复金额舍入错误。已采用的业务规则是十进制中点 half-up 并输出两位小数，例如 1.005 → 1.01、2.675 → 2.68；正确行为适用于全部合法金额输入，而不是只对两个样例打补丁。保存最终委托。",
           "assertions": {
             "artifact_count": 1,
             "runtime_reference": "forbidden",
@@ -309,7 +309,7 @@
       "suite": "behavior",
       "turns": [
         {
-          "prompt": "已经确认一个受监管迁移结果：把全部现有客户授权记录无中断迁移到新账本；每条合法记录保留同一主体、权限和审计链，非法记录进入可见失败队列，旧账本保持只读 30 天。分类、失败路径和证据类别很多，但没有任何子集可以独立产生价值。$mission-brief 生成并保存最终委托。",
+        "prompt": "已经确认一个受监管迁移结果：把全部现有客户授权记录无中断迁移到新账本；每条符合已批准 v3 授权记录规则的记录保留同一主体、权限和审计链，不符合者进入可见失败队列，旧账本保持只读 30 天。v3 规则与本次迁移授权均已批准。分类、失败路径和证据类别很多，但没有任何子集可以独立产生价值。$mission-brief 生成并保存最终委托。",
           "assertions": {
             "artifact_count": 1,
             "runtime_reference": "forbidden",
@@ -458,7 +458,7 @@
       "suite": "behavior",
       "turns": [
         {
-          "prompt": "这是 monorepo。packages/billing/docs 属于 billing 结果，尚无 Mission 约定。$mission-brief 为已确认的可审计账单导出创建并保存 Brief。",
+        "prompt": "这是 monorepo。packages/billing/docs 属于 billing 结果，尚无 Mission 约定。已确认的结果是：获授权 billing operator 可按结算周期导出完整账单 CSV；每行保留账单 ID、金额、币种和来源记录 ID，导出记录结算周期、生成时间与来源快照 ID，失败明确可见且不产生不完整文件。$mission-brief 创建并保存 Brief。",
           "assertions": {
             "artifact_count": 1,
             "runtime_reference": "forbidden",
@@ -537,7 +537,7 @@
       ],
       "rubric": [
         "The adopted retirement, compatibility, permission, and behavioral-proof contract is preserved.",
-        "Confirmed consumers, importer recreation, and distinct stale entry points remain durably recoverable with accurate source status. A durable Reference Source pointer that identifies the confirmed shared-consumer dependency category is sufficient; exact consumer names need not be duplicated in the Brief when the linked source retains them.",
+        "Confirmed consumers, importer recreation, and distinct stale entry points remain durably recoverable with accurate source status. A durable Reference Source pointer that identifies the confirmed shared-consumer dependency category is sufficient; exact consumer names need not be duplicated in the Brief when the linked source retains them. Any saved source pointer is repository-relative and resolves from the Brief rather than embedding an executor workspace absolute path.",
         "Candidate routes and investigation order remain optional, and the Brief does not copy them when a durable labeled pointer is sufficient."
       ]
     },
@@ -571,7 +571,7 @@
       "suite": "behavior",
       "turns": [
         {
-          "prompt": "transient/investigation.md 是临时附件，任务结束后会消失；它是已完成调查的唯一副本。委托已经确定。$mission-brief 把 settled Mission 保存到仓库，并确保交接不只留下临时链接。",
+        "prompt": "transient/investigation.md 是临时附件，任务结束后会消失；它是已完成调查的唯一副本。委托已经确定：`legacy-workflow` 必须从 Agent catalog 永久移除，后续导入不得重建；alpha 和 beta 依赖的共享扫描能力保持可用。$mission-brief 把 settled Mission 保存到仓库，并确保交接不只留下临时链接。",
           "assertions": {
             "artifact_count": 1,
             "runtime_reference": "forbidden",
@@ -606,7 +606,7 @@
       ],
       "fixtures": [],
       "rubric": [
-        "The confirmed consumer dependency remains recoverable as completed investigation.",
+        "The confirmed consumer dependency remains recoverable as completed investigation in the retained artifact or artifact manifest. Judge the archived artifact and declared artifact_paths; do not fail this criterion merely because the harness relocates an otherwise valid user-facing absolute link after execution.",
         "Unknown root cause, edit location, tools, and architecture remain delegated.",
         "The Brief is not blocked by safely discoverable unknowns."
       ]

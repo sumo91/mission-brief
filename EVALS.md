@@ -190,7 +190,7 @@ Give a generated Brief and its target workspace to a capable fresh Agent. Ask it
 
 **Fixture:** Use [`evals/fixtures/mb-001-detailed-plan-preservation/`](evals/fixtures/mb-001-detailed-plan-preservation/) according to [`evals/cases/mission-brief/mb-001-detailed-plan-preservation.md`](evals/cases/mission-brief/mb-001-detailed-plan-preservation.md).
 
-**Expected:** Preserve the adopted retirement, compatibility, permission, and behavioral-proof contract. Keep the confirmed shared consumers, importer recreation mechanism, and distinct stale entry points recoverable through concise context or a durable labeled pointer. Candidate approaches and investigation order do not become commands, while the Brief remains a contract rather than a copied plan.
+**Expected:** Preserve the adopted retirement, compatibility, permission, and behavioral-proof contract. Keep the confirmed shared consumers, importer recreation mechanism, and distinct stale entry points recoverable through concise context or a durable labeled pointer. A saved pointer resolves repository-relatively from the Brief rather than embedding an executor workspace path. Candidate approaches and investigation order do not become commands, while the Brief remains a contract rather than a copied plan.
 
 ### 19. One source may carry mixed authority
 

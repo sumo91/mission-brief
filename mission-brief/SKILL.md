@@ -1,148 +1,99 @@
 ---
 name: mission-brief
-description: Create one stable, traceable result contract for a capable fresh agent without replacing a final plan or losing material handoff context.
+description: Create one stable, traceable result contract for a capable fresh agent.
 disable-model-invocation: true
 ---
 
 # Mission Brief
 
-Use **mission command**: specify the destination, proof, and hard boundaries—not the route. Compress an adopted commission into one stable Brief for a fresh capable agent.
+Use **mission command**: freeze an adopted result, its proof, and its hard boundaries while leaving the route to the executing Agent.
 
-A Mission Brief is a result contract, not a final plan, design review, decision recommendation, or implementation plan. This Skill authors only the Mission Brief; do not create one of those other products inside a `$mission-brief` invocation or silently substitute the Brief for it. When the request asks for another product, explain the boundary and ask whether to freeze the adopted commission as a Brief, produce the other product separately, or do both before writing anything.
+A Mission Brief is a result contract, not a proposal review, final design, implementation plan, or execution request. When a request needs another product too, keep the products separate and settle any decision that defines the commission before freezing it.
 
-A class, file, component, command, phase, or test-count request does not by itself define either a Mission or a product-routing choice. First ask for the observable user or system result, or place the implementation item beneath an existing Mission.
+## Principles
 
-Write one Brief only when the commission is settled. When a consequential user choice or authority conflict would change the contract, write nothing; show what remains undecided and request the smallest decision that can settle it.
+- **Outcome over route.** The executing Agent has fresher workspace and environment evidence, so specify what must become true and let it choose a viable route.
+- **Source status.** An **Authority Source** can bind the Mission; a **Reference Source** preserves useful knowledge without becoming binding merely because it is retained or linked.
+- **One home.** **Material information** is information whose loss could change the contract, materially increase execution risk, or force costly investigation to be repeated. Give each material item one durable home: the Brief, a labeled durable source, a consequential unsettled decision, or justified omission.
+- **Falsifying proof.** Evidence must be capable of exposing failure in the promised result. Tests, screenshots, schemas, and reports prove only the behavior they actually exercise.
 
-## 1. Locate the commission and its sources
+The four required sections—`Outcome`, `Success`, `Evidence Required`, and `Boundaries`—form the **Contract Core**. A complete handoff also identifies the target, authority, necessary durable context, source status, and any adopted parent topology. Protect **route freedom** so a fresh Agent can act without inheriting candidate approaches as commands.
 
-Ground the commission in the conversation and named artifacts. Locate the target, adopted user decisions, applicable repository or governance authority, and material source information. Inspect the workspace only far enough to judge the contract boundary and find the sources needed for a durable handoff.
+## 1. Recover the commission
 
-A source may mix adopted decisions, confirmed facts, candidate approaches, critiques, and superseded material. Preserve each item's actual status. Retaining or linking a source does not make all of it binding.
+Use the conversation, named artifacts, and enough workspace evidence to identify the result and authority. Choose one coherent change in user or system reality with independent value and an honest verdict. Complexity does not split a result; independent outcomes may.
 
-Treat source information as **material** when losing it could change the result, verdict, proof, boundary, target, or authority, or erase a known dependency, concrete risk mechanism, compatibility fact, or costly investigation that a fresh Agent would otherwise need to repeat.
+When adopted facts support one reasonable result, synthesize it without asking the user to restate the source as Brief headings. Ask only when materially different results remain possible or several unrelated results need separate acceptance.
 
-Distinguish safely discoverable unknowns from completed investigation. Leave an unknown root cause, implementation location, internal structure, tool, or architecture to the executing Agent when it can be discovered safely. Do not discard an already confirmed material fact merely because another Agent could rediscover it.
+Classify from the visible commission before opening a reference. Keep unrelated independently acceptable results on the main path and ask which result to commission. Read a conditional reference only when its branch is already present:
 
-If the user requested a different product, or material information exists only in a transient source and cannot be preserved within the authorized handoff, stop after explaining the smallest disposition decision still needed.
+| Branch | Reference |
+| --- | --- |
+| The commission already states one shared result whose seam can fail after its local results pass, or a child explicitly tied to an approved parent | Read [`references/mission-zero.md`](references/mission-zero.md). |
+| A named source mixes authority states, holds material completed investigation, or is temporary while holding the only copy of material information | Read [`references/source-fidelity.md`](references/source-fidelity.md). |
 
-## 2. Choose the result
+Material facts stated directly in the current conversation can enter the Brief's `Context` without opening a source branch.
 
-First decide from the visible commission whether it explicitly concerns an adopted or pending overall result that may fail after local results pass, or a child explicitly tied to a Mission 0. If and only if that condition is true, read [`references/mission-zero.md`](references/mission-zero.md) before deciding or writing. Never open it preemptively for source inspection, ordinary single-result work, or several unrelated results.
+This step is complete when one result is identifiable and any required integration topology has been adopted.
 
-Choose one **result**: a coherent change in user or system reality that has independent value and can receive an honest verdict. Files, components, activities, phases, and test counts are execution work unless they define that observable change.
+## 2. Settle consequential decisions
 
-- If no observable result is stated, ask what should become true for the user or system, or place the request under an existing Mission.
-- If one result owns the destination and verdict, continue with it regardless of size or complexity.
-- If several results can be accepted independently, ask which one to commission unless the user has stated or is considering an overall result that could still fail after every local result passes.
-  In that case, make the candidate integration topology explicit. Do not write the parent Brief until the user adopts it.
+Collect the adopted user decisions and applicable external authority that shape the Contract Core. Preserve the minimum meaning needed for execution and review; a source need not use Brief terminology.
 
-Do not open the Mission 0 reference or manufacture a candidate parent merely because several unrelated results were grouped together or the user requested a parent label. First establish that a genuine overall result is stated or under consideration.
+A retained source keeps its status. Preserve confirmed dependencies, compatibility facts, causal risks, and costly findings. Leave root causes, edit locations, tools, internal structure, and product-neutral architecture to execution when they are safely discoverable.
 
-A parent label or a large scope does not establish an integrated result. Read the Mission 0 reference for a later child explicitly tied to an approved parent as well.
+When a handoff names an unavailable Authority Source but states the applicable constraints, preserve both the constraints and source identity. Stop only for a known authority conflict or an unsettled choice whose alternatives would change the Contract Core, authority, adopted topology, or whether material information will survive the handoff. Do not resolve a conflict by silently dropping requested content. For an external execution gate, identify who can authorize it and what evidence would establish that it occurred.
 
-This step is complete when one commission boundary is selected or the user can see the smallest topology decision still needed.
+This step is complete when writing the Brief will not invent product policy, bypass authority, or erase non-recoverable knowledge.
 
-## 3. Settle the contract
+## 3. Write the current contract
 
-Collect the adopted user decisions and applicable external authority that determine the result. Include binding content only when it follows from them, preserves their minimum necessary meaning, defines task-appropriate proof, or points to a necessary located Authority Source.
+Use the Contract Core and add only useful optional sections: `Intent`, `Non-goals`, `Context`, `Execution Authority`, `Parent Mission`, or `Result Boundaries`.
 
-Paraphrase faithfully. Preserve who or what acts on what, the direction of important relationships, confirmed scope and granularity, and the original proof burden.
+Keep `Success` about facts that must hold and `Evidence Required` about how to challenge them. Scale evidence to consequence and claim breadth. A population claim needs exhaustive coverage or representative classes plus relevant boundaries. Reading, judgment, or use requires a realistic attempt. Reserve human participation for a contracted decision or experience an Agent cannot supply. Evidence must support `PASSED`, `FAILED`, or `INCONCLUSIVE`.
 
-Discussion, examples, critiques, risk hypotheses, and proposed solutions remain non-binding until adopted. They may remain useful in a labeled Reference Source; preservation never promotes them into requirements, authorization, or a mandatory route.
+Treat a platform, mode, consumer, or interaction that the user says must remain unchanged as a compatibility baseline and require proportionate regression evidence.
 
-Keep repository contracts, compatibility commitments, and governance decisions in force. When they conflict with the requested commission and no authorized supersession exists, expose the conflict before writing.
+Draft a clean current contract from facts with a current adopted effect. Earlier and candidate routes remain only in any durable labeled source that already preserves them. An explicit prohibition is a current adopted constraint, not the fact that a proposal was rejected or superseded. The Brief should read as if authored directly from the final decisions; include a prior route's identity only when it carries a current compatibility obligation, explicit prohibition, or authority boundary.
 
-Treat current implementation as a fact to change when the Mission requires it, not as authority over the Mission.
-
-Ask for a user decision only when different answers would materially change the outcome, success meaning, proof, boundary, topology, authority, or durable disposition of otherwise transient material information. Display any proposed synthesis that needs adoption in concrete language. When stopping for that decision, state in the main response every materially changed contract dimension; do not give one representative consequence or leave the rest only in an uncertainty field or audit record. For an unresolved approval, review, or gate, explicitly say whether adopting it would change who authorizes execution and what evidence must prove that the gate occurred.
-
-Delegate product-neutral architecture, tools, implementation choices, safely discoverable unknowns, and facts already available in a durable located source.
-
-The contract is settled when a fresh Agent can identify the result, meaningful failure, proof obligations, hard boundaries, target, and granted authority without inventing product policy.
-
-## 4. Write, compress, and preserve traceability
-
-Use this core structure:
+Example:
 
 ```markdown
-# Mission Brief: <observable result>
+# Mission Brief: Safari users can submit the login form with Enter
 
 ## Outcome
-<What becomes possible or true at the user or system boundary.>
+Safari users can submit valid login credentials by pressing Enter in the login form.
 
 ## Success
-<The minimum falsifiable facts that distinguish success from a plausible but wrong result.>
+- Enter submits the same credentials and produces the same visible result as the submit button.
+- Invalid credentials remain visible as a failed login rather than appearing to succeed.
+- Chrome keyboard submission and mouse-button submission remain unchanged.
 
 ## Evidence Required
-<The task-appropriate evidence needed for an honest verdict.>
+- Exercise valid and invalid Enter submission in Safari.
+- Repeat the corresponding keyboard flow in Chrome and the button flow in both browsers.
 
 ## Boundaries
-<The hard limits that change valid execution.>
+- Preserve the existing authentication and error-message semantics.
 ```
 
-Add a section only when it carries binding content or necessary handoff information:
+If two unadopted choices would produce different authorization semantics, state the affected part of the contract and ask which choice is adopted; do not write the Brief until that decision exists.
 
-- `Intent`: an adopted purpose that adds meaning beyond `Outcome`.
-- `Non-goals`: confirmed adjacent exclusions that change valid execution.
-- `Context`: necessary target facts and durable pointers, labeled as Authority Sources or Reference Sources according to their actual status.
-- `Execution Authority`: a commission-specific grant or restriction that changes ambient authority.
+This step is complete when the Contract Core is falsifiable, each material item has one home, and no optional route has become a command.
 
-Keep `Success` about facts that must hold and `Evidence Required` about how to challenge them. Evidence must address the promised result rather than substitute convenient proxy checks.
+## 4. Save and hand off
 
-When a claim spans a population, numeric domain, state space, or compatibility surface, require evidence that challenges representative classes and relevant boundaries unless the supported domain can be exercised exhaustively.
+Return the Brief inline when requested or when writes are unavailable. Otherwise use the requested path, then an established repository convention, then `docs/missions/<outcome-slug>/brief.md` at the documentation boundary that owns the result.
 
-For claims about reading, judgment, or use, have the executing Agent exercise the finished result under realistic conditions and record concrete success, failure, and uncertainty. Structural and automated checks support the behaviors they actually exercise.
+Update a file only for the same commission and give each distinct result a stable outcome slug. Use repository-relative links and keep necessary context in a durable repository location. Create a companion context record only for material content that lacks another durable home.
 
-Use the least costly evidence capable of falsifying each claim, increasing strength with consequence, irreversibility, cross-system reach, or genuinely subjective judgment. The eventual evidence must support an honest `PASSED`, `FAILED`, or `INCONCLUSIVE`.
+For Mission 0 and child storage, follow the loaded topology reference.
 
-Human participation is reserved only when the contracted claim itself depends on a human decision or experience an Agent cannot genuinely supply, not when the Agent is merely uncertain or routine validation is difficult. Otherwise the Agent continues feasible validation and reports `INCONCLUSIVE` if a decisive fact remains unavailable.
+Finish with a **blind handoff** check:
 
-Preserve an externally fixed mechanism when changing it would alter user-facing behavior, compatibility, collaboration, or governance. Otherwise describe the observable result and leave the route open.
+1. Can a fresh Agent restate the Contract Core?
+2. Can it locate necessary context and distinguish Authority Sources from Reference Sources?
+3. Can it explain what would justify `PASSED`, `FAILED`, or `INCONCLUSIVE`?
+4. Can it choose a viable route without relying on hidden authoring context?
 
-Treat an explicitly named already-working platform, mode, consumer, or interaction as a compatibility baseline when the user contrasts it with the failure or says it must remain unchanged. Preserve that baseline in `Success` or `Boundaries` and require proportionate regression evidence; do not discard it as background merely because it is not the broken path.
-
-Before finalizing, give each material source item one honest disposition: express its adopted effect in the Brief; preserve it in a durable labeled source; expose it as a consequential unsettled decision; or omit it because it is irrelevant, rejected, superseded, or safely discoverable without erasing completed investigation. Do not emit an inventory unless it helps the handoff.
-
-When a durable pointer is sufficient for material non-binding content, name each retained category and its status in the pointer, such as candidate approaches or an advisory investigation order. Do not copy the individual routes or steps merely to make that coverage visible.
-
-When compressing a confirmed causal finding, preserve the actor or trigger, the affected object, the mechanism or relationship, and the material consequence needed to understand the risk. A category label or partial paraphrase is not enough when it erases why the failure recurs.
-
-When necessary material exists only in a temporary path, attachment, or source conversation, preserve the minimum necessary content in `Context` or an established durable repository record. Create a separate context record only when the user requested a Mission Package or repository convention calls for one; otherwise request the smallest disposition decision that prevents silent loss.
-
-For a Mission 0, do not use the parent `Context` as a substitute home for confirmed child-local contracts. Follow the Mission 0 reference and keep the parent unwritten until their durable disposition is explicitly settled. While that disposition blocks writing, do not emit a candidate parent, parent-section outline, or other draft-like substitute for the unwritten Brief; identify the blocked commission and ask only for the smallest disposition decision.
-
-State the current contract, not implementation phases, ownership plans, commands, counts, hashes, completed checks, rejected alternatives, or generic safety prose. Rejected or superseded material may shape the synthesis, but do not mention it by name or through generic historical disclaimers; retain an identity only when current compatibility, prohibition, or authority depends on it.
-
-Keep unadopted candidate approaches in a labeled durable source. Do not copy or paraphrase them into `Boundaries`, `Non-goals`, or a negative requirements list merely to say that they remain optional.
-
-Before saving, compare the Brief against every source item classified as candidate, rejected, or superseded. If a specific route name or identifying paraphrase still appears in `Boundaries`, `Non-goals`, or another contract clause only to disclaim, defer, or contrast it, remove it and rely on the labeled durable pointer plus one generic statement that the route remains open. Keep that identity only when the current contract truly depends on a compatibility obligation, explicit prohibition, or authority boundary attached to it.
-
-Do not add `Context` merely to cite the current user conversation, an empty workspace, the absence of a repository convention, or an implementation fact already delegated for safe discovery.
-
-Mission Brief owns the commission. Authority Sources own applicable decisions and contracts; Reference Sources own useful non-binding context; working plans own route, progress, discoveries, and intermediate evidence; Closure Reviews own actual evidence, counterevidence, verdict, and uncertainty.
-
-Those records may evolve without silently redefining the Brief.
-
-Delete any clause whose removal would not change the result, verdict, proof, hard boundaries, authority, approved topology, necessary target location, or ability to recover material handoff context.
-
-## 5. Save and hand off
-
-Return the Brief inline when requested or when writes are unavailable. Otherwise honor a requested path, then an established repository convention, then use `docs/missions/<outcome-slug>/brief.md` at the relevant repository or package documentation boundary.
-
-Update an existing file only for the same commission; give a distinct result a distinct directory. Do not encode phases, owners, status, dates, or revision numbers in the Mission directory name.
-
-Mission 0 is the parent role of the same `brief.md` artifact, not a global `mission-0.md` file type. Within one documentation boundary, store commissioned children under `children/<child-outcome-slug>/brief.md`, link each parent Result Boundary to its child, and link each child back to its Parent Mission. Across package boundaries, keep each Brief at the boundary that owns its result and use explicit bidirectional links instead of forcing physical nesting.
-
-In saved artifacts, write repository-relative links that resolve from the containing document. Never persist a scratch-workspace, temporary-directory, or evaluation-run absolute path as a source, parent, or child link.
-
-Do not create empty child directories or mandatory companion files. Produce the commission, not its implementation or progress record. Revise the Brief later only when the contract itself changes.
-
-Finish with a **blind handoff** check. Without the source conversation, a capable fresh Agent must be able to:
-
-- recover the outcome, meaningful failure, proof obligations, boundaries, target, and authority;
-- locate necessary durable context and distinguish Authority Sources from Reference Sources;
-- recover material known dependencies and risks without treating optional approaches as commands; and
-- choose a viable route not copied from the authoring context.
-
-Compare the handoff with the material content of named sources, not merely with the Brief in isolation. Require coverage and traceability, not sentence-by-sentence reconstruction.
+The handoff is complete when all four answers are yes.

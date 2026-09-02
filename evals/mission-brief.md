@@ -4,9 +4,9 @@ This maintainer contract binds the executable Eval Pack in [`mission-brief-pack.
 
 ## Candidate and source identity
 
-Each run must record the exact three-file Mission Brief runtime digest, Git revision when available, Eval Pack digest, executor and judge model identities, isolation result, and complete evidence aggregate. A Git revision that does not include a dirty candidate is insufficient on its own; the runtime digest is authoritative for the evaluated bundle. The repository runner extends the platform judge packet with a complete final workspace-directory inventory and binds that extension into the recorded harness identity.
+Each run must record the exact four-file Mission Brief runtime digest, Git revision when available, Eval Pack digest, executor and judge model identities, isolation result, and complete evidence aggregate. The runtime is `SKILL.md`, UI metadata, and the two conditionally loaded references; maintainer files remain outside it. A Git revision that does not include a dirty candidate is insufficient on its own; the runtime digest is authoritative for the evaluated bundle. The repository runner extends the platform judge packet with a complete final workspace-directory inventory and binds that extension into the recorded harness identity.
 
-The historical regression source set in [`fixtures/mb-000-original-feedback-regression/`](./fixtures/mb-000-original-feedback-regression/) is authentically incomplete. Baseline runs may prove behavior against the available screenshot and synthetic cases, but cannot claim to reproduce the missing four-artifact conversation until those originals are supplied.
+The historical regression source set in [`fixtures/mb-000-original-feedback-regression/`](./fixtures/mb-000-original-feedback-regression/) is authentically incomplete, so exact historical reproduction is `INCONCLUSIVE` until the missing originals are supplied. The executable baseline is explicitly a synthetic source-preservation case: it may compare behavior at the historical revision, but cannot close or stand in for the unavailable four-artifact conversation.
 
 ## Executable matrix
 
@@ -40,6 +40,8 @@ The historical regression source set in [`fixtures/mb-000-original-feedback-regr
 
 The static Pack contains 30 behavior cases, 3 Loader cases, and 35 turns. The release run adds two fresh-session blind handoffs derived from frozen candidate outputs.
 
+Progressive disclosure is part of the observable runtime contract. Simple cases `c-10000001` and `c-1000001d` must not read either conditional reference. Mixed durable source cases `c-10000016`, `c-10000017`, and `c-1000001e`, plus transient source case `c-10000018`, must read `references/source-fidelity.md`. Because the upstream `runtime_files_read` field records only the single reference named by its v1 Skill contract, the release verifier also derives successful reference reads from retained `access_events`. Mission 0 routing remains governed separately by its case assertions.
+
 ## Durable run shape
 
 Run evidence lives at `evals/runs/mission-brief/<run-id>/` and includes the platform report, retained Eval Pack and Skill contract, per-case raw turns and filesystem manifests, a generated `run-contract.md`, and `evidence-manifest.json`. Baseline evidence uses a separate run ID bound to `8adf782bf61e7051f9afe14d2e25166790e8bdc3`.
@@ -52,7 +54,7 @@ The two dynamic blind runs must retain:
 - the hidden-authoring exclusions applied;
 - a semantic grade for contract recovery, source-status recovery, known risks, optional routes, and implementation freedom.
 
-For the traceability-aware handoff, an implementation route passes the independence check only when its controlling mechanism differs materially from the candidate mechanisms preserved in the source. Rewording, reordering, or choosing one of the named candidate routes is not independent.
+For the traceability-aware handoff, confirmed findings must remain non-binding Reference context unless a cited adopted decision or applicable Authority Source gives them binding effect. The reader must not invent a user decision for a representative sample that the contract leaves to execution. An implementation route passes the independence check only when its controlling mechanism differs materially from the candidate mechanisms preserved in the source. Rewording, reordering, or choosing one of the named candidate routes is not independent.
 
 ## Release gate
 

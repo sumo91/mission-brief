@@ -63,7 +63,7 @@ These limits do not contradict any observed scenario and did not create an unjus
 
 ## Evidence index
 
-- Mission contract: `docs/mission-briefs/mission-review-mvp.md`
+- Mission contract: `docs/missions/reliable-mission-review/brief.md`
 - Offline preflight: `docs/reviews/2026-08-16-mission-review-v0-offline-preflight.md`
 - Maintainer evaluation contract: `evals/mission-review.md`
 - Behavior run contract: `evals/runs/mission-review-v0/run-contract.md`
