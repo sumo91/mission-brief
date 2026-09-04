@@ -12,13 +12,13 @@ _Avoid_: Task, project, work item
 The normative artifact that records a Mission's outcome, success meaning, proof obligations, hard boundaries, and commission-specific authority.
 _Avoid_: Final plan, implementation brief, requirements summary
 
-**Integration Mission (Mission 0)**:
-A Mission Brief in the parent role, owning an irreducible integration result, cross-result invariants, seam evidence, and concise result boundaries. `Mission 0` remains the compatible artifact title; the role expresses result topology.
-_Avoid_: Phase 0, master plan, program folder
+**Parent Mission**:
+A Mission Brief in the parent role, owning an irreducible integration result, cross-result invariants, seam evidence, and concise result boundaries. The artifact title is `# Mission Brief: <outcome>`, the same as any other Brief. The parent role is marked by `Result Boundaries`, not a numbered name. When reading an existing Brief, treat `# Mission 0:` as a legacy parent-role title.
+_Avoid_: Mission 0, Phase 0, root, master plan, program folder
 
 **Child Mission**:
-An independently verifiable Mission commissioned within a Result Boundary of an adopted Mission 0 while preserving the applicable parent invariants.
-_Avoid_: Subtask, implementation phase
+An independently verifiable Mission commissioned within a Result Boundary of an adopted Parent Mission while preserving the applicable parent invariants. The artifact title is `# Mission Brief: <outcome>`; the child role is marked by a `Parent Mission` link.
+_Avoid_: Subtask, Mission 1, sub, implementation phase
 
 **Authority Source**:
 A user decision, repository contract, governance decision, or other applicable source whose adopted content may bind a Mission.

@@ -31,10 +31,10 @@ A candidate passes only when the applicable behaviors below hold:
 - **Authority:** surface unresolved conflicts with repository contracts, compatibility commitments, or authorized decisions. A later Brief cannot silently narrow or supersede them.
 - **Evidence:** separate success facts from how they will be challenged. Evidence must address the promised result rather than substitute convenient proxy checks, scale with consequence, permit `INCONCLUSIVE`, and remain owned by the Agent unless a genuinely human-only judgment is part of the claim.
 - **Topology:** several independent results do not automatically form a parent. When the user has adopted an overall result that can still fail after local results pass, make that integration result and its seams explicit before commissioning it. Different defensible decompositions may pass when they protect the same user outcome.
-- **Mission 0:** load the parent reference only for a confirmed or pending integration commission or a child tied to one. A parent owns integration value, cross-result invariants, seam evidence, program boundaries, and concise result boundaries—not child implementation plans or copied local contracts.
+- **Parent topology:** load the parent-child reference only for a confirmed or pending integration commission or a child tied to one. A parent owns integration value, cross-result invariants, seam evidence, program boundaries, and concise result boundaries—not child implementation plans or copied local contracts.
 - **Continuity:** preserve applicable parent promises in later child commissions. Keep omitted confirmed child contracts in a durable authoritative source or leave them visibly unsettled for later confirmation.
 - **Blind handoff:** a capable fresh Agent can recover the result, failure conditions, proof obligations, hard boundaries, target, and granted authority without the source conversation, while retaining freedom to choose a viable route.
-- **Mission storage:** a Mission uses `<documentation-boundary>/docs/missions/<outcome-slug>/brief.md`. Mission 0 is the parent role of that same artifact, not a separate global file type; physical nesting may mirror same-boundary topology, while explicit links carry topology across package boundaries.
+- **Mission storage:** a Mission uses `<documentation-boundary>/docs/missions/<outcome-slug>/brief.md`. A parent is the parent role of that same artifact, titled `# Mission Brief: <outcome>` and marked by `Result Boundaries`, not a separate global file type; physical nesting may mirror same-boundary topology, while explicit links carry topology across package boundaries.
 
 ## Active scenarios
 
@@ -126,7 +126,7 @@ A candidate passes only when the applicable behaviors below hold:
 
 **Expected C:** Produce one commission without treating detail or difficulty as proof of multiple results. Population-level reconciliation may be combined with representative and boundary behavioral challenges; topology does not itself require exhaustive execution of every behavior.
 
-### 11. Mission 0 proves the seams
+### 11. Parent Mission proves the seams
 
 **Conversation:** The user adopts the overall claim that the same authorized change set survives preview, approval, publication, and audit without identity substitution. The three adopted result boundaries are concrete: preview inspects one identified change set without publishing it; approval accepts or rejects that same set through an authorized reviewer; publication applies only that approved set and records it for audit.
 
@@ -136,15 +136,15 @@ A candidate passes only when the applicable behaviors below hold:
 
 ### 12. Parent continuity survives later child work
 
-**Variant A — durable source:** An approved Mission 0 names concise result boundaries and a durable authoritative requirements record containing confirmed child-local contracts.
+**Variant A — durable source:** An approved Parent Mission names concise result boundaries and a durable authoritative requirements record containing confirmed child-local contracts.
 
 **Prompt A:** `$mission-brief 为其中已经确认的预览结果单独创建子 Mission Brief。`
 
-**Expected A:** Create one self-contained child Brief, preserve applicable parent invariants, point to the authoritative source when needed, and leave Mission 0 unchanged.
+**Expected A:** Create one self-contained child Brief, preserve applicable parent invariants, point to the authoritative source when needed, and leave the parent unchanged.
 
-**Variant B — chat-only child contract:** The approved Mission 0 deliberately contains only concise preview, approval, and publication boundaries. Confirmed child-local obligations—invalid preview inputs are visible, approval rejections retain a reason, and publication failures can roll back—exist only in the authoring conversation and do not belong in the parent. The user has not decided whether to preserve them durably or leave them for later reconfirmation.
+**Variant B — chat-only child contract:** The approved Parent Mission deliberately contains only concise preview, approval, and publication boundaries. Confirmed child-local obligations—invalid preview inputs are visible, approval rejections retain a reason, and publication failures can roll back—exist only in the authoring conversation and do not belong in the parent. The user has not decided whether to preserve them durably or leave them for later reconfirmation.
 
-**Prompt B:** `$mission-brief 先保存 Mission 0，子 Mission 以后再说。`
+**Prompt B:** `$mission-brief 先保存父级 Mission，子级 Mission 以后再说。`
 
 **Expected B:** Do not silently discard the child contracts or copy them into the parent. Before saving, ask whether to preserve them in a durable authoritative source or leave them unsettled for later child confirmation.
 
@@ -216,11 +216,11 @@ Give a generated Brief and its target workspace to a capable fresh Agent. Ask it
 
 **Expected A:** Save it at `docs/missions/<outcome-slug>/brief.md` without an empty `children/` directory or mandatory context record.
 
-**Variant B — same-boundary Mission 0:** One package owns an adopted integration result in which the same authorized change set retains identity and authority from Preview to Approval. The commissioned Preview child inspects an identified set without applying it and exposes invalid or unauthorized input; the Approval child accepts or rejects that unchanged set through an authorized reviewer and records rejection reasons.
+**Variant B — same-boundary parent:** One package owns an adopted integration result in which the same authorized change set retains identity and authority from Preview to Approval. The commissioned Preview child inspects an identified set without applying it and exposes invalid or unauthorized input; the Approval child accepts or rejects that unchanged set through an authorized reviewer and records rejection reasons.
 
-**Expected B:** Store the parent as `<package>/docs/missions/<integration-slug>/brief.md`; identify its role with a `# Mission 0:` title and `Result Boundaries`; and use `children/<child-slug>/brief.md` plus child `Parent Mission` links for commissioned children. Mission 0 is not a global `mission-0.md` file type.
+**Expected B:** Store the parent as `<package>/docs/missions/<integration-slug>/brief.md`; identify its role with a `# Mission Brief:` title and `Result Boundaries`; and use `children/<child-slug>/brief.md` plus child `Parent Mission` links for commissioned children. A parent is not a global `mission-0.md` file type.
 
-**Variant C — cross-package Mission 0:** The integration result spans independently owned packages. The parent preserves one authorized change set through preview, approval, and publication; each package-owned child has a concrete commissioned result at its own boundary.
+**Variant C — cross-package parent:** The integration result spans independently owned packages. The parent preserves one authorized change set through preview, approval, and publication; each package-owned child has a concrete commissioned result at its own boundary.
 
 **Expected C:** Keep the parent at the lowest common documentation boundary and each child at its owning package boundary. Use explicit bidirectional links rather than forcing physical nesting to override ownership.
 

@@ -2,7 +2,7 @@
 
 ## Outcome
 
-`mission-brief` continues to produce a compact, stable result contract while ensuring that material source information remains durably recoverable with its actual authority status. Mission 0 and child Missions use one predictable storage model that expresses result topology without turning folders into implementation phases or ownership fiction.
+`mission-brief` continues to produce a compact, stable result contract while ensuring that material source information remains durably recoverable with its actual authority status. Parent and child Missions use one predictable storage model that expresses result topology without turning folders into implementation phases or ownership fiction.
 
 ## Success
 
@@ -10,7 +10,7 @@
 - Adopted decisions and applicable authority retain their necessary meaning, while retaining or linking mixed source material does not promote candidate approaches, critiques, or recommendations into binding content.
 - Material known dependencies, concrete risk mechanisms, compatibility facts, and costly completed investigation receive a durable disposition instead of disappearing as implementation detail; safely discoverable unknowns remain delegated.
 - A temporary path, attachment, or source conversation is not treated as a durable handoff when material information exists only there.
-- A standalone Mission defaults to `docs/missions/<outcome-slug>/brief.md`. Mission 0 uses the same `brief.md` artifact with a visible parent role and `Result Boundaries`; commissioned children are nested only within one documentation boundary, while cross-boundary topology uses explicit links.
+- A standalone Mission defaults to `docs/missions/<outcome-slug>/brief.md`. A parent uses the same `brief.md` artifact with `# Mission Brief:` and `Result Boundaries`; commissioned children are nested only within one documentation boundary, while cross-boundary topology uses explicit links.
 - Small settled Missions remain compact and do not acquire mandatory context records, source inventories, child directories, implementation plans, or review ceremony.
 - A fresh Agent can recover the contract, locate material context, distinguish Authority Sources from Reference Sources, identify optional routes, and propose a viable implementation without the authoring conversation.
 
@@ -25,7 +25,7 @@
 
 ## Boundaries
 
-- Preserve explicit-only invocation, outcome-centered commissioning, authority-conflict handling, proportionate evidence, Mission 0 seam semantics, and implementation-route freedom.
+- Preserve explicit-only invocation, outcome-centered commissioning, authority-conflict handling, proportionate evidence, parent seam semantics, and implementation-route freedom.
 - Do not turn Mission Brief into a complete plan, knowledge archive, sentence-by-sentence source map, fixed-length template, or mandatory Mission Package folder set.
 - Keep maintainer context, ADRs, evals, fixtures, runs, and reviews outside the runtime Skill bundles.
 - Preserve frozen historical fixtures as captured evidence; migrate live documentation references without rewriting historical inputs merely to match the new convention.

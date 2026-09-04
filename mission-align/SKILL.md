@@ -37,9 +37,9 @@ Assess three dimensions separately. A Mission candidate is one independently ver
 
 - one Mission when one independently verifiable result owns the value and verdict, regardless of size, duration, components, teams, or implementation phases;
 - several independent Missions when several results provide independent value and no overall result needs its own verdict; or
-- Mission 0 with Child Missions only when independently verifiable result boundaries also serve an irreducible overall result that could still fail after every local result passes.
+- a Parent Mission with Child Missions only when independently verifiable result boundaries also serve an irreducible overall result that could still fail after every local result passes.
 
-For a possible Mission 0, test a concrete “all children pass, whole still fails” scenario. Show the candidate overall result, result boundaries, cross-result invariants, and unsettled topology choice. Keep it a proposal until the user adopts it.
+For a possible parent, test a concrete “all children pass, whole still fails” scenario. Show the candidate overall result, result boundaries, cross-result invariants, and unsettled topology choice. Keep it a proposal until the user adopts it.
 
 A class, file, command, activity, phase, or test count does not by itself establish a Mission result. Small, clear, immediate work may be a valid Mission while still not benefiting enough from Brief ceremony; explain that distinction when it changes the recommendation.
 

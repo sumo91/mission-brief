@@ -1,13 +1,15 @@
-# Integration Mission (Mission 0)
+# Parent and Child Missions
 
-Use this branch for an adopted overall result that can still fail after every local result passes, or for a child explicitly commissioned within such a parent. `Mission 0` remains the compatible parent-role name.
+Use this branch for an adopted overall result that can still fail after every local result passes, or for a child explicitly commissioned within such a parent.
+
+Every Brief uses the same title form `# Mission Brief: <outcome>`. Parent and child are roles, not numbered names and not a separate file type. When reading an existing Brief, treat `# Mission 0:` as a legacy parent-role title with the same meaning.
 
 ## Adopt the result topology
 
 Before writing a new parent, show the user a compact proposal containing:
 
 ```text
-Integration result: <overall result not proved by local success alone>
+Parent result: <overall result not proved by local success alone>
 
 Result boundaries:
 - <independently acceptable result>
@@ -20,15 +22,19 @@ Write the parent after the user adopts the integration result, boundaries, and c
 
 ## Write the parent
 
-Use `# Mission 0: <integration result>` and add `## Result Boundaries` after the Contract Core. Center parent `Success` and evidence on the identity, authority, state, continuity, or other seam that creates integrated value.
+Use `# Mission Brief: <outcome>` and add `## Result Boundaries` after the Contract Core. Center parent `Success` and evidence on the identity, authority, state, continuity, or other seam that creates integrated value.
 
 A parent clause belongs only when violating it would falsify the integration result. Child-local success, evidence, and design belong to self-contained child Briefs. Keep confirmed child contracts that are not yet commissioned in a durable Authority Source; keep useful non-binding plans and investigation in Reference Sources.
 
 A later child preserves applicable parent invariants. Leave an already-linked parent unchanged unless its contract, adopted topology, or a required link actually changes.
 
+## Write the child
+
+Use the same `# Mission Brief: <outcome>` title. Add `## Parent Mission` with a repository-relative link to the parent Brief. Preserve applicable parent invariants; do not copy the parent's local child contracts or invent implementation order.
+
 ## Store the topology
 
-Mission 0 is the parent role of the same `brief.md` artifact:
+The parent is the parent role of the same `brief.md` artifact:
 
 ```text
 docs/missions/<integration-outcome-slug>/brief.md

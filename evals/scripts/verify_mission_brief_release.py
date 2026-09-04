@@ -30,7 +30,7 @@ MAIN_PACK = REPOSITORY / "evals" / "mission-brief-pack.json"
 EXPECTED_RUNTIME_FILES = [
     "SKILL.md",
     "agents/openai.yaml",
-    "references/mission-zero.md",
+    "references/parent-child.md",
     "references/source-fidelity.md",
 ]
 SOURCE_FIDELITY_REQUIRED = {

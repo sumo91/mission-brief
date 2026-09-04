@@ -12,8 +12,8 @@
     "skill_name": "mission-brief",
     "display_name": "Mission Brief",
     "explicit_invocation": "$mission-brief",
-    "conditional_runtime_reference": "references/mission-zero.md",
-    "runtime_reference_finding_name": "mission-zero-reference",
+    "conditional_runtime_reference": "references/parent-child.md",
+    "runtime_reference_finding_name": "parent-child-reference",
     "runtime_reference_roots": [
       "references"
     ],
@@ -329,7 +329,7 @@
       "suite": "behavior",
       "turns": [
         {
-          "prompt": "已经采用整体结果：同一个获授权的变更集必须从预览、审批、发布到审计保持身份和授权连续。三个结果边界也已采用：预览让操作者核对一个具名变更集但不发布；审批让授权审查者接受或拒绝同一个变更集；发布只让已批准的同一变更集生效并进入审计。$mission-brief 创建并保存这个 Mission 0，子结果以后分别立项。",
+          "prompt": "已经采用整体结果：同一个获授权的变更集必须从预览、审批、发布到审计保持身份和授权连续。三个结果边界也已采用：预览让操作者核对一个具名变更集但不发布；审批让授权审查者接受或拒绝同一个变更集；发布只让已批准的同一变更集生效并进入审计。$mission-brief 创建并保存这个父级 Mission，子结果以后分别立项。",
           "assertions": {
             "artifact_count": 1,
             "runtime_reference": "required",
@@ -339,7 +339,7 @@
       ],
       "fixtures": [],
       "rubric": [
-        "The artifact uses a Mission 0 title, a uniform brief.md path, and concise Result Boundaries.",
+        "The artifact uses a Mission Brief title, a uniform brief.md path, and concise Result Boundaries.",
         "Success and evidence challenge identity and authorization across seams rather than union child tests.",
         "No child, milestone, implementation order, or empty children directory is created."
       ]
@@ -349,7 +349,7 @@
       "suite": "behavior",
       "turns": [
         {
-          "prompt": "已批准 docs/missions/authorized-change-set/brief.md 中的 Mission 0，requirements/approved-child-contracts.md 是已确认 child 合同的权威来源。$mission-brief 为其中的预览结果创建并保存一个 child Mission Brief。",
+          "prompt": "已批准 docs/missions/authorized-change-set/brief.md 中的父级 Mission，requirements/approved-child-contracts.md 是已确认 child 合同的权威来源。$mission-brief 为其中的预览结果创建并保存一个 child Mission Brief。",
           "assertions": {
             "artifact_count": 1,
             "runtime_reference": "required",
@@ -360,7 +360,7 @@
       "fixtures": [
         {
           "path": "docs/missions/authorized-change-set/brief.md",
-          "content": "# Mission 0: Authorized change-set continuity\n\n## Outcome\nThe same authorized change set remains identifiable through preview, approval, publication, and audit.\n\n## Result Boundaries\n- Preview — [future child](./children/preview/brief.md)\n- Approval\n- Publication\n\n## Success\nIdentity and authority remain continuous across seams.\n\n## Evidence Required\nChallenge each transition and the integrated audit trail.\n\n## Boundaries\nChild-local contracts remain in requirements/approved-child-contracts.md.\n"
+          "content": "# Mission Brief: Authorized change-set continuity\n\n## Outcome\nThe same authorized change set remains identifiable through preview, approval, publication, and audit.\n\n## Result Boundaries\n- Preview — [future child](./children/preview/brief.md)\n- Approval\n- Publication\n\n## Success\nIdentity and authority remain continuous across seams.\n\n## Evidence Required\nChallenge each transition and the integrated audit trail.\n\n## Boundaries\nChild-local contracts remain in requirements/approved-child-contracts.md.\n"
         },
         {
           "path": "requirements/approved-child-contracts.md",
@@ -378,7 +378,7 @@
       "suite": "behavior",
       "turns": [
         {
-          "prompt": "父级已批准：同一获授权变更集贯穿预览、审批和发布；三个边界分别是预览不发布、审批只接受或拒绝同一变更集、发布只应用已批准变更。已确认的 child 本地义务只存在于这段对话：预览必须显示非法输入，审批必须记录拒绝理由，发布失败必须可回滚。父级应保持简洁，仓库没有权威文件保存这些 child 义务；我还没有决定应把它们持久保存，还是留待 child 立项时重新确认。$mission-brief 先保存 Mission 0，child 以后再说。",
+          "prompt": "父级已批准：同一获授权变更集贯穿预览、审批和发布；三个边界分别是预览不发布、审批只接受或拒绝同一变更集、发布只应用已批准变更。已确认的 child 本地义务只存在于这段对话：预览必须显示非法输入，审批必须记录拒绝理由，发布失败必须可回滚。父级应保持简洁，仓库没有权威文件保存这些 child 义务；我还没有决定应把它们持久保存，还是留待 child 立项时重新确认。$mission-brief 先保存父级 Mission，child 以后再说。",
           "assertions": {
             "artifact_count": 0,
             "runtime_reference": "required",
@@ -388,7 +388,7 @@
       ],
       "fixtures": [],
       "rubric": [
-        "The response protects confirmed child-local contracts from silent loss without copying them into Mission 0.",
+        "The response protects confirmed child-local contracts from silent loss without copying them into the parent.",
         "It asks whether to preserve them in a durable Authority Source or leave them unsettled for later confirmation.",
         "No parent is written while the preservation disposition remains unresolved."
       ]
@@ -636,7 +636,7 @@
       "suite": "behavior",
       "turns": [
         {
-          "prompt": "package 是单一文档边界。已立项的父结果是同一获授权变更集从 Preview 到 Approval 保持身份和授权连续。Preview child 让操作者核对一个具名变更集但不应用它，并显示无效或未授权输入。Approval child 让授权审查者接受或拒绝同一个未被修改的变更集，并记录拒绝理由。$mission-brief 在 package 内保存 Mission 0 和两个 child Brief，父子都要可双向导航。",
+          "prompt": "package 是单一文档边界。已立项的父结果是同一获授权变更集从 Preview 到 Approval 保持身份和授权连续。Preview child 让操作者核对一个具名变更集但不应用它，并显示无效或未授权输入。Approval child 让授权审查者接受或拒绝同一个未被修改的变更集，并记录拒绝理由。$mission-brief 在 package 内保存父级 Mission 和两个 child Brief，父子都要可双向导航。",
           "assertions": {
             "artifact_count": 3,
             "runtime_reference": "required",
@@ -651,7 +651,7 @@
         }
       ],
       "rubric": [
-        "The parent is package/docs/missions/<integration-slug>/brief.md with a Mission 0 title and Result Boundaries.",
+        "The parent is package/docs/missions/<integration-slug>/brief.md with a Mission Brief title and Result Boundaries.",
         "Each commissioned child is physically nested under children/<child-slug>/brief.md and contains a Parent Mission link.",
         "The parent's Result Boundaries link to both children, establishing bidirectional navigation without implementation phases."
       ]
@@ -709,7 +709,7 @@
       "fixtures": [],
       "rubric": [
         "The artifact stays compact and observable.",
-        "No context record, source inventory, ADR, reference appendix, Mission 0, or review ceremony is added.",
+        "No context record, source inventory, ADR, reference appendix, parent topology, or review ceremony is added.",
         "The proof remains proportionate and compatibility remains explicit."
       ]
     },

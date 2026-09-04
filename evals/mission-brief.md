@@ -22,7 +22,7 @@ The historical regression source set in [`fixtures/mb-000-original-feedback-regr
 | 8 experiential evidence | `c-10000009` |
 | 9 proxy checks | `c-1000000a` |
 | 10 result topology variants | `c-1000000b`, `c-1000000c`, `c-1000000d` |
-| 11 Mission 0 seams | `c-1000000e` |
+| 11 parent seams | `c-1000000e` |
 | 12 parent continuity variants | `c-1000000f`, `c-10000010` |
 | 13 safely discoverable unknowns | `c-10000011` |
 | 14 current contract | `c-10000012` |
@@ -40,7 +40,7 @@ The historical regression source set in [`fixtures/mb-000-original-feedback-regr
 
 The static Pack contains 30 behavior cases, 3 Loader cases, and 35 turns. The release run adds two fresh-session blind handoffs derived from frozen candidate outputs.
 
-Progressive disclosure is part of the observable runtime contract. Simple cases `c-10000001` and `c-1000001d` must not read either conditional reference. Mixed durable source cases `c-10000016`, `c-10000017`, and `c-1000001e`, plus transient source case `c-10000018`, must read `references/source-fidelity.md`. Because the upstream `runtime_files_read` field records only the single reference named by its v1 Skill contract, the release verifier also derives successful reference reads from retained `access_events`. Mission 0 routing remains governed separately by its case assertions.
+Progressive disclosure is part of the observable runtime contract. Simple cases `c-10000001` and `c-1000001d` must not read either conditional reference. Mixed durable source cases `c-10000016`, `c-10000017`, and `c-1000001e`, plus transient source case `c-10000018`, must read `references/source-fidelity.md`. Because the upstream `runtime_files_read` field records only the single reference named by its v1 Skill contract, the release verifier also derives successful reference reads from retained `access_events`. Parent-child routing remains governed separately by its case assertions.
 
 ## Durable run shape
 

@@ -30,7 +30,7 @@ Classify from the visible commission before opening a reference. Keep unrelated 
 
 | Branch | Reference |
 | --- | --- |
-| The commission already states one shared result whose seam can fail after its local results pass, or a child explicitly tied to an approved parent | Read [`references/mission-zero.md`](references/mission-zero.md). |
+| The commission already states one shared result whose seam can fail after its local results pass, or a child explicitly tied to an approved parent | Read [`references/parent-child.md`](references/parent-child.md). |
 | A named source mixes authority states, holds material completed investigation, or is temporary while holding the only copy of material information | Read [`references/source-fidelity.md`](references/source-fidelity.md). |
 
 Material facts stated directly in the current conversation can enter the Brief's `Context` without opening a source branch.
@@ -88,7 +88,7 @@ Return the Brief inline when requested or when writes are unavailable. Otherwise
 
 Update a file only for the same commission and give each distinct result a stable outcome slug. Use repository-relative links and keep necessary context in a durable repository location. Create a companion context record only for material content that lacks another durable home.
 
-For Mission 0 and child storage, follow the loaded topology reference.
+For parent and child storage, follow the loaded topology reference.
 
 Finish with a **blind handoff** check:
 
