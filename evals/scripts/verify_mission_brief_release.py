@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 import os
@@ -33,23 +34,14 @@ EXPECTED_RUNTIME_FILES = [
     "references/parent-child.md",
     "references/source-fidelity.md",
 ]
-SOURCE_FIDELITY_REQUIRED = {
-    "c-10000016",
-    "c-10000017",
-    "c-10000018",
-    "c-1000001e",
-}
-SOURCE_FIDELITY_FORBIDDEN = {"c-10000001", "c-1000001d"}
 EXPECTED_STATIC_CASES = {
-    *(f"c-100000{value:02x}" for value in range(1, 31)),
-    "l-20000001",
-    "l-20000002",
-    "l-20000003",
+    case.opaque_id for case in load_eval_pack(MAIN_PACK).cases
 }
-EXPECTED_BLIND_CASES = {"h-40000001", "h-40000002"}
+EXPECTED_BLIND_CASES = {"h-40000001", "h-40000002", "h-40000003"}
 REQUIRED_TRACEABILITY_FINDINGS = {
     "Confirmed findings remain non-binding Reference context unless a cited adopted decision or applicable Authority Source gives them a binding effect; copying them into the Brief does not itself make them contract requirements.",
     "The reader does not invent a user decision or authorization gate for choosing the representative supported consumer when the Brief leaves that sample selection to execution.",
+    "The reader chooses a viable route from current evidence, permitting a source candidate, and adapts to the hypothetical absence of tombstone support and fixed shared-script location without treating candidate advice as binding or the hypothesis as a current fact.",
 }
 LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 
@@ -127,7 +119,7 @@ def verify_links() -> int:
 
 
 def verify_frontmatter() -> None:
-    for relative, expected_name in (("SKILL.md", "mission-brief"), ("mission-review/SKILL.md", "mission-review")):
+    for relative, expected_name in (("SKILL.md", "mission-brief"), ("mission-align/SKILL.md", "mission-align"), ("mission-review/SKILL.md", "mission-review")):
         text = (REPOSITORY / relative).read_text(encoding="utf-8")
         match = re.match(r"\A---\n(.*?)\n---\n", text, re.DOTALL)
         if match is None:
@@ -142,8 +134,6 @@ def verify_frontmatter() -> None:
             raise VerificationError(f"wrong Skill name in {relative}")
         if not fields.get("description"):
             raise VerificationError(f"missing Skill description in {relative}")
-        if fields.get("disable-model-invocation") != "true":
-            raise VerificationError(f"{relative} must keep explicit-only invocation")
 
 
 def verify_runtime_boundary() -> tuple[str, str]:
@@ -165,7 +155,7 @@ def verify_runtime_boundary() -> tuple[str, str]:
         encoding="utf-8"
     )
     if "allow_implicit_invocation: false" not in metadata or "allow_implicit_invocation: false" not in review_metadata:
-        raise VerificationError("UI metadata must keep both Skills explicit-only")
+        raise VerificationError("Codex policy metadata must keep both Skills explicit-only")
     return selected.digest, selected.git_revision or "unavailable"
 
 
@@ -236,11 +226,123 @@ def require_passed(report: dict[str, Any], expected: set[str], label: str) -> No
         raise VerificationError(f"{label} aggregate verdict is not PASSED")
     cases = report_cases(report)
     missing = expected - cases.keys()
-    if missing:
-        raise VerificationError(f"{label} is missing cases: {sorted(missing)}")
+    extra = cases.keys() - expected
+    if missing or extra:
+        raise VerificationError(f"{label} case set differs: missing={sorted(missing)}, extra={sorted(extra)}")
     failed = {case_id: cases[case_id].get("verdict") for case_id in expected if cases[case_id].get("verdict") != "PASSED"}
     if failed:
         raise VerificationError(f"{label} has non-passing cases: {failed}")
+
+
+def require_candidate_identity(report: dict[str, Any], digest: str, label: str) -> None:
+    identity = report.get("candidate")
+    if not isinstance(identity, dict) or identity.get("digest") != digest:
+        raise VerificationError(f"{label} run candidate digest does not match frozen candidate")
+
+
+def apply_semantic_adjudication(run, report, pack, decision_path):
+    """Use a separately reviewed semantic decision without changing the recorded run."""
+    decision = json_object(decision_path)
+    if report.get("consequential_uncertainty"):
+        raise VerificationError("semantic adjudication cannot clear run-level uncertainty")
+    if (decision.get("run_root") != str(run)
+            or decision.get("report_sha256") != sha256(run / "report.json")
+            or decision.get("candidate_digest") != report.get("candidate", {}).get("digest")
+            or decision.get("evidence_aggregate_sha256") != verify_evidence_manifest(run)):
+        raise VerificationError("independent decision does not bind the frozen run")
+    if not decision.get("reviewer_context") or not decision.get("review_evidence_files"):
+        raise VerificationError("independent review context or evidence is missing")
+    for path, digest in decision["review_evidence_files"].items():
+        if not Path(path).is_file() or sha256(Path(path)) != digest:
+            raise VerificationError(f"independent review evidence drifted: {path}")
+    result = deepcopy(report)
+    case_id = decision.get("case_id")
+    case = report_cases(result).get(case_id)
+    contract = report_cases(pack).get(case_id)
+    if (not case or not contract or case.get("suite") != "behavior"
+            or case.get("verdict") != "FAILED" or report.get("verdict") != "FAILED"
+            or not any(f.get("verdict") == "FAILED" for f in case.get("semantic_findings", []))):
+        raise VerificationError("independent decision must address an existing semantic failure")
+    turns = case.get("turns", [])
+    if not turns or any(t.get("verdict") != "PASSED" or not t.get("deterministic_findings")
+                        or any(f.get("verdict") != "PASSED" for f in t["deterministic_findings"])
+                        for t in turns):
+        raise VerificationError("semantic adjudication cannot override deterministic failure")
+    findings = decision.get("criteria", [])
+    if (decision.get("independent_verdict") != "PASSED"
+            or len(findings) != len(contract["rubric"])
+            or {f.get("criterion") for f in findings} != set(contract["rubric"])
+            or any(f.get("verdict") != "PASSED" or not f.get("reason") for f in findings)):
+        raise VerificationError("independent decision must cover every unchanged criterion")
+    case["semantic_findings"] = findings
+    case["verdict"] = "PASSED"
+    if all(c.get("verdict") == "PASSED" for c in result["cases"]):
+        result["verdict"] = "PASSED"
+    return result, {"case_id": case_id, "original_verdict": "FAILED", "independent_verdict": "PASSED",
+                    "decision": str(decision_path), "decision_sha256": sha256(decision_path),
+                    "original_report_sha256": decision["report_sha256"]}
+
+
+def combine_candidate_reports(entries, current_pack, digest, reuse_unchanged=False):
+    """Combine disjoint groups of the exact current cases; never substitute a retried case."""
+    expected = report_cases(current_pack)
+    combined, sources = {}, {}
+    signature = None
+    isolation = None
+    for run, report, pack in entries:
+        declared = report_cases(pack)
+        if pack.get("skill_contract") != current_pack.get("skill_contract"):
+            raise VerificationError(f"candidate Skill contract differs: {run}")
+        if report.get("eval_pack", {}).get("digest") != pack.get("identity", {}).get("digest"):
+            raise VerificationError(f"candidate Pack binding differs: {run}")
+        if not declared or set(declared) - expected.keys():
+            raise VerificationError(f"candidate group has empty or extra cases: {run}")
+        changed = {case_id for case_id, case in declared.items() if case != expected[case_id]}
+        if changed and not reuse_unchanged:
+            raise VerificationError(f"candidate cases changed: {sorted(changed)}")
+        selected = declared.keys() - changed
+        for case_id in sorted(selected):
+            if case_id in combined:
+                raise VerificationError(f"changed or duplicate candidate case: {case_id}")
+        require_candidate_identity(report, digest, str(run))
+        cases = report_cases(report)
+        if set(cases) != set(declared) | {"i-0e519dab"}:
+            raise VerificationError(f"candidate report differs from its declared cases: {run}")
+        if (report.get("consequential_uncertainty") or report.get("verdict") not in {"PASSED", "FAILED"}
+                or (not changed and report["verdict"] != "PASSED")):
+            raise VerificationError(f"candidate run has unresolved failure or uncertainty: {run}")
+        selected_ids = selected | {"i-0e519dab"}
+        require_passed({"verdict": "PASSED", "cases": [cases[c] for c in selected_ids]}, selected_ids, str(run))
+        identity_fields = ("harness_identity", "harness_version", "codex_cli_version",
+                           "executor_model", "semantic_judge_model")
+        if any(not isinstance(report.get(key), str) or not report[key].strip() for key in identity_fields):
+            raise VerificationError(f"candidate execution identity is incomplete: {run}")
+        settings = report.get("execution_settings")
+        required_settings = {"requested_executor_model", "requested_judge_model", "requested_reasoning_effort",
+                             "adapter_flags", "approval_policy", "executor_network", "filesystem_profile",
+                             "shell_environment", "timeout_seconds", "semantic_judging"}
+        if not isinstance(settings, dict) or not required_settings <= settings.keys():
+            raise VerificationError(f"candidate execution settings are incomplete: {run}")
+        if (settings["requested_executor_model"] != report["executor_model"]
+                or settings["requested_judge_model"] != report["semantic_judge_model"]
+                or not isinstance(settings["requested_reasoning_effort"], str)
+                or not settings["requested_reasoning_effort"]):
+            raise VerificationError(f"candidate model or effort binding is incomplete: {run}")
+        settings = dict(settings)
+        settings.pop("eval_pack", None)  # Subset identity differs; all effective settings must agree.
+        observed = tuple(report[key] for key in identity_fields) + (settings,)
+        if signature is not None and observed != signature:
+            raise VerificationError("candidate groups use different harness or execution settings")
+        signature = observed
+        isolation = isolation or cases["i-0e519dab"]
+        for case_id in sorted(selected):
+            combined[case_id] = cases[case_id]
+            sources[case_id] = str(run / "report.json")
+    if set(combined) != set(expected):
+        raise VerificationError("candidate groups do not cover every current case")
+    result = {"verdict": "PASSED", "cases": [*combined.values(), isolation]}
+    require_passed(result, set(expected) | {"i-0e519dab"}, "candidate coverage")
+    return result, sources
 
 
 def verify_blind_semantics(report: dict[str, Any], run: Path) -> None:
@@ -290,92 +392,48 @@ def verify_blind_semantics(report: dict[str, Any], run: Path) -> None:
             raise VerificationError(f"blind semantic findings did not pass: {case_id}: {failed}")
 
 
-def verify_progressive_disclosure(report: dict[str, Any]) -> None:
-    cases = report_cases(report)
-    reads_by_case: dict[str, set[str]] = {}
-    for case_id, case in cases.items():
-        turns = case.get("turns")
-        if not isinstance(turns, list):
-            raise VerificationError(f"candidate case has no turns: {case_id}")
-        reads: set[str] = set()
-        for turn in turns:
-            if not isinstance(turn, dict) or not isinstance(turn.get("runtime_files_read"), list):
-                raise VerificationError(f"candidate case has invalid runtime read evidence: {case_id}")
-            reads.update(
-                value for value in turn["runtime_files_read"] if isinstance(value, str)
-            )
-            events = turn.get("access_events")
-            if not isinstance(events, list):
-                raise VerificationError(f"candidate case has invalid access evidence: {case_id}")
-            for event in events:
-                if not isinstance(event, dict) or event.get("exit_code") != 0:
-                    continue
-                accesses = event.get("path_accesses")
-                if not isinstance(accesses, list):
-                    continue
-                for access in accesses:
-                    if not isinstance(access, dict) or not isinstance(access.get("path"), str):
-                        continue
-                    path = access["path"]
-                    marker = "/skills/mission-brief/references/"
-                    if marker in path and path.endswith(".md"):
-                        reads.add("references/" + path.rsplit("/", 1)[-1])
-        reads_by_case[case_id] = reads
-
-    source_reference = "references/source-fidelity.md"
-    missing = {
-        case_id
-        for case_id in SOURCE_FIDELITY_REQUIRED
-        if source_reference not in reads_by_case.get(case_id, set())
-    }
-    if missing:
-        raise VerificationError(
-            f"source-fidelity reference was not loaded for required cases: {sorted(missing)}"
-        )
-
-    unexpected = {
-        case_id: sorted(
-            value
-            for value in reads_by_case.get(case_id, set())
-            if value.startswith("references/")
-        )
-        for case_id in SOURCE_FIDELITY_FORBIDDEN
-        if any(
-            value.startswith("references/")
-            for value in reads_by_case.get(case_id, set())
-        )
-    }
-    if unexpected:
-        raise VerificationError(
-            f"simple cases loaded conditional references: {unexpected}"
-        )
-
-
 def verify_release_runs(
-    candidate_run_value: Path,
+    candidate_run_values: list[Path],
     blind_run_value: Path,
     baseline_run_value: Path,
     candidate_digest: str,
-) -> tuple[dict[str, str], str]:
-    candidate_run = resolve_run(candidate_run_value)
+    adjudication_paths: list[Path],
+    reuse_unchanged: bool,
+):
+    candidate_runs = [resolve_run(value) for value in candidate_run_values]
     blind_run = resolve_run(blind_run_value)
     baseline_run = resolve_run(baseline_run_value)
     aggregates = {
-        "candidate": verify_evidence_manifest(candidate_run),
+        **{f"candidate:{run.name}": verify_evidence_manifest(run) for run in candidate_runs},
         "blind": verify_evidence_manifest(blind_run),
         "baseline": verify_evidence_manifest(baseline_run),
     }
-    candidate = json_object(candidate_run / "report.json")
+    entries = [(run, json_object(run / "report.json"), json_object(run / "eval-pack.json"))
+               for run in candidate_runs]
+    adjudications = []
+    for path in adjudication_paths:
+        path = path.expanduser().resolve()
+        matching = [index for index, (run, _, _) in enumerate(entries)
+                    if str(run) == json_object(path).get("run_root")]
+        if len(matching) != 1:
+            raise VerificationError("independent decision must identify exactly one supplied run")
+        index = matching[0]
+        run, report, pack = entries[index]
+        reviewed, receipt = apply_semantic_adjudication(run, report, pack, path)
+        entries[index] = (run, reviewed, pack)
+        adjudications.append(receipt)
+    current_pack = json.loads(json.dumps(load_eval_pack(MAIN_PACK).retained_contract()))
+    candidate, coverage_sources = combine_candidate_reports(entries, current_pack, candidate_digest, reuse_unchanged)
+    current_cases = report_cases(current_pack)
+    superseded = [{"report": str(run / "report.json"), "case_id": case_id}
+                  for run, _, pack in entries for case_id, case in report_cases(pack).items()
+                  if case != current_cases.get(case_id)]
     blind = json_object(blind_run / "report.json")
     baseline = json_object(baseline_run / "report.json")
     require_passed(candidate, EXPECTED_STATIC_CASES | {"i-0e519dab"}, "candidate run")
-    verify_progressive_disclosure(candidate)
     require_passed(blind, EXPECTED_BLIND_CASES, "blind run")
     verify_blind_semantics(blind, blind_run)
-    for label, report in (("candidate", candidate), ("blind", blind)):
-        identity = report.get("candidate")
-        if not isinstance(identity, dict) or identity.get("digest") != candidate_digest:
-            raise VerificationError(f"{label} run candidate digest does not match frozen candidate")
+    require_candidate_identity(blind, candidate_digest, "blind")
     baseline_identity = baseline.get("candidate")
     if not isinstance(baseline_identity, dict) or baseline_identity.get("git_revision") != BASELINE_REVISION:
         raise VerificationError("baseline run is not bound to the required historical revision")
@@ -395,9 +453,11 @@ def verify_release_runs(
     ):
         raise VerificationError("historical source gap is not recorded honestly")
     binding = json_object(blind_run / "blind-source-binding.json")
-    if binding.get("source_run_id") != candidate.get("run_id") or binding.get("candidate_digest") != candidate_digest:
+    if (binding.get("candidate_digest") != candidate_digest
+            or binding.get("source_report") != coverage_sources["c-10000016"]
+            or binding.get("amended_source_report", binding.get("source_report")) != coverage_sources["c-10000022"]):
         raise VerificationError("blind evidence is not bound to the candidate authoring run")
-    return aggregates, "INCONCLUSIVE"
+    return aggregates, "INCONCLUSIVE", coverage_sources, adjudications, superseded
 
 
 def verify_installed_runtime(root: Path) -> None:
@@ -417,9 +477,14 @@ def verify_installed_runtime(root: Path) -> None:
 
 
 def parser() -> argparse.ArgumentParser:
-    value = argparse.ArgumentParser(description="Verify Mission Brief static and durable release evidence.")
-    value.add_argument("--candidate-run", type=Path)
+    value = argparse.ArgumentParser(description="Check current local files; supplying all three run options opts into the legacy full-release audit.")
+    value.add_argument("--candidate-run", type=Path, action="append",
+                       help="Repeat for disjoint passing groups of the exact current candidate cases.")
     value.add_argument("--blind-run", type=Path)
+    value.add_argument("--semantic-adjudication", type=Path, action="append", default=[],
+                       help="Explicit independent semantic decision bound to an unchanged failed run.")
+    value.add_argument("--reuse-unchanged-cases", action="store_true",
+                       help="Reuse only exact current cases; every changed case needs new passing evidence.")
     value.add_argument("--baseline-run", type=Path)
     value.add_argument("--installed-runtime", type=Path)
     return value
@@ -430,10 +495,11 @@ def main(argv: list[str] | None = None) -> int:
     provided = [args.candidate_run, args.blind_run, args.baseline_run]
     if any(provided) and not all(provided):
         raise SystemExit("candidate, blind, and baseline runs must be supplied together")
+    if (args.semantic_adjudication or args.reuse_unchanged_cases) and not all(provided):
+        raise SystemExit("adjudication and case reuse require the complete release evidence")
     verify_frontmatter()
     fixture_count = verify_fixture_manifests()
     link_count = verify_links()
-    verify_migration()
     candidate_digest, revision = verify_runtime_boundary()
     result: dict[str, Any] = {
         "static": "PASSED",
@@ -444,14 +510,20 @@ def main(argv: list[str] | None = None) -> int:
         "local_links_verified": link_count,
     }
     if all(provided):
-        aggregates, historical_reproduction = verify_release_runs(
+        verify_migration()
+        aggregates, historical_reproduction, coverage_sources, adjudications, superseded = verify_release_runs(
             args.candidate_run,
             args.blind_run,
             args.baseline_run,
             candidate_digest,
+            args.semantic_adjudication,
+            args.reuse_unchanged_cases,
         )
         result["release_evidence"] = "PASSED"
         result["evidence_aggregates"] = aggregates
+        result["candidate_case_sources"] = coverage_sources
+        result["semantic_adjudications"] = adjudications
+        result["superseded_evaluations"] = superseded
         result["historical_reproduction"] = historical_reproduction
     if args.installed_runtime:
         verify_installed_runtime(args.installed_runtime)

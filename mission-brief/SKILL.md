@@ -9,6 +9,8 @@ Use **mission command**: freeze an adopted result, its proof, and its hard bound
 
 A Mission Brief is a result contract, not a proposal review, final design, implementation plan, or execution request. When a request needs another product too, keep the products separate and settle any decision that defines the commission before freezing it.
 
+If a request for a final plan or design through this Skill leaves the deliverable unclear, explain the difference and ask which product is wanted. Do not promise both a plan and a Brief without authorization, even while waiting for missing source material.
+
 ## Principles
 
 - **Outcome over route.** The executing Agent has fresher workspace and environment evidence, so specify what must become true and let it choose a viable route.
@@ -18,7 +20,7 @@ A Mission Brief is a result contract, not a proposal review, final design, imple
 
 The four required sections—`Outcome`, `Success`, `Evidence Required`, and `Boundaries`—form the **Contract Core**. A complete handoff also identifies the target, authority, necessary durable context, source status, and any adopted parent topology. Protect **route freedom** so a fresh Agent can act without inheriting candidate approaches as commands.
 
-Keep one bounded missing decision in this Skill. When the desired result itself is unclear, several consequential decisions are coupled, plausible interpretations imply different contracts, or Mission suitability or result topology needs exploration, use `mission-align` when it is available. If it is unavailable, retain the same safe gate and request the smallest decision that can settle the commission. Treat an explicitly confirmed Mission Alignment as adopted handoff input, then still check it against applicable authority before writing the Brief.
+Keep one bounded missing decision in this Skill. When the desired result itself is unclear, several consequential decisions are coupled, plausible interpretations imply different contracts, or Mission suitability or result topology needs exploration, use `mission-align` when available. After adoption, resume this authorized Brief request without requiring another invocation. If Align is unavailable, ask the smallest consequential question. Check adopted alignment against applicable authority; resume only a request that has not been cancelled or replaced.
 
 ## 1. Recover the commission
 
@@ -51,6 +53,8 @@ This step is complete when writing the Brief will not invent product policy, byp
 
 Use the Contract Core and add only useful optional sections: `Intent`, `Non-goals`, `Context`, `Execution Authority`, `Parent Mission`, or `Result Boundaries`.
 
+Use `Execution Authority` when a fresh executor needs to recover specific delegated choices, authorized actions, or remaining external gates. Preserve both granted authority and its limits; writing a Brief does not itself initiate execution or grant permission.
+
 Keep `Success` about facts that must hold and `Evidence Required` about how to challenge them. Scale evidence to consequence and claim breadth. A population claim needs exhaustive coverage or representative classes plus relevant boundaries. Reading, judgment, or use requires a realistic attempt. Reserve human participation for a contracted decision or experience an Agent cannot supply. Evidence must support `PASSED`, `FAILED`, or `INCONCLUSIVE`.
 
 Treat a platform, mode, consumer, or interaction that the user says must remain unchanged as a compatibility baseline and require proportionate regression evidence.
@@ -78,8 +82,6 @@ Safari users can submit valid login credentials by pressing Enter in the login f
 - Preserve the existing authentication and error-message semantics.
 ```
 
-If two unadopted choices would produce different authorization semantics, state the affected part of the contract and ask which choice is adopted; do not write the Brief until that decision exists.
-
 This step is complete when the Contract Core is falsifiable, each material item has one home, and no optional route has become a command.
 
 ## 4. Save and hand off
@@ -88,13 +90,17 @@ Return the Brief inline when requested or when writes are unavailable. Otherwise
 
 Update a file only for the same commission and give each distinct result a stable outcome slug. Use repository-relative links and keep necessary context in a durable repository location. Create a companion context record only for material content that lacks another durable home.
 
-For parent and child storage, follow the loaded topology reference.
+An explicit amendment replaces only affected decisions; preserve the rest and update dependent success, evidence, and parent-child relationships consistently. A question or new implementation fact is not itself a change of commission. Keep the current Brief clean and use existing sources or Git history where traceability matters.
 
-Finish with a **blind handoff** check:
+Within authorized repository writes, choose a suitable durable home without asking the user to decide routine storage. Ask only if preservation changes confidentiality, access, authority, or has no authorized destination. Retaining adopted child obligations does not commission those children.
+
+For Parent and Child Mission storage, follow the loaded topology reference.
+
+The Brief is **ready for handoff** when its contents support all four judgments:
 
 1. Can a fresh Agent restate the Contract Core?
 2. Can it locate necessary context and distinguish Authority Sources from Reference Sources?
 3. Can it explain what would justify `PASSED`, `FAILED`, or `INCONCLUSIVE`?
 4. Can it choose a viable route without relying on hidden authoring context?
 
-The handoff is complete when all four answers are yes.
+This authoring check establishes readiness. Use an actual fresh reader when independent handoff evidence is required.

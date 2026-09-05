@@ -8,6 +8,6 @@ Run this case in a fresh session against a frozen candidate Skill. Give the Agen
 - Whether the known shared consumers, importer recreation mechanism, and distinct stale entry points remain recoverable from the completed handoff.
 - Whether candidate approaches and investigation order remain clearly non-binding.
 - Whether the output stays a result contract rather than reproducing the detailed proposal as an implementation plan.
-- Whether a fresh executing Agent can locate the durable proposal, distinguish its authority, identify the concrete known risks, and still choose a different viable route.
+- Whether a fresh executing Agent can locate the durable proposal, distinguish its authority, identify the concrete known risks, and choose a viable route from current evidence, including a source candidate when appropriate.
 
 Do not grade exact headings, sentence form, proposal length, or whether recoverable context is carried inline versus by a durable labeled pointer.

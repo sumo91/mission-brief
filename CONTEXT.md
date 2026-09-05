@@ -8,17 +8,25 @@ This context defines the language used to commission, hand off, and review indep
 An adopted commission for one independently verifiable change in user or system reality.
 _Avoid_: Task, project, work item
 
+**Mission Alignment**:
+The user's explicit adoption of the selected route, result topology, intended result, and consequential boundaries before Mission Briefing or another adopted next product. Explicit original instructions count as adoption of the decisions they settle; a synthesis adding no consequential interpretation needs no repeat confirmation. An unambiguous amendment can adopt the revised understanding and its unaffected remainder; delegation settles only its scope. New consequential choices, authority conflicts and a user-requested confirmation remain to be resolved. Tentative suggestions and silence create no adoption. It is a confirmed pre-commissioning understanding, not a normative result contract.
+_Avoid_: Requirements interview, draft Brief, inferred intent
+
+**Mission Alignment Handoff**:
+A conversational or durable transfer of adopted alignment decisions, existing authorization, correctly labeled reference material, and open uncertainty. It is input to Mission Briefing or another adopted next product; it creates no new authority. After alignment, the original request resumes only within its still-authorized scope.
+_Avoid_: Mission Brief, implementation plan, approval record
+
 **Mission Brief**:
 The normative artifact that records a Mission's outcome, success meaning, proof obligations, hard boundaries, and commission-specific authority.
 _Avoid_: Final plan, implementation brief, requirements summary
 
 **Parent Mission**:
-A Mission Brief in the parent role, owning an irreducible integration result, cross-result invariants, seam evidence, and concise result boundaries. The artifact title is `# Mission Brief: <outcome>`, the same as any other Brief. The parent role is marked by `Result Boundaries`, not a numbered name. When reading an existing Brief, treat `# Mission 0:` as a legacy parent-role title.
-_Avoid_: Mission 0, Phase 0, root, master plan, program folder
+A Mission for an overall result that can still fail after all child results pass, owning cross-result invariants, seam evidence, and concise result boundaries.
+_Avoid_: Phase 0, master plan, program folder
 
 **Child Mission**:
-An independently verifiable Mission commissioned within a Result Boundary of an adopted Parent Mission while preserving the applicable parent invariants. The artifact title is `# Mission Brief: <outcome>`; the child role is marked by a `Parent Mission` link.
-_Avoid_: Subtask, Mission 1, sub, implementation phase
+An independently verifiable Mission commissioned within a Result Boundary of an adopted Parent Mission while preserving the applicable parent invariants.
+_Avoid_: Subtask, implementation phase
 
 **Authority Source**:
 A user decision, repository contract, governance decision, or other applicable source whose adopted content may bind a Mission.

@@ -1,0 +1,17 @@
+{
+  "provenance": "Synthetic executable acceptance fixture added 2026-09-05; not a historical or production record.",
+  "files": [
+    {
+      "path": "assets/evidence-4.svg",
+      "sha256": "cc8f48e9485d1697dd099814b7e7a8be2f08df289f26fc5f46690d3f2178d55a"
+    },
+    {
+      "path": "report.html",
+      "sha256": "771eab1a9da543509cf61372a7918ef5d7c64e4135c5e436aafe8d96a3a3779f"
+    },
+    {
+      "path": "review-request.md",
+      "sha256": "341ab555758f0d113b96eafc34f46e6dcd9d357beaa43b70b062a9e3b1a4a340"
+    }
+  ]
+}

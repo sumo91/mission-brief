@@ -113,7 +113,7 @@ docs/missions/<integration-outcome-slug>/
    - 增加转换保真检查；
    - 默认路径改为 `docs/missions/<outcome-slug>/brief.md`。
 
-2. [references/mission-zero.md](/Users/admin/Documents/Codex/MissionBrief/references/mission-zero.md)
+2. `references/mission-zero.md`（原版：`git show 2eb9b367f00d69f2bb631e19eceea67cefc6c8af:references/mission-zero.md`）
 
    - 对齐新目录约定；
    - 要求父子双向链接；

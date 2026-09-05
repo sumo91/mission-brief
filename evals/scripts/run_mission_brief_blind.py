@@ -16,6 +16,7 @@ sys.path.insert(0, str(SCRIPT_DIR))
 
 from run_mission_brief_behavior import (  # noqa: E402
     HARNESS_SOURCE,
+    configure_evaluation,
     evidence_manifest,
     write_run_contract,
 )
@@ -41,7 +42,7 @@ from mission_brief_eval.runner import HarnessRunner  # noqa: E402
 
 DEFAULT_OUTPUT = REPOSITORY / "evals" / "runs" / "mission-brief-blind"
 SOURCE_CASE = "c-10000016"
-BLIND_CASES = ("h-40000001", "h-40000002")
+BLIND_CASES = ("h-40000001", "h-40000002", "h-40000003")
 
 
 _REPOSITORY_EXTENDED_HARNESS_IDENTITY = harness_runner_module.harness_identity
@@ -121,7 +122,7 @@ def source_artifact(report_path: Path) -> tuple[dict[str, object], Path, Path]:
     return report, brief, proposal
 
 
-def dynamic_pack(brief: str, proposal: str) -> dict[str, object]:
+def dynamic_pack(brief: str, proposal: str, amended_brief: str) -> dict[str, object]:
     contract = {
         "skill_name": "mission-brief",
         "display_name": "Mission Brief",
@@ -145,7 +146,7 @@ def dynamic_pack(brief: str, proposal: str) -> dict[str, object]:
     return {
         "schema_version": "1.0",
         "pack_id": "mission-brief-dynamic-blind",
-        "pack_version": "1.1.0",
+        "pack_version": "1.3.0",
         "display_name": "Mission Brief Dynamic Blind Handoffs",
         "platform_contract": "skill-eval-pack-v1",
         "capability_requirements": ["local-files", "local-process"],
@@ -182,8 +183,9 @@ def dynamic_pack(brief: str, proposal: str) -> dict[str, object]:
                     {
                         "prompt": (
                             "你是没有参与编写过程的执行 Agent。阅读 brief.md 和 proposal.md。说明恢复出的合同、来源状态、"
-                            "已确认依赖与风险，以及哪些建议仍非绑定；然后提出一条可行实现路线。该路线的控制机制必须实质区别于"
-                            "proposal.md 中列出的候选机制，不能只是换词、换序或从候选项中挑一个。不要修改工作区，也不要调用任何技能。"
+                            "已确认依赖与风险，以及哪些建议仍非绑定；然后根据现有事实提出一条可行路线，解释选择依据。"
+                            "再单独分析一个假设：现场不支持 registry tombstone，且共享脚本的位置不能移动。"
+                            "说明你将如何调整路线并保留原合同；该假设不是当前环境的新事实。不要修改工作区，也不要调用任何技能。"
                         ),
                         "assertions": {
                             "artifact_count": 0,
@@ -201,7 +203,20 @@ def dynamic_pack(brief: str, proposal: str) -> dict[str, object]:
                     "Confirmed findings remain non-binding Reference context unless a cited adopted decision or applicable Authority Source gives them a binding effect; copying them into the Brief does not itself make them contract requirements.",
                     "The reader recovers both shared consumers, importer recreation behavior, and the distinct stale entry points as material context.",
                     "The reader does not invent a user decision or authorization gate for choosing the representative supported consumer when the Brief leaves that sample selection to execution.",
-                    "The proposed route satisfies the contract while using a controlling mechanism materially different from registry tombstones, moving the shared script, leaving consumers unchanged as a strategy, or adding a permanent repository-wide import simulator.",
+                    "The reader chooses a viable route from current evidence, permitting a source candidate, and adapts to the hypothetical absence of tombstone support and fixed shared-script location without treating candidate advice as binding or the hypothesis as a current fact.",
+                ],
+            },
+            {
+                "id": "h-40000003",
+                "suite": "behavior",
+                "turns": [{
+                    "prompt": "你是没有参与编写过程的新执行者。只阅读 brief.md，说明当前结果、兼容要求、可自行决定或执行的事项、仍需谁批准的事项，以及何时能判定交付通过。不要调用任何技能，不修改文件。",
+                    "assertions": {"artifact_count": 0, "runtime_reference": "forbidden", "skill_invocation": "forbidden"},
+                }],
+                "fixtures": [{"path": "brief.md", "content": amended_brief}],
+                "rubric": [
+                    "The fresh reader recovers the terminal-failure refund result, exclusion of pending refunds, and current JSON v2 compatibility without reviving revoked CSV compatibility or the unadopted scope suggestion.",
+                    "The reader recovers delegated implementation-route and local-code authority together with the required deployment approval by Li Mei, without treating Brief authoring as a new execution grant.",
                 ],
             },
         ],
@@ -283,8 +298,8 @@ def verify_blind_pack_integrity(pack: EvalPack) -> None:
     expected_ids = tuple(case.opaque_id for case in pack.cases)
     if expected_ids != BLIND_CASES:
         raise SystemExit(f"dynamic blind pack must contain exactly {BLIND_CASES}")
-    if len(pack.cases) != 2:
-        raise SystemExit("dynamic blind pack must contain exactly two cases")
+    if len(pack.cases) != len(BLIND_CASES):
+        raise SystemExit("dynamic blind pack case count differs from the frozen set")
     for case in pack.cases:
         if case.suite != "behavior" or not case.rubric or len(case.turns) != 1:
             raise SystemExit("each blind case must be a one-turn semantic behavior case")
@@ -338,12 +353,15 @@ def verify_blind_pack_integrity(pack: EvalPack) -> None:
 
 
 def parser() -> argparse.ArgumentParser:
-    value = argparse.ArgumentParser(description="Run two fresh-session Mission Brief blind handoffs.")
+    value = argparse.ArgumentParser(description="Run three fresh-session Mission Brief blind handoffs.")
     value.add_argument("--source-run", type=Path, required=True)
+    value.add_argument("--amended-source-run", type=Path,
+                       help="Optional separate run containing the passing amendment case.")
     value.add_argument("--candidate", type=Path, default=REPOSITORY)
     value.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     value.add_argument("--model", required=True)
     value.add_argument("--judge-model")
+    value.add_argument("--reasoning-effort", choices=("low", "medium", "high", "xhigh", "max", "ultra"))
     value.add_argument("--codex-bin", type=Path)
     value.add_argument("--timeout", type=int, default=900)
     return value
@@ -351,8 +369,21 @@ def parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
+    configure_evaluation(args.reasoning_effort)
     report_path = resolve_report(args.source_run)
     source_report, brief_path, proposal_path = source_artifact(report_path)
+    amended_report_path = resolve_report(args.amended_source_run) if args.amended_source_run else report_path
+    amended_report = read_json(amended_report_path)
+    if amended_report.get("candidate", {}).get("digest") != source_report.get("candidate", {}).get("digest"):
+        raise SystemExit("amendment source uses a different candidate")
+    amended_cases = [case for case in amended_report["cases"] if case.get("opaque_id") == "c-10000022"]
+    if len(amended_cases) != 1 or amended_cases[0].get("verdict") != "PASSED":
+        raise SystemExit("source run must include a passing c-10000022 amendment case")
+    amended_root = amended_report_path.parent / "cases/c-10000022/workspace-final"
+    amended_paths = [path for path in amended_root.rglob("brief.md") if path.is_file() and not path.is_symlink()]
+    if len(amended_paths) != 1:
+        raise SystemExit("amendment case must retain exactly one Brief")
+    amended_path = amended_paths[0]
     source_candidate = source_report.get("candidate")
     if not isinstance(source_candidate, dict) or not isinstance(source_candidate.get("digest"), str):
         raise SystemExit("source report has no candidate digest")
@@ -366,6 +397,7 @@ def main(argv: list[str] | None = None) -> int:
             dynamic_pack(
                 brief_path.read_text(encoding="utf-8"),
                 proposal_path.read_text(encoding="utf-8"),
+                amended_path.read_text(encoding="utf-8"),
             ),
             ensure_ascii=False,
             indent=2,
@@ -409,6 +441,10 @@ def main(argv: list[str] | None = None) -> int:
         "candidate_digest": selected.digest,
         "brief_source_path": str(brief_path),
         "proposal_source_path": str(proposal_path),
+        "amended_brief_source_path": str(amended_path),
+        "amended_brief_source_case": "c-10000022",
+        "amended_source_report": str(amended_report_path),
+        "amended_source_run_id": amended_report.get("run_id"),
     }
     (run_dir / "blind-source-binding.json").write_text(
         json.dumps(source_binding, ensure_ascii=False, indent=2) + "\n",

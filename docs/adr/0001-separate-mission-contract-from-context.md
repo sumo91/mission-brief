@@ -4,7 +4,7 @@ status: accepted
 
 # Separate the Mission contract from durable execution context
 
-A Mission Brief remains the compact normative contract for one independently verifiable result; it does not become a compressed final plan or knowledge archive. Material non-contract information must still receive an explicit durable destination when losing it would erase known dependencies, risks, rationale, or costly investigation: preserve it in an existing Authority Source or Reference Source, or create an appropriate context record, while labeling its authority accurately. A Parent Mission uses the same `brief.md` artifact, titled `# Mission Brief: <outcome>` and marked by `Result Boundaries`; physical folders follow documentation ownership while explicit links carry parent-child topology. This separation preserves route freedom and stable review semantics without making compression a license for silent information loss.
+A Mission Brief remains the compact normative contract for one independently verifiable result; it does not become a compressed final plan or knowledge archive. Material non-contract information must still receive an explicit durable destination when losing it would erase known dependencies, risks, rationale, or costly investigation: preserve it in an existing Authority Source or Reference Source, or create an appropriate context record, while labeling its authority accurately. Parent Mission uses the same `brief.md` artifact in a parent integration role, and physical folders follow documentation ownership while explicit links carry parent-child topology. This separation preserves route freedom and stable review semantics without making compression a license for silent information loss.
 
 ## Considered options
 

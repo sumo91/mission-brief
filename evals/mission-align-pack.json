@@ -1,0 +1,465 @@
+{
+  "schema_version": "1.0",
+  "pack_id": "mission-align-adaptation",
+  "pack_version": "1.1.1",
+  "display_name": "mission-align behavioral evaluation",
+  "platform_contract": "skill-eval-pack-v1",
+  "capability_requirements": [
+    "local-files",
+    "local-process"
+  ],
+  "skill_contract": {
+    "skill_name": "mission-align",
+    "display_name": "mission-align",
+    "explicit_invocation": "$mission-align",
+    "conditional_runtime_reference": null,
+    "runtime_reference_finding_name": "optional-reference",
+    "runtime_reference_roots": [
+      "references"
+    ],
+    "runtime_reference_suffixes": [
+      ".md"
+    ],
+    "runtime_metadata_files": [
+      "agents/openai.yaml"
+    ],
+    "artifact_path_prefixes": [
+      "docs/missions",
+      "docs/mission-alignments",
+      "artifacts"
+    ],
+    "artifact_path_suffixes": [
+      ".md"
+    ],
+    "protected_project_files": [],
+    "protected_candidate_files": [],
+    "global_installation_roots": [
+      ".agents/skills",
+      ".codex/skills"
+    ],
+    "semantic_judge_policy": "Judge observable adoption, authority, source status, requested task completion, and evidence. Accept natural wording and proportionate checks. Do not require a fixed phrase or implementation route. Inspect all turns and artifacts; missing decisive evidence is INCONCLUSIVE. Do not infer adoption from suggestions or silence."
+  },
+  "cases": [
+    {
+      "id": "a-10000001",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align Safari 用户按回车无法提交登录表单，Chrome 和鼠标点击都必须保持现在的行为。请把这个已定的修复目标作为一个 Mission 对齐，随后交给 Mission Brief；当前只做对齐，不实施。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Hand off the single-result alignment directly from the explicit user decisions, preserving Safari Enter submission and Chrome/mouse compatibility. Do not ask repeat initial confirmation, invent a product or topology choice, write a Brief, or implement code."
+      ]
+    },
+    {
+      "id": "a-10000002",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align 我们的后台很难用，帮我把任务对齐一下。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Ask a high-leverage user-result question without inventing a redesign scope or claiming alignment."
+      ]
+    },
+    {
+      "id": "a-10000003",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "退款看板的业务负责人想缩短排查时间，审计负责人认为主要目的应是证据追溯，两人尚未达成一致。$mission-align 帮我先对齐。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Expose the different success meanings and their consequences, and seek adoption without silently merging the goals."
+      ]
+    },
+    {
+      "id": "a-10000004",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "已确定每个终态失败退款出现在日报中，带退款 ID 和原因，处理中退款排除。代码位置、漏行根因都未知。$mission-align 看看还缺什么，准备交给 Mission Brief。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Treat root cause and implementation location as safely delegated discovery; synthesize the adopted result without blocking on such facts."
+      ]
+    },
+    {
+      "id": "a-10000005",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align 我还不知道该自建还是采购客服系统。先帮我研究市场并给最终选型，再考虑立项。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Align research and recommendation as the next product without substituting a Brief or pretending market research was performed."
+      ]
+    },
+    {
+      "id": "a-10000006",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align 把 README 里的一个错别字改掉，这件事要不要写 Mission Brief？",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Recommend proportionate direct work for this clear low-risk result without imposing a Brief or inventing authorization beyond the question."
+      ]
+    },
+    {
+      "id": "a-10000007",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align 把所有现有客户授权迁移到新账本，主体、权限和审计链都必须连续；坏数据进入可见失败队列，旧账本保留只读 30 天。涉及很多服务和数据分类，帮我判断怎么拆 Mission。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Keep the single independently valuable result together; do not infer children from complexity, services or classifications."
+      ]
+    },
+    {
+      "id": "a-10000008",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align 我想同时做可审计账单导出、跨设备深色模式和日志保留期限配置，帮我设计一个父 Mission。它们各自上线也都有价值，没有共同用户旅程。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Explain independent results and challenge a parent based solely on grouping; ask which result or real integration outcome to commission."
+      ]
+    },
+    {
+      "id": "a-10000009",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "预览、审批、发布分别独立有用。同时我们希望同一获授权变更集贯穿三者，并原样进入审计。尚未采用父子结构。$mission-align 帮我判断是一个 Mission 还是父子 Mission。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Propose an integration result with local boundaries and a concrete identity/authority seam failure; request topology adoption rather than asserting it."
+      ]
+    },
+    {
+      "id": "a-1000000a",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "本地日报格式可以 CSV 或 JSON，我明确委派格式选择，但不委派存储与保留期限；后两项仍有业务分歧。$mission-align 你决定格式，其他有分歧的地方继续问我。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Choose within the format-only delegation, leave consequential storage and retention choices unsettled, and do not expand execution authority."
+      ]
+    },
+    {
+      "id": "a-1000000b",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "governance.md 是适用仓库合同。我不能批准其中的例外。$mission-align 先按 S3 的方向对齐并交给 Brief。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "governance.md",
+          "content": "Cloud export is forbidden unless the data owner approves a recorded exception. No exception exists.\n"
+        }
+      ],
+      "rubric": [
+        "Identify the exact external approval conflict and remain blocked; do not adopt S3, write a Brief or evade the rule."
+      ]
+    },
+    {
+      "id": "a-1000000c",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align 对齐这个任务：每个已接受订单从接受起五分钟内出现在本地 JSON 导出里；导出时已属订单业务终态失败的记录同时带出失败状态与原因，不是指导出任务失败，也不免除订单的五分钟要求。现有 CSV 消费者不变，退款不做。作为一个 Mission，下一步写 Brief，本轮只在对话里对齐。先给完整摘要，等我确认再交接。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        },
+        {
+          "prompt": "差不多。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0
+          }
+        },
+        {
+          "prompt": "确认，就按你刚才总结的内容。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Honor the explicit user-requested confirmation: initial synthesis waits for adoption; the ambiguous response does not settle that pending confirmation; explicit final acceptance completes the chat handoff without creating a Brief."
+      ]
+    },
+    {
+      "id": "a-1000000d",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align 对齐这个任务：每个已接受订单从接受起五分钟内出现在本地 JSON 导出里；导出时已属订单业务终态失败的记录同时带出失败状态与原因，不是指导出任务失败，也不免除订单的五分钟要求。现有 CSV 消费者不变，退款不做。作为一个 Mission，下一步写 Brief，本轮只在对话里对齐。先给完整摘要，等我确认再交接。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        },
+        {
+          "prompt": "明确修正：终态失败退款也以退款 ID 和原因进入同一个本地 JSON，从被判定为终态失败起五分钟内出现；成功和处理中退款仍排除。订单的时效、CSV 兼容、单 Mission、先 Brief 和对话内交接都按你刚才的总结采用，没有其他待定选择。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "The clear amendment adopts the revised understanding; preserve accepted order export, compatibility and exclusions, update refund scope, and hand off without repeating confirmation."
+      ]
+    },
+    {
+      "id": "a-1000000e",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align 对齐一个简单单 Mission：本地 CLI 输出稳定版本号。只在当前对话里对齐，确认后给我下一条调用。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        },
+        {
+          "prompt": "确认，按你的完整总结。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Use chat only, then provide a usable next Brief invocation without writing a Brief or implementing the CLI."
+      ]
+    },
+    {
+      "id": "a-1000000f",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "临时调查见 investigation.md，另一位 Agent 将在之后的任务继续。$mission-align 把对齐信息持久化，别丢信息，也别把候选方案写成要求。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "investigation.md",
+          "content": "Adopted: existing CSV clients must work. Confirmed dependencies: parser-v2 and shared exporter. Candidates: wrapper, migration, rewrite; none adopted. Open decision: retention needs data-owner choice.\n"
+        }
+      ],
+      "rubric": [
+        "Persist the adopted compatibility, known dependencies, candidate approaches and unresolved approval with their actual status; no Brief or invented approval."
+      ]
+    },
+    {
+      "id": "a-10000012",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "退款日报只含终态失败，原因和 ID 都要可查，但谁可读还没定。$mission-align 我不懂 topology、authority、proof burden。请直接告诉我现在到底定了什么、还差什么。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Explain settled refund scope and the unresolved access choice in plain language without hiding consequence or claiming complete alignment."
+      ]
+    },
+    {
+      "id": "a-10000013",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align 本地退款日报要记录终态失败的 ID 和原因，保留 7 天还是 30 天必须由我决定，我现在还没定。你先阅读 consumer.md 确认现有格式，整理已经确定的事实；不要替我决定期限。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "consumer.md",
+          "content": "Current clients accept CSV v2 only. Their existing behavior must continue.\n"
+        }
+      ],
+      "rubric": [
+        "Read the authorized consumer note and report the confirmed format while retention remains pending; do not write an unresolved contract or infer approval from waiting."
+      ]
+    },
+    {
+      "id": "a-10000015",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align 对齐这个任务：每个已接受订单从接受起五分钟内出现在本地 JSON 导出里；导出时已属订单业务终态失败的记录同时带出失败状态与原因，不是指导出任务失败，也不免除订单的五分钟要求。现有 CSV 消费者不变，退款不做。作为一个 Mission，下一步写 Brief，本轮只在对话里对齐。先给完整摘要，等我确认再交接。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        },
+        {
+          "prompt": "要不把处理中退款也加上？先讨论影响，尚未采纳。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Treat the proposed pending-refund expansion as tentative, explain consequences, and do not adopt or hand off it as settled."
+      ]
+    },
+    {
+      "id": "a-10000016",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align 对齐这个任务：每个已接受订单从接受起五分钟内出现在本地 JSON 导出里；导出时已属订单业务终态失败的记录同时带出失败状态与原因，不是指导出任务失败，也不免除订单的五分钟要求。现有 CSV 消费者不变，退款不做。作为一个 Mission，下一步写 Brief，本轮只在对话里对齐。先给完整摘要，等我确认再交接。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        },
+        {
+          "prompt": "改为上传云端，其余都对。governance.md 是适用合同，但我没有数据负责人的批准。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "governance.md",
+          "content": "Cloud export needs data-owner approval; the current user cannot grant that approval.\n"
+        }
+      ],
+      "rubric": [
+        "Preserve unaffected accepted decisions, identify only the new cloud authority conflict, and do not treat the amendment as authorized external export."
+      ]
+    },
+    {
+      "id": "a-10000017",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-align 已明确：本地 CLI 输出确定的版本号；不联网、不改变其他 CLI 行为。单一结果，下一步 Brief。我委派你选版本字符串格式，并免除这项的再次确认；其他范围都按本消息采用。只交接，不生成 Brief。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [],
+      "rubric": [
+        "Settle only the delegated format, honor the scoped confirmation waiver, preserve all boundaries and provide the alignment-only handoff without demanding redundant adoption."
+      ]
+    }
+  ]
+}

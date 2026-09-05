@@ -2,6 +2,8 @@
 
 This maintainer contract binds the executable Eval Pack in [`mission-brief-pack.json`](./mission-brief-pack.json) to the human-readable behavior in [`../EVALS.md`](../EVALS.md). It is not runtime instruction and must remain inaccessible to evaluation executors.
 
+Select validation according to the shared [default policy](../EVALS.md#default-validation-policy). The matrix is a selectable case bank.
+
 ## Candidate and source identity
 
 Each run must record the exact four-file Mission Brief runtime digest, Git revision when available, Eval Pack digest, executor and judge model identities, isolation result, and complete evidence aggregate. The runtime is `SKILL.md`, UI metadata, and the two conditionally loaded references; maintainer files remain outside it. A Git revision that does not include a dirty candidate is insufficient on its own; the runtime digest is authoritative for the evaluated bundle. The repository runner extends the platform judge packet with a complete final workspace-directory inventory and binds that extension into the recorded harness identity.
@@ -22,7 +24,7 @@ The historical regression source set in [`fixtures/mb-000-original-feedback-regr
 | 8 experiential evidence | `c-10000009` |
 | 9 proxy checks | `c-1000000a` |
 | 10 result topology variants | `c-1000000b`, `c-1000000c`, `c-1000000d` |
-| 11 parent seams | `c-1000000e` |
+| 11 Parent Mission seams | `c-1000000e` |
 | 12 parent continuity variants | `c-1000000f`, `c-10000010` |
 | 13 safely discoverable unknowns | `c-10000011` |
 | 14 current contract | `c-10000012` |
@@ -37,16 +39,25 @@ The historical regression source set in [`fixtures/mb-000-original-feedback-regr
 | 23 simple Mission ceremony | `c-1000001d` |
 | 24 traceability-aware blind handoff | dynamic blind run `traceability-aware` |
 | 25 irrelevant bulk | `c-1000001e` |
+| 12 explicit preservation choice still pending | `c-1000001f` |
+| 26 coupled ambiguity and return / cancellation | `c-10000020`, `c-10000021`; optional Align availability comparison |
+| Current authorization and compatibility amendments | `c-10000022`; fresh recovery in `h-40000003` |
+| Reference instructions do not grant authority | `c-10000023` |
+| Implicit alignment discovery with Brief still hidden | `l-20000004`, with Align staged |
 
-The static Pack contains 30 behavior cases, 3 Loader cases, and 35 turns. The release run adds two fresh-session blind handoffs derived from frozen candidate outputs.
+Case `c-1000000f` retains an older `Mission 0` fixture title to exercise existing Brief input; current prompts use Parent Mission.
 
-Progressive disclosure is part of the observable runtime contract. Simple cases `c-10000001` and `c-1000001d` must not read either conditional reference. Mixed durable source cases `c-10000016`, `c-10000017`, and `c-1000001e`, plus transient source case `c-10000018`, must read `references/source-fidelity.md`. Because the upstream `runtime_files_read` field records only the single reference named by its v1 Skill contract, the release verifier also derives successful reference reads from retained `access_events`. Parent-child routing remains governed separately by its case assertions.
+The static Pack contains 35 behavior cases, 4 Loader cases, and 45 turns. Three optional fresh-session blind handoffs examine contract recovery, traceability and amended authorization/compatibility. Select them when those handoff properties are in question; a full-coverage claim derives its cases from the frozen Pack.
+
+The runtime's handoff-readiness check is an authoring criterion, not evidence that an independent reader was run. Real execution is evaluated separately with [frozen local tasks](mission-handoff-execution.json) and [the existing-harness chain entrypoint](scripts/run_mission_handoff_execution.py). The chain compares commissioning variants while keeping the executor and Review configuration fixed; it does not measure Review against a minimal-review control.
+
+Ordinary behavior cases judge the resulting commission, source fidelity and handoff. Reference-read observations remain available for a specific progressive-disclosure or cost investigation; reading a different sufficient path is not by itself a failed outcome. Loader cases retain explicit invocation and reference assertions. File-count assertions remain where they represent a no-write boundary or an explicitly tested storage topology, rather than a general preference for a single file.
 
 ## Durable run shape
 
-Run evidence lives at `evals/runs/mission-brief/<run-id>/` and includes the platform report, retained Eval Pack and Skill contract, per-case raw turns and filesystem manifests, a generated `run-contract.md`, and `evidence-manifest.json`. Baseline evidence uses a separate run ID bound to `8adf782bf61e7051f9afe14d2e25166790e8bdc3`.
+Run evidence lives at `evals/runs/mission-brief/<run-id>/` and includes the platform report, retained Eval Pack and Skill contract, per-case raw turns and filesystem manifests, a generated `run-contract.md`, and `evidence-manifest.json`. Comparative baseline evidence uses its own run ID and names the revision actually compared. The old `8adf782bf61e7051f9afe14d2e25166790e8bdc3` baseline belongs to the historical full-release protocol.
 
-The two dynamic blind runs must retain:
+The dynamic blind runs must retain:
 
 - the exact source Brief and any allowed durable sources;
 - the new task or session identity;
@@ -54,8 +65,8 @@ The two dynamic blind runs must retain:
 - the hidden-authoring exclusions applied;
 - a semantic grade for contract recovery, source-status recovery, known risks, optional routes, and implementation freedom.
 
-For the traceability-aware handoff, confirmed findings must remain non-binding Reference context unless a cited adopted decision or applicable Authority Source gives them binding effect. The reader must not invent a user decision for a representative sample that the contract leaves to execution. An implementation route passes the independence check only when its controlling mechanism differs materially from the candidate mechanisms preserved in the source. Rewording, reordering, or choosing one of the named candidate routes is not independent.
+For the traceability-aware handoff, confirmed findings remain Reference context unless adopted authority gives them binding effect. The reader must not invent a user decision for a representative sample left to execution. Route freedom permits a source candidate when current evidence supports it. The blind prompt also supplies a clearly hypothetical incompatible environment: the reader must change the route while preserving the contract, without treating that hypothesis as a new current fact or source advice as authority. Independence is established by fresh context and restricted inputs, not novelty of mechanism.
 
-## Release gate
+## Completion
 
-An independent Closure may return `PASSED` only when all 33 static cases and both dynamic blind cases have durable evidence against one frozen candidate, the suite has no unresolved release-blocking finding, the authentic-source gap is either closed or explicitly makes the historical claim `INCONCLUSIVE`, and no decisive proof depends on `/tmp` or the authoring conversation.
+Apply the shared validation policy and state the scope supported by the retained evidence. Selected-case checks do not imply full-suite coverage, and handoff recovery does not imply actual implementation. Full suites, independent Closure and cross-Skill coverage are available when a specific change calls for them.

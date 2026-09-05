@@ -1,0 +1,13 @@
+{
+  "provenance": "Synthetic executable acceptance fixture added 2026-09-05; not a historical or production record.",
+  "files": [
+    {
+      "path": "test.sh",
+      "sha256": "87033bc8aaf565ef87a78e5686c7077a3f3620db00dff39b90a77e6330d09de5"
+    },
+    {
+      "path": "webhook.sh",
+      "sha256": "f8da2e9ca9860fa480fe066bb46fe40028e323822807621a2aa1bea5fd9d8270"
+    }
+  ]
+}

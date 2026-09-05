@@ -1,0 +1,25 @@
+{
+  "provenance": "Synthetic executable acceptance fixture added 2026-09-05; not a historical or production record.",
+  "files": [
+    {
+      "path": "accepted-orders.tsv",
+      "sha256": "2bcb542206c6afa532354a0bf6bbbb9c358aed22c656e4022187054fdbfed284"
+    },
+    {
+      "path": "export.json",
+      "sha256": "346ef441df465279687b233ef8a9b807a6bfb525a1f9dd5fe973fc93f9a3f738"
+    },
+    {
+      "path": "postgres-audit.sql",
+      "sha256": "fc017ece9e67c21ce48d939d41c9a0128bd6ce03f84cf378741c0c9ad06daf5c"
+    },
+    {
+      "path": "scope.md",
+      "sha256": "f2f1b48446494f8eaf43a91c358999801e8f7299c48cd1840918343692787548"
+    },
+    {
+      "path": "terminal-output.txt",
+      "sha256": "1da4347f180789a2ace92b25c3ad37cfd1ad8828dd4f681a295c0d045742919e"
+    }
+  ]
+}

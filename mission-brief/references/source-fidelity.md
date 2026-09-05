@@ -12,7 +12,7 @@ Confirmed facts, dependencies, and causal findings remain Reference context unle
 
 Use a repository-relative pointer when the source will remain available. Name the categories it preserves and their status when a fresh Agent could otherwise mistake optional material for requirements.
 
-When a temporary source is the only home of material information, preserve the minimum necessary facts in the Brief's `Context` or another appropriate durable source. Create a companion context record only when the material is substantial and the user-authorized repository write or an established convention provides a natural home.
+When a temporary source is the only home of material information, preserve the minimum necessary facts in the Brief's `Context` or another appropriate durable source. Within authorized repository writes, choose the home using existing conventions; create a companion record only when the material warrants it. Preservation keeps each item's authority status and does not itself commission retained child obligations.
 
 For a confirmed causal finding, retain the actor or trigger, affected object, mechanism or relationship, and material consequence. Preserve enough to avoid repeating costly investigation without prescribing the eventual fix.
 

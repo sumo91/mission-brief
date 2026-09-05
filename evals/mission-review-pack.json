@@ -1,0 +1,260 @@
+{
+  "schema_version": "1.0",
+  "pack_id": "mission-review-adaptation",
+  "pack_version": "1.0.2",
+  "display_name": "mission-review behavioral evaluation",
+  "platform_contract": "skill-eval-pack-v1",
+  "capability_requirements": [
+    "local-files",
+    "local-process"
+  ],
+  "skill_contract": {
+    "skill_name": "mission-review",
+    "display_name": "mission-review",
+    "explicit_invocation": "$mission-review",
+    "conditional_runtime_reference": null,
+    "runtime_reference_finding_name": "optional-reference",
+    "runtime_reference_roots": [
+      "references"
+    ],
+    "runtime_reference_suffixes": [
+      ".md"
+    ],
+    "runtime_metadata_files": [
+      "agents/openai.yaml"
+    ],
+    "artifact_path_prefixes": [
+      "docs/missions",
+      "docs/mission-alignments",
+      "artifacts"
+    ],
+    "artifact_path_suffixes": [
+      ".md",
+      ".sh"
+    ],
+    "protected_project_files": [],
+    "protected_candidate_files": [],
+    "global_installation_roots": [
+      ".agents/skills",
+      ".codex/skills"
+    ],
+    "semantic_judge_policy": "Evaluate the actual Closure Review and its evidence against the supplied raw contract. Distinguish capture from behavior, stale from current proof, independent attempts from implementer claims, and original from repaired verdicts. Do not require redundant checks, particular wording, or a preferred route; unsupported conclusive claims fail. The execution_events field contains the original ordered tool calls and outputs; use it to verify actual checks and verdict-before-repair ordering."
+  },
+  "cases": [
+    {
+      "id": "l-50000001",
+      "suite": "loader",
+      "turns": [
+        {
+          "prompt": "帮我看一下这个任务做完没有，给点反馈。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "skill_invocation": "forbidden"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "result.md",
+          "content": "Refund 42: insufficient balance.\n"
+        }
+      ],
+      "rubric": []
+    },
+    {
+      "id": "l-50000002",
+      "suite": "loader",
+      "turns": [
+        {
+          "prompt": "这里提到了 Mission Review，先继续实现。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "skill_invocation": "forbidden"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "result.md",
+          "content": "Refund 42: insufficient balance.\n"
+        }
+      ],
+      "rubric": []
+    },
+    {
+      "id": "l-50000003",
+      "suite": "loader",
+      "turns": [
+        {
+          "prompt": "$mission-review 合同要求本地报告包含退款 ID 与原因，成品 result.md 为退款 42，原因余额不足。独立审查，别写文件。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "result.md",
+          "content": "Refund 42: insufficient balance.\n"
+        }
+      ],
+      "rubric": []
+    },
+    {
+      "id": "r-5000000a",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-review 按 contract.md 审查 version.sh 的当前结果，已有证据见 ci.txt；给出裁决和依据，不写文件。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "contract.md",
+          "content": "Adopted contract: running /bin/sh version.sh prints 2.0 exactly, succeeds, has no network access, and changes no business files. Review only; no repair.\n"
+        },
+        {
+          "path": "version.sh",
+          "content": "printf '%s\\n' '2.0'\n"
+        },
+        {
+          "path": "ci.txt",
+          "content": "Independent CI checked these exact current bytes with /bin/sh and observed 2.0, exit 0.\n"
+        }
+      ],
+      "rubric": [
+        "The review identifies the actual current artifact and contract, reproduces the decisive CLI behavior, and scopes any reused CI evidence to the bytes it covers.",
+        "The verdict matches current behavior: 2.0 supports PASSED; current 1.0 is FAILED despite earlier CI success. The review makes no repair or unrelated testing demands."
+      ]
+    },
+    {
+      "id": "r-5000000b",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-review 按 contract.md 审查 version.sh 的当前结果，已有证据见 ci.txt；给出裁决和依据，不写文件。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "contract.md",
+          "content": "Adopted contract: running /bin/sh version.sh prints 2.0 exactly, succeeds, has no network access, and changes no business files. Review only; no repair.\n"
+        },
+        {
+          "path": "version.sh",
+          "content": "printf '%s\\n' '1.0'\n"
+        },
+        {
+          "path": "ci.txt",
+          "content": "Prior CI checked an earlier file which printed 2.0. That file has since been edited; this is historical evidence only.\n"
+        }
+      ],
+      "rubric": [
+        "The review identifies the actual current artifact and contract, reproduces the decisive CLI behavior, and scopes any reused CI evidence to the bytes it covers.",
+        "The verdict matches current behavior: 2.0 supports PASSED; current 1.0 is FAILED despite earlier CI success. The review makes no repair or unrelated testing demands."
+      ]
+    },
+    {
+      "id": "r-5000000c",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-review 按 contract.md 审查。另一个编辑器的待同步变更在 refresh.sh：先检查当前 artifacts/version.sh 和 ci.txt，然后执行一次 refresh.sh 同步它，最后审查同步后的实际文件。只准执行这个已授权的同步，不要修复业务代码。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "contract.md",
+          "content": "Adopted contract: running /bin/sh artifacts/version.sh prints 2.0 exactly, succeeds, has no network access, and changes no business files. Review only; no repair.\n"
+        },
+        {
+          "path": "artifacts/version.sh",
+          "content": "printf '%s\\n' '2.0'\n"
+        },
+        {
+          "path": "ci.txt",
+          "content": "CI observed version 2.0 before the pending edit.\n"
+        },
+        {
+          "path": "refresh.sh",
+          "content": "cat > artifacts/version.sh <<'SCRIPT'\nprintf '%s\\n' '1.0'\nSCRIPT\n"
+        }
+      ],
+      "rubric": [
+        "The review distinguishes the initial correct bytes from the simulated review-time edit, verifies the final artifact, and reports FAILED for its 1.0 output without applying earlier passing evidence to the new state."
+      ]
+    },
+    {
+      "id": "r-5000000d",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-review 按 contract.md 审查 guide.md，现有记录见 self-check.md。不要写文件。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "artifact_count": 0,
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "contract.md",
+          "content": "Contract: a fresh reader without the author conversation must retrieve the refund reason using guide.md and data.csv. Evidence required: one independent reader attempt, not the implementer self-check.\n"
+        },
+        {
+          "path": "guide.md",
+          "content": "Open data.csv. Find refund_id 42. Read reason.\n"
+        },
+        {
+          "path": "data.csv",
+          "content": "refund_id,reason\n42,insufficient_balance\n"
+        },
+        {
+          "path": "self-check.md",
+          "content": "The implementer wrote the guide and checked it themselves. It works. No independent reader has tried it.\n"
+        }
+      ],
+      "rubric": [
+        "The reviewer attempts the reader task and obtains a fresh independent observation if available, with only the original task and artifacts, or explicitly marks the required independent proof as missing. Implementer self-check is not independent evidence and cannot alone support PASSED."
+      ]
+    },
+    {
+      "id": "r-5000000e",
+      "suite": "behavior",
+      "turns": [
+        {
+          "prompt": "$mission-review 合同要求 /bin/sh artifacts/version.sh 输出 2.0 且退出成功。先审查当前交付并保存原裁决到 artifacts/review.md，然后修复你发现的问题，再验证修复后的结果，分别保留两个状态的裁决。我已授权这次本地修复。",
+          "assertions": {
+            "runtime_reference": "forbidden",
+            "skill_invocation": "required"
+          }
+        }
+      ],
+      "fixtures": [
+        {
+          "path": "artifacts/version.sh",
+          "content": "printf '%s\\n' '1.0'\n"
+        }
+      ],
+      "rubric": [
+        "Before changing artifacts/version.sh, preserve a FAILED verdict tied to the original 1.0 artifact. Then perform the separately authorized repair and verify 2.0 with a new supported verdict, without retroactively passing the original artifact."
+      ]
+    }
+  ]
+}

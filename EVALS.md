@@ -1,18 +1,31 @@
-# Mission Brief behavioral evals
+# Mission Skills validation and Brief scenarios
 
-Maintainer-only evaluation set for `mission-brief`. It is not runtime instruction and must not be installed with or loaded while using the Skill.
+Maintainer-only validation policy for Mission Align, Brief and Review, followed by the Brief scenario bank. It is not runtime instruction and is not installed with the Skills.
 
-## Protocol
+## Default validation policy
 
-Run each scenario in a fresh session against a frozen Skill identity. Invoke the Skill explicitly except where a scenario tests manual invocation. Give the Agent raw conversation, artifacts, and repository authority—not the expected answer, suspected defect, prior critique, or intended fix.
+Choose evidence for the change and the question it needs to answer:
 
-Record the response, questions, file writes, references loaded, and generated Brief. Grade observable behavior and the resulting commission. Internal labels, exact wording, fixed response fields, and a predetermined number of dialogue turns are not requirements.
+- Documentation, wording and packaging changes normally need local consistency, link and runtime-boundary checks.
+- Changes to decisions, authority, routing or source preservation call for related existing cases or a representative real task. Select the cases that could expose the suspected regression and state that scope.
+- Changes to handoff meaning benefit from a fresh reader or executor using only the handoff and normal workspace. Use actual execution when the question is whether the handoff enables delivery.
+- A model or host migration, a broad behavioral change, or a concrete unresolved failure can justify wider coverage. Full suites, multiple blind readers and independent Closure remain available for an explicit investigation; they are not routine prerequisites for editing, committing or installing a Skill.
 
-Enumerate and execute every prompt variant rather than treating a scenario heading as one run. Bind the run to the candidate runtime-file digest and retain the raw prompt, turn trace, final response, workspace before/after manifests, artifact diff, semantic grade, and aggregate evidence manifest under `evals/runs/`. A `/tmp` artifact or a Closure summary alone is not release evidence.
+Stop when the selected evidence answers the question and there is no unresolved material counterexample within the claimed scope. One decisive defect is enough to report failure; a passing sample supports only the tested scope. The case bank is not a checklist that every change must complete.
 
-For a regression introduced by an earlier candidate, run the authentic source set against the named baseline revision when those originals are available. When an authentic source is missing, preserve the gap explicitly; a reconstruction may exercise the rule but cannot be labeled as the historical baseline.
+Keep capture health, Skill behavior and delivered outcome separate. A transport failure or missing trace is an evidence gap, not proof of a Skill defect. A completed capture is not a behavioral pass; a well-conducted Review can correctly find a failed delivery. Read the underlying evidence when a judge finding rests on wording or process preferences. Record any correction alongside the original result without silently replacing it or building a new gate for a single disputed judgment.
 
-After representative authoring scenarios pass, give a separate fresh Agent only the Brief, target workspace, and normal ambient instructions. That blind handoff is part of the release result.
+Preserve useful failures and distinguish reruns from earlier attempts. Retry a transport failure only when needed to answer the current question; an altered prompt or rubric is a new evaluation. Historical baselines, migration checks and prior full-release protocols remain historical evidence, not requirements inherited by every future change. Old results do not establish a pass for a changed Pack or runtime.
+
+## Model-run protocol
+
+For a selected scenario, use a fresh session and give the Agent raw conversation, artifacts and repository authority. Invoke the Skill explicitly except in discovery/Loader cases. Keep expected answers, prior critiques and suspected defects outside executor input. Preserve all actual messages in a multi-turn trial; a necessary unanswered user decision leaves the trial pending rather than authorizing an invented answer.
+
+Record enough to recover the input, candidate runtime digest, Pack, model/host settings, raw response, relevant tool observations, changed artifacts and result. The existing runners retain traces and manifests under `evals/runs/`; use them when making durable behavioral claims. A summary alone does not replace the underlying observations.
+
+Grade the commission and observable result. Labels, exact wording, fixed response fields, file totals, reference-reading order and dialogue counts are not general quality criteria. Deterministic assertions are appropriate when they test an actual user boundary, a specified storage contract, invocation or loader behavior. Reference reads and extra steps can inform a cost investigation without becoming ordinary result failures.
+
+For historical comparisons, use authentic inputs when available and name missing originals. Reconstructed inputs may exercise a rule but cannot establish what happened in the unavailable conversation. A blind handoff establishes only the recovery or execution it actually attempts.
 
 ## Behavioral contract
 
@@ -21,8 +34,10 @@ A candidate passes only when the applicable behaviors below hold:
 - **Manual invocation:** ordinary implementation and natural-language mentions of a brief do not load this user-invoked Skill.
 - **One commission:** the output centers one coherent result that can receive an honest verdict. Complexity, file count, requested labels, and implementation phases do not determine result topology.
 - **Settled before writing:** create one Brief when the commission is sufficiently settled. When a consequential user choice or authority conflict would change the contract, expose the smallest decision needed before writing. Do not pair an unresolved contract with a completed artifact.
+- **Alignment routing:** keep one bounded missing decision in `mission-brief`. Deeper ambiguity reaches available `mission-align`; otherwise retain the safe clarification gate. Resume an already-invoked Brief after explicit adoption, without another invocation. Unconfirmed or cancelled work does not produce a Brief.
 - **Faithful contract:** binding content comes from adopted user decisions, applicable external authority, necessary meaning, task-appropriate proof, or a necessary located pointer. Discussion, critiques, examples, and proposed solutions remain unbound until adopted.
 - **Artifact fidelity:** a result contract does not silently replace a requested final plan, design review, decision recommendation, or implementation plan. When the requested product differs, expose the difference and settle the smallest consequential choice before writing.
+
 - **Information disposition:** material source information is not silently lost merely because it is non-binding. Keep contract-shaping content in the Brief, preserve valuable non-contract findings in a durable labeled source, expose consequential unsettled decisions, and omit only content that is irrelevant, rejected, superseded, or safely discoverable without erasing completed investigation.
 - **Source authority:** a source may mix adopted decisions, applicable authority, confirmed facts, and candidate approaches. Preserve their actual status; linking or retaining a source does not make all of it binding.
 - **Durable traceability:** necessary context remains retrievable after handoff. A temporary path, expiring attachment, or source conversation alone is not a completed handoff when material information exists only there.
@@ -31,10 +46,12 @@ A candidate passes only when the applicable behaviors below hold:
 - **Authority:** surface unresolved conflicts with repository contracts, compatibility commitments, or authorized decisions. A later Brief cannot silently narrow or supersede them.
 - **Evidence:** separate success facts from how they will be challenged. Evidence must address the promised result rather than substitute convenient proxy checks, scale with consequence, permit `INCONCLUSIVE`, and remain owned by the Agent unless a genuinely human-only judgment is part of the claim.
 - **Topology:** several independent results do not automatically form a parent. When the user has adopted an overall result that can still fail after local results pass, make that integration result and its seams explicit before commissioning it. Different defensible decompositions may pass when they protect the same user outcome.
-- **Parent topology:** load the parent-child reference only for a confirmed or pending integration commission or a child tied to one. A parent owns integration value, cross-result invariants, seam evidence, program boundaries, and concise result boundaries—not child implementation plans or copied local contracts.
+- **Parent Mission:** treat a confirmed or pending integration commission, or a child tied to one, according to its actual parent relationship. A parent owns integration value, cross-result invariants, seam evidence, program boundaries, and concise result boundaries—not child implementation plans or copied local contracts.
 - **Continuity:** preserve applicable parent promises in later child commissions. Keep omitted confirmed child contracts in a durable authoritative source or leave them visibly unsettled for later confirmation.
 - **Blind handoff:** a capable fresh Agent can recover the result, failure conditions, proof obligations, hard boundaries, target, and granted authority without the source conversation, while retaining freedom to choose a viable route.
-- **Mission storage:** a Mission uses `<documentation-boundary>/docs/missions/<outcome-slug>/brief.md`. A parent is the parent role of that same artifact, titled `# Mission Brief: <outcome>` and marked by `Result Boundaries`, not a separate global file type; physical nesting may mirror same-boundary topology, while explicit links carry topology across package boundaries.
+
+Authoring-time handoff readiness is distinct from actual fresh-reader evidence. The existing dynamic blind suite checks recovery and route freedom, without implementation. The [real execution inputs](evals/mission-handoff-execution.json) and [chain runner](evals/scripts/run_mission_handoff_execution.py) additionally test authoring, fresh implementation and independent Review. These are separate evidence scopes.
+- **Mission storage:** a Mission uses `<documentation-boundary>/docs/missions/<outcome-slug>/brief.md`. Parent Mission is the parent role of that same artifact, not a separate global file type; physical nesting may mirror same-boundary topology, while explicit links carry topology across package boundaries.
 
 ## Active scenarios
 
@@ -92,6 +109,8 @@ A candidate passes only when the applicable behaviors below hold:
 
 **Prompt A:** `$mission-brief 给本地 CLI 增加确定性的 --version 输出；失败只影响开发者读取版本号。`
 
+**Fixture A:** A repository README identifies its single developer CLI, `bin/fixture-cli`, and its current help behavior. This makes the target recoverable without inventing which product is commissioned.
+
 **Expected A:** Ask for cheap deterministic and relevant compatibility evidence, without broad journeys or independent reviewers.
 
 **Prompt B:** `$mission-brief 修复金额舍入错误。现有测试只覆盖 1.005 和 2.675，但正确行为适用于全部合法两位小数金额。`
@@ -140,13 +159,13 @@ A candidate passes only when the applicable behaviors below hold:
 
 **Prompt A:** `$mission-brief 为其中已经确认的预览结果单独创建子 Mission Brief。`
 
-**Expected A:** Create one self-contained child Brief, preserve applicable parent invariants, point to the authoritative source when needed, and leave the parent unchanged.
+**Expected A:** Create one self-contained child Brief, preserve applicable parent invariants, point to the authoritative source when needed, and leave Parent Mission unchanged.
 
-**Variant B — chat-only child contract:** The approved Parent Mission deliberately contains only concise preview, approval, and publication boundaries. Confirmed child-local obligations—invalid preview inputs are visible, approval rejections retain a reason, and publication failures can roll back—exist only in the authoring conversation and do not belong in the parent. The user has not decided whether to preserve them durably or leave them for later reconfirmation.
+**Variant B — chat-only child contract:** The approved Parent Mission deliberately contains only concise preview, approval, and publication boundaries. Confirmed child-local obligations—invalid preview inputs are visible, approval rejections retain a reason, and publication failures can roll back—exist only in the authoring conversation and do not belong in the parent. The user authorizes durable repository preservation; child commissioning remains deferred.
 
-**Prompt B:** `$mission-brief 先保存父级 Mission，子级 Mission 以后再说。`
+**Prompt B:** `$mission-brief 先保存 Parent Mission，子 Mission 以后再说。`
 
-**Expected B:** Do not silently discard the child contracts or copy them into the parent. Before saving, ask whether to preserve them in a durable authoritative source or leave them unsettled for later child confirmation.
+**Expected B:** Save Parent Mission and the child obligations in an appropriate durable Authority Source without asking the user to choose an ordinary location. Preserve their adopted but uncommissioned status and create no child directories. A separate variant explicitly leaves preservation versus later reconfirmation undecided; ask only about that real choice.
 
 ### 13. Discoverable unknowns do not block the commission
 
@@ -184,7 +203,11 @@ Give a generated Brief and its target workspace to a capable fresh Agent. Ask it
 
 **Conversation:** The user supplies a detailed but partly unadopted architecture proposal and asks `$mission-brief 阅读方案并给出最终可行方案。`
 
+The executable case supplies that proposal as `proposal.md`; an empty workspace does not exercise reading and resolving the supplied proposal. Preserve the original prompt and product-choice rubric when correcting this fixture.
+
 **Expected:** Do not author a final plan inside the `$mission-brief` invocation or silently relabel a Mission Brief as that plan. Explain the result-contract boundary and determine whether the user wants the adopted commission frozen, the proposal reviewed and completed as a separate product, or both. Preserve an already adopted detailed plan as authority only to the extent actually adopted.
+
+An open product-choice question is sufficient; enumerating three fixed options is not required. Do not assume both products or forbid an explicitly requested combination.
 
 ### 18. Detailed findings survive contract compression
 
@@ -216,11 +239,11 @@ Give a generated Brief and its target workspace to a capable fresh Agent. Ask it
 
 **Expected A:** Save it at `docs/missions/<outcome-slug>/brief.md` without an empty `children/` directory or mandatory context record.
 
-**Variant B — same-boundary parent:** One package owns an adopted integration result in which the same authorized change set retains identity and authority from Preview to Approval. The commissioned Preview child inspects an identified set without applying it and exposes invalid or unauthorized input; the Approval child accepts or rejects that unchanged set through an authorized reviewer and records rejection reasons.
+**Variant B — same-boundary Parent Mission:** One package owns an adopted integration result in which the same authorized change set retains identity and authority from Preview to Approval. The commissioned Preview child inspects an identified set without applying it and exposes invalid or unauthorized input; the Approval child accepts or rejects that unchanged set through an authorized reviewer and records rejection reasons.
 
-**Expected B:** Store the parent as `<package>/docs/missions/<integration-slug>/brief.md`; identify its role with a `# Mission Brief:` title and `Result Boundaries`; and use `children/<child-slug>/brief.md` plus child `Parent Mission` links for commissioned children. A parent is not a global `mission-0.md` file type.
+**Expected B:** Store the parent as `<package>/docs/missions/<integration-slug>/brief.md`; make its parent role explicit in the title (for example `# Parent Mission:`) and include `Result Boundaries`; and use `children/<child-slug>/brief.md` plus child `Parent Mission` links for commissioned children. Parent and Child Missions use the same `brief.md` artifact type.
 
-**Variant C — cross-package parent:** The integration result spans independently owned packages. The parent preserves one authorized change set through preview, approval, and publication; each package-owned child has a concrete commissioned result at its own boundary.
+**Variant C — cross-package Parent Mission:** The integration result spans independently owned packages. The parent preserves one authorized change set through preview, approval, and publication; each package-owned child has a concrete commissioned result at its own boundary.
 
 **Expected C:** Keep the parent at the lowest common documentation boundary and each child at its owning package boundary. Use explicit bidirectional links rather than forcing physical nesting to override ownership.
 
@@ -228,7 +251,7 @@ Give a generated Brief and its target workspace to a capable fresh Agent. Ask it
 
 **Prompt:** `$mission-brief Safari 下登录表单按回车没有提交，Chrome 和鼠标点击行为必须保持不变。`
 
-**Expected:** Produce a compact `brief.md` with the observable regression, compatibility boundary, and proportionate proof. Do not create a context record, source inventory, ADR, or reference appendix when no material external context needs preservation.
+**Expected:** Produce a compact `brief.md` with the observable regression, compatibility boundary, and proportionate proof. Do not add preservation tasks, topology decisions or review obligations when no material external context needs them. Judge any extra material by its effect on the handoff, rather than its filename alone.
 
 ### 24. Blind handoff checks contract and traceability
 
@@ -240,14 +263,28 @@ Give a generated Brief, its durable labeled sources, and the target workspace to
 
 **Conversation:** A settled local export commission is accompanied by a long durable source containing meeting history, superseded naming debates, unrelated roadmap ideas, generic security advice, and one confirmed compatibility fact that changes the result boundary.
 
-**Expected:** Preserve the settled export contract and the one material compatibility fact. Leave the durable source labeled as reference when it remains useful, but do not copy its unrelated or superseded bulk into the Brief, add obligations from generic advice, or create preservation ceremony merely because the source is long. Judge compactness by whether each retained clause changes the contract, proof, boundary, or handoff—not by a fixed word count or ratio.
+**Expected:** Preserve the settled export contract and the one material compatibility fact. Leave the durable source labeled as reference when it remains useful, but do not copy its unrelated or superseded bulk into the Brief, add obligations from generic advice, or create preservation ceremony merely because the source is long. Judge compactness by its effect on the contract and handoff, not a fixed word count or ratio. Actual extra confirmation, preservation or topology steps, authority conditions, route constraints or obscured obligations are material; harmless restatement or a short absence declaration is non-blocking wording.
+
+### 26. Deep ambiguity routes to Mission Align
+
+**Variant A — coupled ambiguity:** `$mission-brief 把内部运营工具做得更好并立项。现在有人关心权限，有人关心速度，也有人觉得主要问题是新人不会用；谁是主要用户、哪个结果优先、是否一次完成都还没决定。`
+
+**Expected A:** Initially write no Brief. With `mission-align` available, expose the coupled result, priority, and topology choices plainly. Once the user adopts a complete result and boundaries, continue the original Brief. Do not request a duplicate invocation, invent a parent, or ask for implementation details.
+
+**Variant B — one bounded choice:** `$mission-brief 让用户可以删除账户，其他行为保持不变；现在只差确认是立即永久删除，还是保留 30 天恢复期。`
+
+**Expected B:** Keep the decision in `mission-brief`, explain how the alternatives change the result and boundary, and ask for that one choice. Do not invoke a full alignment process merely because one consequential question exists.
+
+**Variant C — optional Skill unavailable:** Use Variant A in an environment where `mission-align` is not installed.
+
+**Expected C:** Preserve the current safe gate: write nothing, explain the smallest consequential decision needed to establish the result, and continue without pretending the optional Skill ran.
 
 ## Scoring and iteration
 
-Treat invented binding content, hidden authority conflict, proxy evidence presented as final proof, unresolved-contract writes, and a failed blind handoff as release-blocking. Treat unnecessary blocking, route overconstraint, gratuitous review burden, and non-self-contained wording as material regressions.
+Treat invented binding content, hidden authority conflict, proxy evidence presented as final proof, unresolved-contract writes, and a failed handoff as material failures in the evaluated scope. Treat unnecessary blocking, route overconstraint, gratuitous review burden, and non-self-contained wording as material regressions.
 
 Do not fail a candidate for natural wording, a defensible alternative decomposition, absence of internal state labels, or a different number of focused clarification turns. Preserve raw failures and candidate identities. Change runtime instruction only for repeated or high-consequence behavioral failures that the existing principles do not already cover.
 
-## Release evidence gate
+## Completion
 
-A release candidate is eligible for independent Closure only when every active scenario and prompt variant has a durable result, every release-blocking finding is resolved or honestly makes the run `FAILED`/`INCONCLUSIVE`, both blind handoffs have fresh task identities, and the evidence aggregate identifies the exact candidate used. The installed runtime is synchronized only after that Closure returns an evidence-supported `PASSED`.
+Apply the default validation policy above. Summarize the change, the evidence actually obtained, any material gap and the conclusion it supports. Installation uses the checked runtime bundle; it does not require an additional independent Closure unless that review is part of the commissioned work.

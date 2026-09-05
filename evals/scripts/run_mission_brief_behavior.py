@@ -23,11 +23,125 @@ sys.path.insert(0, str(HARNESS_SOURCE))
 from mission_brief_eval.eval_pack import load_eval_pack  # noqa: E402
 from mission_brief_eval.models import RunConfig, Verdict  # noqa: E402
 import mission_brief_eval.runner as harness_runner_module  # noqa: E402
+import mission_brief_eval.judge as harness_judge_module  # noqa: E402
+from mission_brief_eval.trace import session_turn_context, session_skill_evidence, runtime_reads  # noqa: E402
+from mission_brief_eval.candidate import identify, bundle_digest  # noqa: E402
 from mission_brief_eval.runner import HarnessRunner  # noqa: E402
 
 
 _PLATFORM_BUILD_JUDGE_PACKET = harness_runner_module.build_judge_packet
 _PLATFORM_HARNESS_IDENTITY = harness_runner_module.harness_identity
+_PLATFORM_CONFIG = harness_runner_module.write_isolated_config
+_PLATFORM_SETTINGS = harness_runner_module._execution_settings
+_PLATFORM_ADAPTER = harness_runner_module.CodexAdapter
+_PLATFORM_STAGE = harness_runner_module.stage
+_PLATFORM_ESTABLISH = harness_runner_module.establish
+_PLATFORM_CASE = HarnessRunner._run_case
+REASONING_EFFORT: str | None = None
+COMPANION = None
+CASE_EVIDENCE: Path | None = None
+
+
+def configure_evaluation(effort: str | None, companion: Path | None = None, companion_pack: Path | None = None) -> None:
+    global REASONING_EFFORT, COMPANION
+    REASONING_EFFORT = effort
+    if bool(companion) != bool(companion_pack):
+        raise ValueError("--companion and --companion-pack must be supplied together")
+    COMPANION = None
+    if companion is not None:
+        contract = load_eval_pack(companion_pack.resolve()).skill_contract
+        COMPANION = (companion.resolve(), contract, identify(companion.resolve(), contract))
+
+
+def isolated_config_with_effort(**kwargs: object) -> Path:
+    path = _PLATFORM_CONFIG(**kwargs)
+    if REASONING_EFFORT:
+        path.write_text(
+            f'model_reasoning_effort = {json.dumps(REASONING_EFFORT)}\n'
+            + path.read_text(encoding="utf-8"), encoding="utf-8"
+        )
+    if COMPANION and (kwargs["isolated_home"] / "skills" / COMPANION[1].skill_name).is_dir():
+        runtime = (kwargs["isolated_home"] / "skills" / COMPANION[1].skill_name).resolve()
+        marker = "\n[permissions.eval-executor.network]"
+        config = path.read_text(encoding="utf-8")
+        if config.count(marker) != 1:
+            raise RuntimeError("unexpected isolated config boundary")
+        path.write_text(config.replace(marker, f'\n{json.dumps(str(runtime))} = "read"\n{marker}'), encoding="utf-8")
+    return path
+
+
+def execution_settings_with_effort(config: RunConfig) -> dict[str, object]:
+    return {**_PLATFORM_SETTINGS(config), "requested_reasoning_effort": REASONING_EFFORT,
+            "companion": asdict(COMPANION[2]) if COMPANION else None}
+
+
+def stage_discoverable(candidate, isolated_home, contract):
+    # Native skill symlinks keep runtime outside the denied credential/session tree.
+    isolated_home = isolated_home.resolve()
+    runtime = _PLATFORM_STAGE(candidate, isolated_home.parent / "runtime", contract)
+    link = isolated_home / "skills" / contract.skill_name
+    link.parent.mkdir(parents=True, exist_ok=True)
+    link.symlink_to(runtime, target_is_directory=True)
+    return runtime
+
+
+def establish_with_runtime(**kwargs):
+    result = _PLATFORM_ESTABLISH(**kwargs)
+    runtime = kwargs["isolated_home"].parent / "runtime"
+    if runtime.is_dir():
+        with kwargs["profile_path"].open("a", encoding="utf-8") as stream:
+            stream.write(f'\n(allow file-read* (subpath {json.dumps(str(runtime))}))\n')
+    return result
+
+
+def stage_with_companion(candidate, isolated_home, contract):
+    runtime = stage_discoverable(candidate, isolated_home, contract)
+    if COMPANION:
+        source, companion_contract, identity = COMPANION
+        if companion_contract.skill_name == contract.skill_name:
+            raise ValueError("companion must be a distinct Skill")
+        staged = stage_discoverable(source, isolated_home, companion_contract)
+        if bundle_digest(staged) != identity.digest:
+            raise RuntimeError("companion changed after selection")
+        if CASE_EVIDENCE:
+            shutil.copytree(staged, CASE_EVIDENCE / "retained-companion-bundle")
+    return runtime
+
+
+def run_case_with_companion(self, case, output, *args, **kwargs):
+    global CASE_EVIDENCE
+    CASE_EVIDENCE = output / "cases" / (case.opaque_id if case else "i-0e519dab")
+    CASE_EVIDENCE.mkdir(parents=True, exist_ok=True)
+    try:
+        return _PLATFORM_CASE(self, case, output, *args, **kwargs)
+    finally:
+        CASE_EVIDENCE = None
+
+
+class ObservedAdapter(_PLATFORM_ADAPTER):
+    def execute(self, prompt: str, *, turn_index: int, judge: bool = False):
+        execution = super().execute(prompt, turn_index=turn_index, judge=judge)
+        context = session_turn_context(self.isolated_home) or {}
+        if REASONING_EFFORT and context.get("effort") != REASONING_EFFORT:
+            execution.uncertainty.append(
+                f"Reasoning effort mismatch: requested {REASONING_EFFORT}, observed {context.get('effort')!r}."
+            )
+            execution.returncode = execution.returncode or 1
+        if COMPANION and not judge:
+            _, contract, identity = COMPANION
+            runtime = (self.isolated_home / "skills" / contract.skill_name).resolve()
+            observed = bundle_digest(runtime)
+            observation = {
+                "identity": asdict(identity), "observed_digest": observed,
+                "invocation": session_skill_evidence(self.isolated_home, runtime, contract.skill_name),
+                "reads": runtime_reads(execution.events, runtime_bundle=runtime, observable_targets=("SKILL.md",)),
+            }
+            (CASE_EVIDENCE / f"turn-{turn_index + 1}.companion.json").write_text(
+                json.dumps(observation, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            if observed != identity.digest:
+                execution.uncertainty.append("Companion runtime identity changed during execution.")
+                execution.returncode = execution.returncode or 1
+        return execution
 
 
 def build_judge_packet_with_directories(**kwargs: object) -> dict[str, object]:
@@ -38,7 +152,33 @@ def build_judge_packet_with_directories(**kwargs: object) -> dict[str, object]:
         for path in workspace.rglob("*")
         if path.is_dir()
     )
+    if CASE_EVIDENCE:
+        packet["execution_events"] = recorded_tool_events(CASE_EVIDENCE)
+        packet["runtime_context"] = {
+            "companion_skill": COMPANION[1].skill_name if COMPANION else None,
+            "companion_observations": [
+                {"turn": path.name, "reads": (value := json.loads(path.read_text(encoding="utf-8")))["reads"],
+                 "injection_count": value["invocation"]["injection_count"],
+                 "catalog_present": value["invocation"]["catalog_present"]}
+                for path in sorted(CASE_EVIDENCE.glob("turn-*.companion.json"))
+            ],
+        }
     return packet
+
+
+def recorded_tool_events(evidence: Path) -> dict[str, list[dict[str, object]]]:
+    """CLI stdout omits some code-mode calls; private sessions retain their output."""
+    recorded = {}
+    types = {"function_call", "function_call_output", "custom_tool_call", "custom_tool_call_output"}
+    for path in sorted((evidence / "codex-sessions").rglob("*.jsonl")):
+        events = []
+        for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            value = json.loads(line)
+            payload = value.get("payload", {})
+            if value.get("type") == "response_item" and payload.get("type") in types:
+                events.append({"line": number, "timestamp": value.get("timestamp"), "payload": payload})
+        recorded[path.relative_to(evidence).as_posix()] = events
+    return recorded
 
 
 def repository_extended_harness_identity() -> str:
@@ -51,6 +191,14 @@ def repository_extended_harness_identity() -> str:
 
 harness_runner_module.build_judge_packet = build_judge_packet_with_directories
 harness_runner_module.harness_identity = repository_extended_harness_identity
+harness_runner_module._execution_settings = execution_settings_with_effort
+harness_runner_module.write_isolated_config = isolated_config_with_effort
+harness_judge_module.write_isolated_config = isolated_config_with_effort
+harness_runner_module.CodexAdapter = ObservedAdapter
+harness_judge_module.CodexAdapter = ObservedAdapter
+harness_runner_module.stage = stage_with_companion
+harness_runner_module.establish = establish_with_runtime
+HarnessRunner._run_case = run_case_with_companion
 
 
 DEFAULT_PACK = REPOSITORY / "evals" / "mission-brief-pack.json"
@@ -167,10 +315,14 @@ def parser() -> argparse.ArgumentParser:
     value.add_argument("--eval-pack", type=Path, default=DEFAULT_PACK)
     value.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     value.add_argument(
-        "--suite", choices=("behavior", "loader", "isolation", "all"), default="all"
+        "--suite", choices=("behavior", "loader", "isolation", "all"), required=True,
+        help="Choose the validation scope explicitly; use --case-id for targeted cases."
     )
     value.add_argument("--model", required=True)
     value.add_argument("--judge-model")
+    value.add_argument("--reasoning-effort", choices=("low", "medium", "high", "xhigh", "max", "ultra"))
+    value.add_argument("--companion", type=Path)
+    value.add_argument("--companion-pack", type=Path)
     value.add_argument("--codex-bin", type=Path)
     value.add_argument("--timeout", type=int, default=900)
     value.add_argument(
@@ -190,6 +342,7 @@ def parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
+    configure_evaluation(args.reasoning_effort, args.companion, args.companion_pack)
     codex_bin = (
         args.codex_bin.expanduser().resolve()
         if args.codex_bin

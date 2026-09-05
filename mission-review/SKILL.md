@@ -7,7 +7,7 @@ description: Review a completed Mission against its adopted result contract and 
 
 Use **outcome review**: test the delivered result, not whether the implementation or report resembles the words used to commission it.
 
-Review a completed Mission from its adopted contract, finished artifacts, and available evidence. Perform the review; do not repair the work, rewrite the contract, or turn optional improvements into failure conditions.
+Review a completed Mission from its adopted contract, finished artifacts, and available evidence. Keep optional improvements outside failure conditions. Preserve the verdict before entering any separately authorized repair phase; a review-only request leaves the work and contract unchanged.
 
 ## 1. Recover the promise
 
@@ -30,7 +30,9 @@ This step is complete when the promised result and the facts that would material
 
 ## 2. Exercise the finished result
 
-Inspect the actual deliverables and reproduce important existing evidence. Then perform the least costly additional checks capable of falsifying the Mission's meaningful claims in the current environment.
+Identify the contract and artifact state being reviewed, using a commit, relevant file digest, deployment identity, or observable state appropriate to the claim. HEAD alone does not identify uncommitted changes. If the result changes during review, identify affected claims and recheck them; qualify a verdict that covers only the earlier state.
+
+Inspect actual deliverables. Reuse traceable evidence when its coverage, artifact state, and relevant environment still apply; reproduce decisive or doubtful parts and any explicitly required independent checks. Perform the least costly additional checks capable of falsifying remaining meaningful claims. An implementer assertion is a lead, not reproduced evidence.
 
 Credit each check only for the behavior it exercises. File presence, schema shape, passing automation, screenshots, and implementer summaries can support a verdict, but none proves a broader user or system result by association.
 
@@ -38,11 +40,11 @@ For a claim about reading, judgment, or use, attempt the promised task on the fi
 
 The reviewing Agent owns every check it can genuinely perform. Reserve human participation for an explicitly contracted human decision or an experience an Agent cannot supply.
 
-When the environment supports it, use a fresh child Agent if an independent attempt would materially improve the evidence—for example, by reducing implementation-context bias or exercising a reader task.
+Use an existing fresh review context or a fresh child Agent when independence materially improves the evidence, such as a reader task or a review after participating in implementation. A new Agent inheriting the implementation history is not a blind attempt. If independence is unavailable, disclose that limit and judge whether the contract requires it.
 
 Give it the original contract, finished artifact, and task without the expected verdict or suspected defect. Treat its observations as evidence to verify, not as an approval that replaces the main reviewer's judgment.
 
-Stop when decisive evidence supports a verdict or when the remaining decisive fact cannot be obtained with the available authority and environment.
+Stop when proportionate evidence supports all material obligations, a decisive failure establishes `FAILED`, or a remaining decisive fact is unobtainable. Extend checks only for new changes, counterevidence, or unresolved material doubt.
 
 ## 3. Judge material fulfillment
 
@@ -68,7 +70,7 @@ Include material gaps and unresolved uncertainty only when they affect the verdi
 
 Distinguish direct observation, reproduced evidence, implementer claim, and reviewer inference when that distinction affects confidence.
 
-Cite concrete artifact paths, commands, outputs, or interaction results closely enough for another Agent to retrace the decision.
+Cite the reviewed state and concrete artifact paths, commands, outputs, or interactions closely enough for another Agent to retrace the decision. A later repaired result requires its own verification; it cannot retroactively pass the original delivery.
 
 Choose headings that fit the repository rather than filling a fixed form. Do not manufacture recommendations after `PASSED` or design a repair unless the user separately commissions it.
 

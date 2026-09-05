@@ -46,6 +46,15 @@ from mission_brief_eval.trace import (  # noqa: E402
     session_skill_evidence,
     write_jsonl,
 )
+from mission_brief_eval.eval_pack import load_eval_pack  # noqa: E402
+from run_mission_brief_behavior import (  # noqa: E402
+    configure_evaluation, isolated_config_with_effort, ObservedAdapter, stage_discoverable, establish_with_runtime,
+)
+
+REVIEW_CONTRACT = load_eval_pack(REPOSITORY / "evals/mission-review-pack.json").skill_contract
+write_isolated_config = isolated_config_with_effort
+CodexAdapter = ObservedAdapter
+establish = establish_with_runtime
 
 
 @dataclass(frozen=True)
@@ -73,12 +82,21 @@ SYNTHETIC = {
 
 
 def synthetic_case(case_id: str, filename: str) -> CaseSpec:
+    supplemental = {
+        "mr-007": ("mr-007-local-webhook", "Run /bin/sh artifacts/test.sh to inspect the local evidence; no live credentials or receipts are supplied."),
+        "mr-008": ("mr-008-offline-report", "The actual report and supplied assets are under artifacts/."),
+        "mr-009": ("mr-009-chat-export", "Inspect the finished export and complete synthetic acceptance population under artifacts/. Retained PostgreSQL evidence covers that fixture run, not production."),
+    }
+    extra = supplemental.get(case_id)
+    packet = ("evals/fixtures/mr-008-offline-report/review-request.md" if case_id == "mr-008"
+              else f"evals/cases/mission-review/{filename}")
     return CaseSpec(
         case_id,
-        (InputCopy(f"evals/cases/mission-review/{filename}", "packet.md"),),
+        (InputCopy(packet, "packet.md"),)
+        + ((InputCopy(f"evals/fixtures/{extra[0]}", "artifacts"),) if extra else ()),
         "$mission-review Follow the independent review request in `packet.md`. "
         "Inspect the completed result and available evidence yourself. Return the Closure Review "
-        "inline and write nothing.",
+        "inline and write nothing. " + (extra[1] if extra else ""),
     )
 
 
@@ -359,26 +377,7 @@ def make_tree_removable(root: Path) -> None:
 
 
 def stage_candidate(candidate: Path, isolated_home: Path) -> Path:
-    destination = isolated_home / "skills" / "mission-review"
-    destination.mkdir(parents=True)
-    selected = runtime_files(candidate)
-    for source in selected:
-        relative = source.relative_to(candidate)
-        target = destination / relative
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(source, target)
-    expected = [path.relative_to(candidate).as_posix() for path in selected]
-    actual = sorted(
-        path.relative_to(destination).as_posix()
-        for path in destination.rglob("*")
-        if path.is_file()
-    )
-    if actual != expected:
-        raise RuntimeError(f"staged runtime mismatch: expected={expected}, actual={actual}")
-    for path in sorted(destination.rglob("*"), reverse=True):
-        path.chmod(0o444 if path.is_file() else 0o555)
-    destination.chmod(0o555)
-    return destination
+    return stage_discoverable(candidate, isolated_home, REVIEW_CONTRACT)
 
 
 def copy_input(spec: InputCopy, workspace: Path) -> None:
@@ -450,7 +449,7 @@ def error_event_messages(events: list[dict[str, object]]) -> list[str]:
 
 
 def preflight(candidate: Path, selected: list[str], codex_bin: Path, model: str, timeout_seconds: int) -> dict[str, object]:
-    identity = identify(candidate)
+    identity = identify(candidate, REVIEW_CONTRACT)
     if identity.runtime_files != ["SKILL.md", "agents/openai.yaml"]:
         raise RuntimeError(f"unexpected runtime files: {identity.runtime_files}")
     if any(path.is_symlink() for path in candidate.rglob("*")):
@@ -491,6 +490,8 @@ def preflight(candidate: Path, selected: list[str], codex_bin: Path, model: str,
         )
     harness_files = [
         Path(__file__).resolve(),
+        REPOSITORY / "evals/scripts/run_mission_brief_behavior.py",
+        REPOSITORY / "evals/mission-review-pack.json",
         HARNESS_SOURCE / "mission_brief_eval" / "adapter.py",
         HARNESS_SOURCE / "mission_brief_eval" / "candidate.py",
         HARNESS_SOURCE / "mission_brief_eval" / "filesystem.py",
@@ -831,19 +832,32 @@ def run_case(
     return result
 
 
+def capture_summary_conditions(selected: list[str], results: list[dict[str, object]]) -> dict[str, bool]:
+    thread_ids = [item.get("thread_id") for item in results]
+    return {
+        "selected_cases_completed": bool(selected) and [item["case_id"] for item in results] == selected,
+        "all_case_capture_passed": bool(results) and all(item["capture_status"] == "PASSED" for item in results),
+        "selected_unique_threads": all(isinstance(value, str) and value for value in thread_ids)
+        and len(set(thread_ids)) == len(selected) == len(thread_ids),
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--candidate", type=Path, default=REPOSITORY / "mission-review")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--codex-bin", type=Path, default=Path(shutil.which("codex") or "codex"))
     parser.add_argument("--model", default="gpt-5.6-sol")
+    parser.add_argument("--reasoning-effort", choices=("low", "medium", "high", "xhigh", "max", "ultra"))
     parser.add_argument("--timeout-seconds", type=int, default=900)
     parser.add_argument("--case", action="append", choices=sorted(CASES))
     parser.add_argument("--preflight", action="store_true")
     args = parser.parse_args()
+    configure_evaluation(args.reasoning_effort)
     candidate = args.candidate.resolve()
     selected = args.case or sorted(CASES)
     frozen = preflight(candidate, selected, args.codex_bin, args.model, args.timeout_seconds)
+    frozen["runner"]["requested_reasoning_effort"] = args.reasoning_effort
     frozen["runner"]["argv"] = sys.argv
     if args.preflight:
         print(json.dumps(frozen, ensure_ascii=False, indent=2))
@@ -872,16 +886,12 @@ def main() -> int:
         print(json.dumps({"case_id": case_id, "capture_status": result["capture_status"]}))
         if result["capture_status"] != "PASSED":
             break
-    thread_ids = [item.get("thread_id") for item in results if isinstance(item.get("thread_id"), str)]
-    suite_conditions = {
-        "complete_eight_case_set": selected == sorted(CASES),
-        "all_case_capture_passed": all(item["capture_status"] == "PASSED" for item in results),
-        "eight_unique_threads": len(thread_ids) == len(CASES) and len(set(thread_ids)) == len(CASES),
-    }
+    suite_conditions = capture_summary_conditions(selected, results)
     summary = {
         "capture_status": "PASSED" if all(suite_conditions.values()) else "FAILED",
         "behavior_verdict": "NOT_GRADED",
         "suite_conditions": suite_conditions,
+        "full_suite_coverage": set(selected) == set(CASES) and suite_conditions["selected_cases_completed"],
         "candidate": frozen["candidate"],
         "model": args.model,
         "selected_cases": selected,

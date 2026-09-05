@@ -117,7 +117,7 @@ $mission-review  →  独立检查结果是否兑现
 
 一次塞进很多彼此独立的结果时，先让 `$mission-align` 看拓扑：这是一个整体结果，还是几个可以分别验收的结果。
 
-它可能提议一份父级 Mission，管接缝和不变量；再拆成若干份子级 Mission，各自有独立成败。你也可以主动说“拆开做”。先定拓扑，再分别写 Brief，比硬塞进一份长委托更稳。所有 Brief 的标题都是 `# Mission Brief: …`。父级靠 `Result Boundaries` 标明，子级靠 `Parent Mission` 链回父级。
+它可能提议一份父级 Mission，管接缝和不变量；再拆成若干份子级 Mission，各自有独立成败。你也可以主动说“拆开做”。先定拓扑，再分别写 Brief，比硬塞进一份长委托更稳。普通 Brief 标题是 `# Mission Brief: …`；父级用 `# Parent Mission: …` 加上 `Result Boundaries`，子级用 `# Mission Brief: …` 加上 `Parent Mission` 链回父级。旧文档里的 `# Mission 0:` 仍按父级读。
 
 没有 Align 时，`$mission-brief` 仍会在合同还写不清时停下来，只问那个会改变结果的最小决定。
 
